@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "grpc.demo.user";
+option java_outer_classname = "UserServiceImpl";
+
+package user;
+
+service UserService{
+	rpc login(LoginRequest) returns (LoginResponse){}
+	rpc logout(LogoutRequest) returns (LogoutResponse){}
+	
+}
+
+message LoginRequest{
+	string username = 1;
+	string password = 2;
+}
+
+message LoginResponse{
+	string responseMessage = 1;
+	int32 responseCode = 2;
+}
+
+message LogoutRequest{
+	string username = 1;
+}
+
+message LogoutResponse{
+	string responseMessage = 1;
+	int32 responseCode = 2;
+}
+
+message Empty{}
