@@ -17,7 +17,7 @@ private static final long serialVersionUID = 0L;
   }
   private LightAdjustRequest() {
     lightId_ = 0;
-    adjust_ = "";
+    adjust_ = 0;
   }
 
   @java.lang.Override
@@ -49,10 +49,9 @@ private static final long serialVersionUID = 0L;
             lightId_ = input.readInt32();
             break;
           }
-          case 18: {
-            java.lang.String s = input.readStringRequireUtf8();
+          case 16: {
 
-            adjust_ = s;
+            adjust_ = input.readInt32();
             break;
           }
           default: {
@@ -97,37 +96,12 @@ private static final long serialVersionUID = 0L;
   }
 
   public static final int ADJUST_FIELD_NUMBER = 2;
-  private volatile java.lang.Object adjust_;
+  private int adjust_;
   /**
-   * <code>string adjust = 2;</code>
+   * <code>int32 adjust = 2;</code>
    */
-  public java.lang.String getAdjust() {
-    java.lang.Object ref = adjust_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = 
-          (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      adjust_ = s;
-      return s;
-    }
-  }
-  /**
-   * <code>string adjust = 2;</code>
-   */
-  public com.google.protobuf.ByteString
-      getAdjustBytes() {
-    java.lang.Object ref = adjust_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b = 
-          com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
-      adjust_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+  public int getAdjust() {
+    return adjust_;
   }
 
   private byte memoizedIsInitialized = -1;
@@ -147,8 +121,8 @@ private static final long serialVersionUID = 0L;
     if (lightId_ != 0) {
       output.writeInt32(1, lightId_);
     }
-    if (!getAdjustBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, adjust_);
+    if (adjust_ != 0) {
+      output.writeInt32(2, adjust_);
     }
     unknownFields.writeTo(output);
   }
@@ -163,8 +137,9 @@ private static final long serialVersionUID = 0L;
       size += com.google.protobuf.CodedOutputStream
         .computeInt32Size(1, lightId_);
     }
-    if (!getAdjustBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, adjust_);
+    if (adjust_ != 0) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeInt32Size(2, adjust_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -184,8 +159,8 @@ private static final long serialVersionUID = 0L;
     boolean result = true;
     result = result && (getLightId()
         == other.getLightId());
-    result = result && getAdjust()
-        .equals(other.getAdjust());
+    result = result && (getAdjust()
+        == other.getAdjust());
     result = result && unknownFields.equals(other.unknownFields);
     return result;
   }
@@ -200,7 +175,7 @@ private static final long serialVersionUID = 0L;
     hash = (37 * hash) + LIGHTID_FIELD_NUMBER;
     hash = (53 * hash) + getLightId();
     hash = (37 * hash) + ADJUST_FIELD_NUMBER;
-    hash = (53 * hash) + getAdjust().hashCode();
+    hash = (53 * hash) + getAdjust();
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -336,7 +311,7 @@ private static final long serialVersionUID = 0L;
       super.clear();
       lightId_ = 0;
 
-      adjust_ = "";
+      adjust_ = 0;
 
       return this;
     }
@@ -417,9 +392,8 @@ private static final long serialVersionUID = 0L;
       if (other.getLightId() != 0) {
         setLightId(other.getLightId());
       }
-      if (!other.getAdjust().isEmpty()) {
-        adjust_ = other.adjust_;
-        onChanged();
+      if (other.getAdjust() != 0) {
+        setAdjust(other.getAdjust());
       }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
@@ -476,71 +450,28 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object adjust_ = "";
+    private int adjust_ ;
     /**
-     * <code>string adjust = 2;</code>
+     * <code>int32 adjust = 2;</code>
      */
-    public java.lang.String getAdjust() {
-      java.lang.Object ref = adjust_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs =
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        adjust_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+    public int getAdjust() {
+      return adjust_;
     }
     /**
-     * <code>string adjust = 2;</code>
+     * <code>int32 adjust = 2;</code>
      */
-    public com.google.protobuf.ByteString
-        getAdjustBytes() {
-      java.lang.Object ref = adjust_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        adjust_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-    /**
-     * <code>string adjust = 2;</code>
-     */
-    public Builder setAdjust(
-        java.lang.String value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  
+    public Builder setAdjust(int value) {
+      
       adjust_ = value;
       onChanged();
       return this;
     }
     /**
-     * <code>string adjust = 2;</code>
+     * <code>int32 adjust = 2;</code>
      */
     public Builder clearAdjust() {
       
-      adjust_ = getDefaultInstance().getAdjust();
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>string adjust = 2;</code>
-     */
-    public Builder setAdjustBytes(
-        com.google.protobuf.ByteString value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-      
-      adjust_ = value;
+      adjust_ = 0;
       onChanged();
       return this;
     }

@@ -4,20 +4,19 @@
 package grpc.services.climate;
 
 /**
- * Protobuf type {@code climate.TempRequest}
+ * Protobuf type {@code climate.HvacStatusRequest}
  */
-public  final class TempRequest extends
+public  final class HvacStatusRequest extends
     com.google.protobuf.GeneratedMessageV3 implements
-    // @@protoc_insertion_point(message_implements:climate.TempRequest)
-    TempRequestOrBuilder {
+    // @@protoc_insertion_point(message_implements:climate.HvacStatusRequest)
+    HvacStatusRequestOrBuilder {
 private static final long serialVersionUID = 0L;
-  // Use TempRequest.newBuilder() to construct.
-  private TempRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+  // Use HvacStatusRequest.newBuilder() to construct.
+  private HvacStatusRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
   }
-  private TempRequest() {
+  private HvacStatusRequest() {
     hvacId_ = 0;
-    temperature_ = 0;
   }
 
   @java.lang.Override
@@ -25,7 +24,7 @@ private static final long serialVersionUID = 0L;
   getUnknownFields() {
     return this.unknownFields;
   }
-  private TempRequest(
+  private HvacStatusRequest(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
@@ -49,11 +48,6 @@ private static final long serialVersionUID = 0L;
             hvacId_ = input.readInt32();
             break;
           }
-          case 16: {
-
-            temperature_ = input.readInt32();
-            break;
-          }
           default: {
             if (!parseUnknownFieldProto3(
                 input, unknownFields, extensionRegistry, tag)) {
@@ -75,15 +69,15 @@ private static final long serialVersionUID = 0L;
   }
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
-    return grpc.services.climate.ClimateServiceImpl.internal_static_climate_TempRequest_descriptor;
+    return grpc.services.climate.ClimateServiceImpl.internal_static_climate_HvacStatusRequest_descriptor;
   }
 
   @java.lang.Override
   protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internalGetFieldAccessorTable() {
-    return grpc.services.climate.ClimateServiceImpl.internal_static_climate_TempRequest_fieldAccessorTable
+    return grpc.services.climate.ClimateServiceImpl.internal_static_climate_HvacStatusRequest_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
-            grpc.services.climate.TempRequest.class, grpc.services.climate.TempRequest.Builder.class);
+            grpc.services.climate.HvacStatusRequest.class, grpc.services.climate.HvacStatusRequest.Builder.class);
   }
 
   public static final int HVACID_FIELD_NUMBER = 1;
@@ -93,15 +87,6 @@ private static final long serialVersionUID = 0L;
    */
   public int getHvacId() {
     return hvacId_;
-  }
-
-  public static final int TEMPERATURE_FIELD_NUMBER = 2;
-  private int temperature_;
-  /**
-   * <code>int32 temperature = 2;</code>
-   */
-  public int getTemperature() {
-    return temperature_;
   }
 
   private byte memoizedIsInitialized = -1;
@@ -121,9 +106,6 @@ private static final long serialVersionUID = 0L;
     if (hvacId_ != 0) {
       output.writeInt32(1, hvacId_);
     }
-    if (temperature_ != 0) {
-      output.writeInt32(2, temperature_);
-    }
     unknownFields.writeTo(output);
   }
 
@@ -137,10 +119,6 @@ private static final long serialVersionUID = 0L;
       size += com.google.protobuf.CodedOutputStream
         .computeInt32Size(1, hvacId_);
     }
-    if (temperature_ != 0) {
-      size += com.google.protobuf.CodedOutputStream
-        .computeInt32Size(2, temperature_);
-    }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
     return size;
@@ -151,16 +129,14 @@ private static final long serialVersionUID = 0L;
     if (obj == this) {
      return true;
     }
-    if (!(obj instanceof grpc.services.climate.TempRequest)) {
+    if (!(obj instanceof grpc.services.climate.HvacStatusRequest)) {
       return super.equals(obj);
     }
-    grpc.services.climate.TempRequest other = (grpc.services.climate.TempRequest) obj;
+    grpc.services.climate.HvacStatusRequest other = (grpc.services.climate.HvacStatusRequest) obj;
 
     boolean result = true;
     result = result && (getHvacId()
         == other.getHvacId());
-    result = result && (getTemperature()
-        == other.getTemperature());
     result = result && unknownFields.equals(other.unknownFields);
     return result;
   }
@@ -174,76 +150,74 @@ private static final long serialVersionUID = 0L;
     hash = (19 * hash) + getDescriptor().hashCode();
     hash = (37 * hash) + HVACID_FIELD_NUMBER;
     hash = (53 * hash) + getHvacId();
-    hash = (37 * hash) + TEMPERATURE_FIELD_NUMBER;
-    hash = (53 * hash) + getTemperature();
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
   }
 
-  public static grpc.services.climate.TempRequest parseFrom(
+  public static grpc.services.climate.HvacStatusRequest parseFrom(
       java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static grpc.services.climate.TempRequest parseFrom(
+  public static grpc.services.climate.HvacStatusRequest parseFrom(
       java.nio.ByteBuffer data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static grpc.services.climate.TempRequest parseFrom(
+  public static grpc.services.climate.HvacStatusRequest parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static grpc.services.climate.TempRequest parseFrom(
+  public static grpc.services.climate.HvacStatusRequest parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static grpc.services.climate.TempRequest parseFrom(byte[] data)
+  public static grpc.services.climate.HvacStatusRequest parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static grpc.services.climate.TempRequest parseFrom(
+  public static grpc.services.climate.HvacStatusRequest parseFrom(
       byte[] data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static grpc.services.climate.TempRequest parseFrom(java.io.InputStream input)
+  public static grpc.services.climate.HvacStatusRequest parseFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static grpc.services.climate.TempRequest parseFrom(
+  public static grpc.services.climate.HvacStatusRequest parseFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
-  public static grpc.services.climate.TempRequest parseDelimitedFrom(java.io.InputStream input)
+  public static grpc.services.climate.HvacStatusRequest parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input);
   }
-  public static grpc.services.climate.TempRequest parseDelimitedFrom(
+  public static grpc.services.climate.HvacStatusRequest parseDelimitedFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
   }
-  public static grpc.services.climate.TempRequest parseFrom(
+  public static grpc.services.climate.HvacStatusRequest parseFrom(
       com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static grpc.services.climate.TempRequest parseFrom(
+  public static grpc.services.climate.HvacStatusRequest parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
@@ -256,7 +230,7 @@ private static final long serialVersionUID = 0L;
   public static Builder newBuilder() {
     return DEFAULT_INSTANCE.toBuilder();
   }
-  public static Builder newBuilder(grpc.services.climate.TempRequest prototype) {
+  public static Builder newBuilder(grpc.services.climate.HvacStatusRequest prototype) {
     return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
   }
   @java.lang.Override
@@ -272,26 +246,26 @@ private static final long serialVersionUID = 0L;
     return builder;
   }
   /**
-   * Protobuf type {@code climate.TempRequest}
+   * Protobuf type {@code climate.HvacStatusRequest}
    */
   public static final class Builder extends
       com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-      // @@protoc_insertion_point(builder_implements:climate.TempRequest)
-      grpc.services.climate.TempRequestOrBuilder {
+      // @@protoc_insertion_point(builder_implements:climate.HvacStatusRequest)
+      grpc.services.climate.HvacStatusRequestOrBuilder {
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return grpc.services.climate.ClimateServiceImpl.internal_static_climate_TempRequest_descriptor;
+      return grpc.services.climate.ClimateServiceImpl.internal_static_climate_HvacStatusRequest_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return grpc.services.climate.ClimateServiceImpl.internal_static_climate_TempRequest_fieldAccessorTable
+      return grpc.services.climate.ClimateServiceImpl.internal_static_climate_HvacStatusRequest_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              grpc.services.climate.TempRequest.class, grpc.services.climate.TempRequest.Builder.class);
+              grpc.services.climate.HvacStatusRequest.class, grpc.services.climate.HvacStatusRequest.Builder.class);
     }
 
-    // Construct using grpc.services.climate.TempRequest.newBuilder()
+    // Construct using grpc.services.climate.HvacStatusRequest.newBuilder()
     private Builder() {
       maybeForceBuilderInitialization();
     }
@@ -311,25 +285,23 @@ private static final long serialVersionUID = 0L;
       super.clear();
       hvacId_ = 0;
 
-      temperature_ = 0;
-
       return this;
     }
 
     @java.lang.Override
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
-      return grpc.services.climate.ClimateServiceImpl.internal_static_climate_TempRequest_descriptor;
+      return grpc.services.climate.ClimateServiceImpl.internal_static_climate_HvacStatusRequest_descriptor;
     }
 
     @java.lang.Override
-    public grpc.services.climate.TempRequest getDefaultInstanceForType() {
-      return grpc.services.climate.TempRequest.getDefaultInstance();
+    public grpc.services.climate.HvacStatusRequest getDefaultInstanceForType() {
+      return grpc.services.climate.HvacStatusRequest.getDefaultInstance();
     }
 
     @java.lang.Override
-    public grpc.services.climate.TempRequest build() {
-      grpc.services.climate.TempRequest result = buildPartial();
+    public grpc.services.climate.HvacStatusRequest build() {
+      grpc.services.climate.HvacStatusRequest result = buildPartial();
       if (!result.isInitialized()) {
         throw newUninitializedMessageException(result);
       }
@@ -337,10 +309,9 @@ private static final long serialVersionUID = 0L;
     }
 
     @java.lang.Override
-    public grpc.services.climate.TempRequest buildPartial() {
-      grpc.services.climate.TempRequest result = new grpc.services.climate.TempRequest(this);
+    public grpc.services.climate.HvacStatusRequest buildPartial() {
+      grpc.services.climate.HvacStatusRequest result = new grpc.services.climate.HvacStatusRequest(this);
       result.hvacId_ = hvacId_;
-      result.temperature_ = temperature_;
       onBuilt();
       return result;
     }
@@ -379,21 +350,18 @@ private static final long serialVersionUID = 0L;
     }
     @java.lang.Override
     public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof grpc.services.climate.TempRequest) {
-        return mergeFrom((grpc.services.climate.TempRequest)other);
+      if (other instanceof grpc.services.climate.HvacStatusRequest) {
+        return mergeFrom((grpc.services.climate.HvacStatusRequest)other);
       } else {
         super.mergeFrom(other);
         return this;
       }
     }
 
-    public Builder mergeFrom(grpc.services.climate.TempRequest other) {
-      if (other == grpc.services.climate.TempRequest.getDefaultInstance()) return this;
+    public Builder mergeFrom(grpc.services.climate.HvacStatusRequest other) {
+      if (other == grpc.services.climate.HvacStatusRequest.getDefaultInstance()) return this;
       if (other.getHvacId() != 0) {
         setHvacId(other.getHvacId());
-      }
-      if (other.getTemperature() != 0) {
-        setTemperature(other.getTemperature());
       }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
@@ -410,11 +378,11 @@ private static final long serialVersionUID = 0L;
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      grpc.services.climate.TempRequest parsedMessage = null;
+      grpc.services.climate.HvacStatusRequest parsedMessage = null;
       try {
         parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        parsedMessage = (grpc.services.climate.TempRequest) e.getUnfinishedMessage();
+        parsedMessage = (grpc.services.climate.HvacStatusRequest) e.getUnfinishedMessage();
         throw e.unwrapIOException();
       } finally {
         if (parsedMessage != null) {
@@ -449,32 +417,6 @@ private static final long serialVersionUID = 0L;
       onChanged();
       return this;
     }
-
-    private int temperature_ ;
-    /**
-     * <code>int32 temperature = 2;</code>
-     */
-    public int getTemperature() {
-      return temperature_;
-    }
-    /**
-     * <code>int32 temperature = 2;</code>
-     */
-    public Builder setTemperature(int value) {
-      
-      temperature_ = value;
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>int32 temperature = 2;</code>
-     */
-    public Builder clearTemperature() {
-      
-      temperature_ = 0;
-      onChanged();
-      return this;
-    }
     @java.lang.Override
     public final Builder setUnknownFields(
         final com.google.protobuf.UnknownFieldSet unknownFields) {
@@ -488,41 +430,41 @@ private static final long serialVersionUID = 0L;
     }
 
 
-    // @@protoc_insertion_point(builder_scope:climate.TempRequest)
+    // @@protoc_insertion_point(builder_scope:climate.HvacStatusRequest)
   }
 
-  // @@protoc_insertion_point(class_scope:climate.TempRequest)
-  private static final grpc.services.climate.TempRequest DEFAULT_INSTANCE;
+  // @@protoc_insertion_point(class_scope:climate.HvacStatusRequest)
+  private static final grpc.services.climate.HvacStatusRequest DEFAULT_INSTANCE;
   static {
-    DEFAULT_INSTANCE = new grpc.services.climate.TempRequest();
+    DEFAULT_INSTANCE = new grpc.services.climate.HvacStatusRequest();
   }
 
-  public static grpc.services.climate.TempRequest getDefaultInstance() {
+  public static grpc.services.climate.HvacStatusRequest getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<TempRequest>
-      PARSER = new com.google.protobuf.AbstractParser<TempRequest>() {
+  private static final com.google.protobuf.Parser<HvacStatusRequest>
+      PARSER = new com.google.protobuf.AbstractParser<HvacStatusRequest>() {
     @java.lang.Override
-    public TempRequest parsePartialFrom(
+    public HvacStatusRequest parsePartialFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return new TempRequest(input, extensionRegistry);
+      return new HvacStatusRequest(input, extensionRegistry);
     }
   };
 
-  public static com.google.protobuf.Parser<TempRequest> parser() {
+  public static com.google.protobuf.Parser<HvacStatusRequest> parser() {
     return PARSER;
   }
 
   @java.lang.Override
-  public com.google.protobuf.Parser<TempRequest> getParserForType() {
+  public com.google.protobuf.Parser<HvacStatusRequest> getParserForType() {
     return PARSER;
   }
 
   @java.lang.Override
-  public grpc.services.climate.TempRequest getDefaultInstanceForType() {
+  public grpc.services.climate.HvacStatusRequest getDefaultInstanceForType() {
     return DEFAULT_INSTANCE;
   }
 

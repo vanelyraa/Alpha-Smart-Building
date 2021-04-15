@@ -3,8 +3,8 @@
 
 package grpc.services.occupancy;
 
-public interface LocalRequestOrBuilder extends
-    // @@protoc_insertion_point(interface_extends:occupancy.LocalRequest)
+public interface PersonnelOrBuilder extends
+    // @@protoc_insertion_point(interface_extends:occupancy.Personnel)
     com.google.protobuf.MessageOrBuilder {
 
   /**
@@ -16,4 +16,9 @@ public interface LocalRequestOrBuilder extends
    */
   com.google.protobuf.ByteString
       getRoomBytes();
+
+  /**
+   * <code>int32 localOccupancy = 2;</code>
+   */
+  int getLocalOccupancy();
 }

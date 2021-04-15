@@ -25,10 +25,15 @@ public final class EnergyServiceImpl {
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_energy_DevicesOffResponse_fieldAccessorTable;
   static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_energy_LightsSwitchRequest_descriptor;
+    internal_static_energy_Lights_descriptor;
   static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_energy_LightsSwitchRequest_fieldAccessorTable;
+      internal_static_energy_Lights_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_energy_LightsOnRequest_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_energy_LightsOnRequest_fieldAccessorTable;
   static final com.google.protobuf.Descriptors.Descriptor
     internal_static_energy_LightsResponse_descriptor;
   static final 
@@ -39,11 +44,6 @@ public final class EnergyServiceImpl {
   static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_energy_LightAdjustRequest_fieldAccessorTable;
-  static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_energy_LightAdjustResponse_descriptor;
-  static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_energy_LightAdjustResponse_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -55,19 +55,20 @@ public final class EnergyServiceImpl {
     java.lang.String[] descriptorData = {
       "\n\026energyEfficiency.proto\022\006energy\"&\n\021Devi" +
       "cesOffRequest\022\021\n\tdeviceOff\030\001 \001(\010\"\'\n\022Devi" +
-      "cesOffResponse\022\021\n\tdeviceOff\030\001 \001(\010\"&\n\023Lig" +
-      "htsSwitchRequest\022\017\n\007lightId\030\001 \001(\005\"!\n\016Lig" +
-      "htsResponse\022\017\n\007lightOn\030\002 \001(\t\"5\n\022LightAdj" +
-      "ustRequest\022\017\n\007lightId\030\001 \001(\005\022\016\n\006adjust\030\002 " +
-      "\001(\t\")\n\023LightAdjustResponse\022\022\n\nadjustMade" +
-      "\030\001 \001(\t2\361\001\n\rEnergyService\022H\n\rswitchDevice" +
-      "s\022\031.energy.DevicesOffRequest\032\032.energy.De" +
-      "vicesOffResponse\"\000\022G\n\016switchLightsOn\022\033.e" +
-      "nergy.LightsSwitchRequest\032\026.energy.Light" +
-      "sResponse\"\000\022M\n\016lightIntensity\022\032.energy.L" +
-      "ightAdjustRequest\032\033.energy.LightAdjustRe" +
-      "sponse\"\0000\001B+\n\024grpc.services.energyB\021Ener" +
-      "gyServiceImplP\001b\006proto3"
+      "cesOffResponse\022\021\n\tdeviceOff\030\001 \001(\010\">\n\006Lig" +
+      "hts\022\017\n\007lightId\030\001 \001(\005\022\023\n\013lightStatus\030\002 \001(" +
+      "\t\022\016\n\006adjust\030\003 \001(\005\"\"\n\017LightsOnRequest\022\017\n\007" +
+      "lightId\030\001 \001(\005\"/\n\016LightsResponse\022\035\n\005light" +
+      "\030\001 \001(\0132\016.energy.Lights\"5\n\022LightAdjustReq" +
+      "uest\022\017\n\007lightId\030\001 \001(\005\022\016\n\006adjust\030\002 \001(\0052\350\001" +
+      "\n\rEnergyService\022H\n\rswitchDevices\022\031.energ" +
+      "y.DevicesOffRequest\032\032.energy.DevicesOffR" +
+      "esponse\"\000\022C\n\016switchLightsOn\022\027.energy.Lig" +
+      "htsOnRequest\032\026.energy.LightsResponse\"\000\022H" +
+      "\n\016lightIntensity\022\032.energy.LightAdjustReq" +
+      "uest\032\026.energy.LightsResponse\"\000(\001B+\n\024grpc" +
+      ".services.energyB\021EnergyServiceImplP\001b\006p" +
+      "roto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -93,30 +94,30 @@ public final class EnergyServiceImpl {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_energy_DevicesOffResponse_descriptor,
         new java.lang.String[] { "DeviceOff", });
-    internal_static_energy_LightsSwitchRequest_descriptor =
+    internal_static_energy_Lights_descriptor =
       getDescriptor().getMessageTypes().get(2);
-    internal_static_energy_LightsSwitchRequest_fieldAccessorTable = new
+    internal_static_energy_Lights_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_energy_LightsSwitchRequest_descriptor,
+        internal_static_energy_Lights_descriptor,
+        new java.lang.String[] { "LightId", "LightStatus", "Adjust", });
+    internal_static_energy_LightsOnRequest_descriptor =
+      getDescriptor().getMessageTypes().get(3);
+    internal_static_energy_LightsOnRequest_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_energy_LightsOnRequest_descriptor,
         new java.lang.String[] { "LightId", });
     internal_static_energy_LightsResponse_descriptor =
-      getDescriptor().getMessageTypes().get(3);
+      getDescriptor().getMessageTypes().get(4);
     internal_static_energy_LightsResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_energy_LightsResponse_descriptor,
-        new java.lang.String[] { "LightOn", });
+        new java.lang.String[] { "Light", });
     internal_static_energy_LightAdjustRequest_descriptor =
-      getDescriptor().getMessageTypes().get(4);
+      getDescriptor().getMessageTypes().get(5);
     internal_static_energy_LightAdjustRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_energy_LightAdjustRequest_descriptor,
         new java.lang.String[] { "LightId", "Adjust", });
-    internal_static_energy_LightAdjustResponse_descriptor =
-      getDescriptor().getMessageTypes().get(5);
-    internal_static_energy_LightAdjustResponse_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_energy_LightAdjustResponse_descriptor,
-        new java.lang.String[] { "AdjustMade", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

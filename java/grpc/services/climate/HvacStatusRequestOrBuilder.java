@@ -3,17 +3,12 @@
 
 package grpc.services.climate;
 
-public interface TempRequestOrBuilder extends
-    // @@protoc_insertion_point(interface_extends:climate.TempRequest)
+public interface HvacStatusRequestOrBuilder extends
+    // @@protoc_insertion_point(interface_extends:climate.HvacStatusRequest)
     com.google.protobuf.MessageOrBuilder {
 
   /**
    * <code>int32 HvacId = 1;</code>
    */
   int getHvacId();
-
-  /**
-   * <code>int32 temperature = 2;</code>
-   */
-  int getTemperature();
 }

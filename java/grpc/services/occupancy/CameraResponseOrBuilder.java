@@ -8,12 +8,7 @@ public interface CameraResponseOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>string cameraOn = 2;</code>
+   * <code>bool cameraOn = 1;</code>
    */
-  java.lang.String getCameraOn();
-  /**
-   * <code>string cameraOn = 2;</code>
-   */
-  com.google.protobuf.ByteString
-      getCameraOnBytes();
+  boolean getCameraOn();
 }

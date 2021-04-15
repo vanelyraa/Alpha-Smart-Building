@@ -16,7 +16,6 @@ private static final long serialVersionUID = 0L;
     super(builder);
   }
   private LightsResponse() {
-    lightOn_ = "";
   }
 
   @java.lang.Override
@@ -43,10 +42,17 @@ private static final long serialVersionUID = 0L;
           case 0:
             done = true;
             break;
-          case 18: {
-            java.lang.String s = input.readStringRequireUtf8();
+          case 10: {
+            grpc.services.energy.Lights.Builder subBuilder = null;
+            if (light_ != null) {
+              subBuilder = light_.toBuilder();
+            }
+            light_ = input.readMessage(grpc.services.energy.Lights.parser(), extensionRegistry);
+            if (subBuilder != null) {
+              subBuilder.mergeFrom(light_);
+              light_ = subBuilder.buildPartial();
+            }
 
-            lightOn_ = s;
             break;
           }
           default: {
@@ -81,38 +87,25 @@ private static final long serialVersionUID = 0L;
             grpc.services.energy.LightsResponse.class, grpc.services.energy.LightsResponse.Builder.class);
   }
 
-  public static final int LIGHTON_FIELD_NUMBER = 2;
-  private volatile java.lang.Object lightOn_;
+  public static final int LIGHT_FIELD_NUMBER = 1;
+  private grpc.services.energy.Lights light_;
   /**
-   * <code>string lightOn = 2;</code>
+   * <code>.energy.Lights light = 1;</code>
    */
-  public java.lang.String getLightOn() {
-    java.lang.Object ref = lightOn_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = 
-          (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      lightOn_ = s;
-      return s;
-    }
+  public boolean hasLight() {
+    return light_ != null;
   }
   /**
-   * <code>string lightOn = 2;</code>
+   * <code>.energy.Lights light = 1;</code>
    */
-  public com.google.protobuf.ByteString
-      getLightOnBytes() {
-    java.lang.Object ref = lightOn_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b = 
-          com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
-      lightOn_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+  public grpc.services.energy.Lights getLight() {
+    return light_ == null ? grpc.services.energy.Lights.getDefaultInstance() : light_;
+  }
+  /**
+   * <code>.energy.Lights light = 1;</code>
+   */
+  public grpc.services.energy.LightsOrBuilder getLightOrBuilder() {
+    return getLight();
   }
 
   private byte memoizedIsInitialized = -1;
@@ -129,8 +122,8 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
-    if (!getLightOnBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, lightOn_);
+    if (light_ != null) {
+      output.writeMessage(1, getLight());
     }
     unknownFields.writeTo(output);
   }
@@ -141,8 +134,9 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
-    if (!getLightOnBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, lightOn_);
+    if (light_ != null) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeMessageSize(1, getLight());
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -160,8 +154,11 @@ private static final long serialVersionUID = 0L;
     grpc.services.energy.LightsResponse other = (grpc.services.energy.LightsResponse) obj;
 
     boolean result = true;
-    result = result && getLightOn()
-        .equals(other.getLightOn());
+    result = result && (hasLight() == other.hasLight());
+    if (hasLight()) {
+      result = result && getLight()
+          .equals(other.getLight());
+    }
     result = result && unknownFields.equals(other.unknownFields);
     return result;
   }
@@ -173,8 +170,10 @@ private static final long serialVersionUID = 0L;
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + LIGHTON_FIELD_NUMBER;
-    hash = (53 * hash) + getLightOn().hashCode();
+    if (hasLight()) {
+      hash = (37 * hash) + LIGHT_FIELD_NUMBER;
+      hash = (53 * hash) + getLight().hashCode();
+    }
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -308,8 +307,12 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public Builder clear() {
       super.clear();
-      lightOn_ = "";
-
+      if (lightBuilder_ == null) {
+        light_ = null;
+      } else {
+        light_ = null;
+        lightBuilder_ = null;
+      }
       return this;
     }
 
@@ -336,7 +339,11 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public grpc.services.energy.LightsResponse buildPartial() {
       grpc.services.energy.LightsResponse result = new grpc.services.energy.LightsResponse(this);
-      result.lightOn_ = lightOn_;
+      if (lightBuilder_ == null) {
+        result.light_ = light_;
+      } else {
+        result.light_ = lightBuilder_.build();
+      }
       onBuilt();
       return result;
     }
@@ -385,9 +392,8 @@ private static final long serialVersionUID = 0L;
 
     public Builder mergeFrom(grpc.services.energy.LightsResponse other) {
       if (other == grpc.services.energy.LightsResponse.getDefaultInstance()) return this;
-      if (!other.getLightOn().isEmpty()) {
-        lightOn_ = other.lightOn_;
-        onChanged();
+      if (other.hasLight()) {
+        mergeLight(other.getLight());
       }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
@@ -418,73 +424,121 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object lightOn_ = "";
+    private grpc.services.energy.Lights light_ = null;
+    private com.google.protobuf.SingleFieldBuilderV3<
+        grpc.services.energy.Lights, grpc.services.energy.Lights.Builder, grpc.services.energy.LightsOrBuilder> lightBuilder_;
     /**
-     * <code>string lightOn = 2;</code>
+     * <code>.energy.Lights light = 1;</code>
      */
-    public java.lang.String getLightOn() {
-      java.lang.Object ref = lightOn_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs =
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        lightOn_ = s;
-        return s;
+    public boolean hasLight() {
+      return lightBuilder_ != null || light_ != null;
+    }
+    /**
+     * <code>.energy.Lights light = 1;</code>
+     */
+    public grpc.services.energy.Lights getLight() {
+      if (lightBuilder_ == null) {
+        return light_ == null ? grpc.services.energy.Lights.getDefaultInstance() : light_;
       } else {
-        return (java.lang.String) ref;
+        return lightBuilder_.getMessage();
       }
     }
     /**
-     * <code>string lightOn = 2;</code>
+     * <code>.energy.Lights light = 1;</code>
      */
-    public com.google.protobuf.ByteString
-        getLightOnBytes() {
-      java.lang.Object ref = lightOn_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        lightOn_ = b;
-        return b;
+    public Builder setLight(grpc.services.energy.Lights value) {
+      if (lightBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        light_ = value;
+        onChanged();
       } else {
-        return (com.google.protobuf.ByteString) ref;
+        lightBuilder_.setMessage(value);
+      }
+
+      return this;
+    }
+    /**
+     * <code>.energy.Lights light = 1;</code>
+     */
+    public Builder setLight(
+        grpc.services.energy.Lights.Builder builderForValue) {
+      if (lightBuilder_ == null) {
+        light_ = builderForValue.build();
+        onChanged();
+      } else {
+        lightBuilder_.setMessage(builderForValue.build());
+      }
+
+      return this;
+    }
+    /**
+     * <code>.energy.Lights light = 1;</code>
+     */
+    public Builder mergeLight(grpc.services.energy.Lights value) {
+      if (lightBuilder_ == null) {
+        if (light_ != null) {
+          light_ =
+            grpc.services.energy.Lights.newBuilder(light_).mergeFrom(value).buildPartial();
+        } else {
+          light_ = value;
+        }
+        onChanged();
+      } else {
+        lightBuilder_.mergeFrom(value);
+      }
+
+      return this;
+    }
+    /**
+     * <code>.energy.Lights light = 1;</code>
+     */
+    public Builder clearLight() {
+      if (lightBuilder_ == null) {
+        light_ = null;
+        onChanged();
+      } else {
+        light_ = null;
+        lightBuilder_ = null;
+      }
+
+      return this;
+    }
+    /**
+     * <code>.energy.Lights light = 1;</code>
+     */
+    public grpc.services.energy.Lights.Builder getLightBuilder() {
+      
+      onChanged();
+      return getLightFieldBuilder().getBuilder();
+    }
+    /**
+     * <code>.energy.Lights light = 1;</code>
+     */
+    public grpc.services.energy.LightsOrBuilder getLightOrBuilder() {
+      if (lightBuilder_ != null) {
+        return lightBuilder_.getMessageOrBuilder();
+      } else {
+        return light_ == null ?
+            grpc.services.energy.Lights.getDefaultInstance() : light_;
       }
     }
     /**
-     * <code>string lightOn = 2;</code>
+     * <code>.energy.Lights light = 1;</code>
      */
-    public Builder setLightOn(
-        java.lang.String value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  
-      lightOn_ = value;
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>string lightOn = 2;</code>
-     */
-    public Builder clearLightOn() {
-      
-      lightOn_ = getDefaultInstance().getLightOn();
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>string lightOn = 2;</code>
-     */
-    public Builder setLightOnBytes(
-        com.google.protobuf.ByteString value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-      
-      lightOn_ = value;
-      onChanged();
-      return this;
+    private com.google.protobuf.SingleFieldBuilderV3<
+        grpc.services.energy.Lights, grpc.services.energy.Lights.Builder, grpc.services.energy.LightsOrBuilder> 
+        getLightFieldBuilder() {
+      if (lightBuilder_ == null) {
+        lightBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+            grpc.services.energy.Lights, grpc.services.energy.Lights.Builder, grpc.services.energy.LightsOrBuilder>(
+                getLight(),
+                getParentForChildren(),
+                isClean());
+        light_ = null;
+      }
+      return lightBuilder_;
     }
     @java.lang.Override
     public final Builder setUnknownFields(

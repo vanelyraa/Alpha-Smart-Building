@@ -4,20 +4,20 @@
 package grpc.services.climate;
 
 /**
- * Protobuf type {@code climate.TempRequest}
+ * Protobuf type {@code climate.CoLevel}
  */
-public  final class TempRequest extends
+public  final class CoLevel extends
     com.google.protobuf.GeneratedMessageV3 implements
-    // @@protoc_insertion_point(message_implements:climate.TempRequest)
-    TempRequestOrBuilder {
+    // @@protoc_insertion_point(message_implements:climate.CoLevel)
+    CoLevelOrBuilder {
 private static final long serialVersionUID = 0L;
-  // Use TempRequest.newBuilder() to construct.
-  private TempRequest(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+  // Use CoLevel.newBuilder() to construct.
+  private CoLevel(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
   }
-  private TempRequest() {
-    hvacId_ = 0;
-    temperature_ = 0;
+  private CoLevel() {
+    building_ = "";
+    coNow_ = 0;
   }
 
   @java.lang.Override
@@ -25,7 +25,7 @@ private static final long serialVersionUID = 0L;
   getUnknownFields() {
     return this.unknownFields;
   }
-  private TempRequest(
+  private CoLevel(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
@@ -44,14 +44,15 @@ private static final long serialVersionUID = 0L;
           case 0:
             done = true;
             break;
-          case 8: {
+          case 10: {
+            java.lang.String s = input.readStringRequireUtf8();
 
-            hvacId_ = input.readInt32();
+            building_ = s;
             break;
           }
           case 16: {
 
-            temperature_ = input.readInt32();
+            coNow_ = input.readInt32();
             break;
           }
           default: {
@@ -75,33 +76,58 @@ private static final long serialVersionUID = 0L;
   }
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
-    return grpc.services.climate.ClimateServiceImpl.internal_static_climate_TempRequest_descriptor;
+    return grpc.services.climate.ClimateServiceImpl.internal_static_climate_CoLevel_descriptor;
   }
 
   @java.lang.Override
   protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internalGetFieldAccessorTable() {
-    return grpc.services.climate.ClimateServiceImpl.internal_static_climate_TempRequest_fieldAccessorTable
+    return grpc.services.climate.ClimateServiceImpl.internal_static_climate_CoLevel_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
-            grpc.services.climate.TempRequest.class, grpc.services.climate.TempRequest.Builder.class);
+            grpc.services.climate.CoLevel.class, grpc.services.climate.CoLevel.Builder.class);
   }
 
-  public static final int HVACID_FIELD_NUMBER = 1;
-  private int hvacId_;
+  public static final int BUILDING_FIELD_NUMBER = 1;
+  private volatile java.lang.Object building_;
   /**
-   * <code>int32 HvacId = 1;</code>
+   * <code>string building = 1;</code>
    */
-  public int getHvacId() {
-    return hvacId_;
+  public java.lang.String getBuilding() {
+    java.lang.Object ref = building_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      building_ = s;
+      return s;
+    }
+  }
+  /**
+   * <code>string building = 1;</code>
+   */
+  public com.google.protobuf.ByteString
+      getBuildingBytes() {
+    java.lang.Object ref = building_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      building_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
   }
 
-  public static final int TEMPERATURE_FIELD_NUMBER = 2;
-  private int temperature_;
+  public static final int CONOW_FIELD_NUMBER = 2;
+  private int coNow_;
   /**
-   * <code>int32 temperature = 2;</code>
+   * <code>int32 CoNow = 2;</code>
    */
-  public int getTemperature() {
-    return temperature_;
+  public int getCoNow() {
+    return coNow_;
   }
 
   private byte memoizedIsInitialized = -1;
@@ -118,11 +144,11 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
-    if (hvacId_ != 0) {
-      output.writeInt32(1, hvacId_);
+    if (!getBuildingBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, building_);
     }
-    if (temperature_ != 0) {
-      output.writeInt32(2, temperature_);
+    if (coNow_ != 0) {
+      output.writeInt32(2, coNow_);
     }
     unknownFields.writeTo(output);
   }
@@ -133,13 +159,12 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
-    if (hvacId_ != 0) {
-      size += com.google.protobuf.CodedOutputStream
-        .computeInt32Size(1, hvacId_);
+    if (!getBuildingBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, building_);
     }
-    if (temperature_ != 0) {
+    if (coNow_ != 0) {
       size += com.google.protobuf.CodedOutputStream
-        .computeInt32Size(2, temperature_);
+        .computeInt32Size(2, coNow_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -151,16 +176,16 @@ private static final long serialVersionUID = 0L;
     if (obj == this) {
      return true;
     }
-    if (!(obj instanceof grpc.services.climate.TempRequest)) {
+    if (!(obj instanceof grpc.services.climate.CoLevel)) {
       return super.equals(obj);
     }
-    grpc.services.climate.TempRequest other = (grpc.services.climate.TempRequest) obj;
+    grpc.services.climate.CoLevel other = (grpc.services.climate.CoLevel) obj;
 
     boolean result = true;
-    result = result && (getHvacId()
-        == other.getHvacId());
-    result = result && (getTemperature()
-        == other.getTemperature());
+    result = result && getBuilding()
+        .equals(other.getBuilding());
+    result = result && (getCoNow()
+        == other.getCoNow());
     result = result && unknownFields.equals(other.unknownFields);
     return result;
   }
@@ -172,78 +197,78 @@ private static final long serialVersionUID = 0L;
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + HVACID_FIELD_NUMBER;
-    hash = (53 * hash) + getHvacId();
-    hash = (37 * hash) + TEMPERATURE_FIELD_NUMBER;
-    hash = (53 * hash) + getTemperature();
+    hash = (37 * hash) + BUILDING_FIELD_NUMBER;
+    hash = (53 * hash) + getBuilding().hashCode();
+    hash = (37 * hash) + CONOW_FIELD_NUMBER;
+    hash = (53 * hash) + getCoNow();
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
   }
 
-  public static grpc.services.climate.TempRequest parseFrom(
+  public static grpc.services.climate.CoLevel parseFrom(
       java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static grpc.services.climate.TempRequest parseFrom(
+  public static grpc.services.climate.CoLevel parseFrom(
       java.nio.ByteBuffer data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static grpc.services.climate.TempRequest parseFrom(
+  public static grpc.services.climate.CoLevel parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static grpc.services.climate.TempRequest parseFrom(
+  public static grpc.services.climate.CoLevel parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static grpc.services.climate.TempRequest parseFrom(byte[] data)
+  public static grpc.services.climate.CoLevel parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static grpc.services.climate.TempRequest parseFrom(
+  public static grpc.services.climate.CoLevel parseFrom(
       byte[] data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static grpc.services.climate.TempRequest parseFrom(java.io.InputStream input)
+  public static grpc.services.climate.CoLevel parseFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static grpc.services.climate.TempRequest parseFrom(
+  public static grpc.services.climate.CoLevel parseFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
-  public static grpc.services.climate.TempRequest parseDelimitedFrom(java.io.InputStream input)
+  public static grpc.services.climate.CoLevel parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input);
   }
-  public static grpc.services.climate.TempRequest parseDelimitedFrom(
+  public static grpc.services.climate.CoLevel parseDelimitedFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
   }
-  public static grpc.services.climate.TempRequest parseFrom(
+  public static grpc.services.climate.CoLevel parseFrom(
       com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static grpc.services.climate.TempRequest parseFrom(
+  public static grpc.services.climate.CoLevel parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
@@ -256,7 +281,7 @@ private static final long serialVersionUID = 0L;
   public static Builder newBuilder() {
     return DEFAULT_INSTANCE.toBuilder();
   }
-  public static Builder newBuilder(grpc.services.climate.TempRequest prototype) {
+  public static Builder newBuilder(grpc.services.climate.CoLevel prototype) {
     return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
   }
   @java.lang.Override
@@ -272,26 +297,26 @@ private static final long serialVersionUID = 0L;
     return builder;
   }
   /**
-   * Protobuf type {@code climate.TempRequest}
+   * Protobuf type {@code climate.CoLevel}
    */
   public static final class Builder extends
       com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-      // @@protoc_insertion_point(builder_implements:climate.TempRequest)
-      grpc.services.climate.TempRequestOrBuilder {
+      // @@protoc_insertion_point(builder_implements:climate.CoLevel)
+      grpc.services.climate.CoLevelOrBuilder {
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return grpc.services.climate.ClimateServiceImpl.internal_static_climate_TempRequest_descriptor;
+      return grpc.services.climate.ClimateServiceImpl.internal_static_climate_CoLevel_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return grpc.services.climate.ClimateServiceImpl.internal_static_climate_TempRequest_fieldAccessorTable
+      return grpc.services.climate.ClimateServiceImpl.internal_static_climate_CoLevel_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              grpc.services.climate.TempRequest.class, grpc.services.climate.TempRequest.Builder.class);
+              grpc.services.climate.CoLevel.class, grpc.services.climate.CoLevel.Builder.class);
     }
 
-    // Construct using grpc.services.climate.TempRequest.newBuilder()
+    // Construct using grpc.services.climate.CoLevel.newBuilder()
     private Builder() {
       maybeForceBuilderInitialization();
     }
@@ -309,9 +334,9 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public Builder clear() {
       super.clear();
-      hvacId_ = 0;
+      building_ = "";
 
-      temperature_ = 0;
+      coNow_ = 0;
 
       return this;
     }
@@ -319,17 +344,17 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
-      return grpc.services.climate.ClimateServiceImpl.internal_static_climate_TempRequest_descriptor;
+      return grpc.services.climate.ClimateServiceImpl.internal_static_climate_CoLevel_descriptor;
     }
 
     @java.lang.Override
-    public grpc.services.climate.TempRequest getDefaultInstanceForType() {
-      return grpc.services.climate.TempRequest.getDefaultInstance();
+    public grpc.services.climate.CoLevel getDefaultInstanceForType() {
+      return grpc.services.climate.CoLevel.getDefaultInstance();
     }
 
     @java.lang.Override
-    public grpc.services.climate.TempRequest build() {
-      grpc.services.climate.TempRequest result = buildPartial();
+    public grpc.services.climate.CoLevel build() {
+      grpc.services.climate.CoLevel result = buildPartial();
       if (!result.isInitialized()) {
         throw newUninitializedMessageException(result);
       }
@@ -337,10 +362,10 @@ private static final long serialVersionUID = 0L;
     }
 
     @java.lang.Override
-    public grpc.services.climate.TempRequest buildPartial() {
-      grpc.services.climate.TempRequest result = new grpc.services.climate.TempRequest(this);
-      result.hvacId_ = hvacId_;
-      result.temperature_ = temperature_;
+    public grpc.services.climate.CoLevel buildPartial() {
+      grpc.services.climate.CoLevel result = new grpc.services.climate.CoLevel(this);
+      result.building_ = building_;
+      result.coNow_ = coNow_;
       onBuilt();
       return result;
     }
@@ -379,21 +404,22 @@ private static final long serialVersionUID = 0L;
     }
     @java.lang.Override
     public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof grpc.services.climate.TempRequest) {
-        return mergeFrom((grpc.services.climate.TempRequest)other);
+      if (other instanceof grpc.services.climate.CoLevel) {
+        return mergeFrom((grpc.services.climate.CoLevel)other);
       } else {
         super.mergeFrom(other);
         return this;
       }
     }
 
-    public Builder mergeFrom(grpc.services.climate.TempRequest other) {
-      if (other == grpc.services.climate.TempRequest.getDefaultInstance()) return this;
-      if (other.getHvacId() != 0) {
-        setHvacId(other.getHvacId());
+    public Builder mergeFrom(grpc.services.climate.CoLevel other) {
+      if (other == grpc.services.climate.CoLevel.getDefaultInstance()) return this;
+      if (!other.getBuilding().isEmpty()) {
+        building_ = other.building_;
+        onChanged();
       }
-      if (other.getTemperature() != 0) {
-        setTemperature(other.getTemperature());
+      if (other.getCoNow() != 0) {
+        setCoNow(other.getCoNow());
       }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
@@ -410,11 +436,11 @@ private static final long serialVersionUID = 0L;
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      grpc.services.climate.TempRequest parsedMessage = null;
+      grpc.services.climate.CoLevel parsedMessage = null;
       try {
         parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        parsedMessage = (grpc.services.climate.TempRequest) e.getUnfinishedMessage();
+        parsedMessage = (grpc.services.climate.CoLevel) e.getUnfinishedMessage();
         throw e.unwrapIOException();
       } finally {
         if (parsedMessage != null) {
@@ -424,54 +450,97 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private int hvacId_ ;
+    private java.lang.Object building_ = "";
     /**
-     * <code>int32 HvacId = 1;</code>
+     * <code>string building = 1;</code>
      */
-    public int getHvacId() {
-      return hvacId_;
+    public java.lang.String getBuilding() {
+      java.lang.Object ref = building_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        building_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
     }
     /**
-     * <code>int32 HvacId = 1;</code>
+     * <code>string building = 1;</code>
      */
-    public Builder setHvacId(int value) {
-      
-      hvacId_ = value;
+    public com.google.protobuf.ByteString
+        getBuildingBytes() {
+      java.lang.Object ref = building_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        building_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     * <code>string building = 1;</code>
+     */
+    public Builder setBuilding(
+        java.lang.String value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  
+      building_ = value;
       onChanged();
       return this;
     }
     /**
-     * <code>int32 HvacId = 1;</code>
+     * <code>string building = 1;</code>
      */
-    public Builder clearHvacId() {
+    public Builder clearBuilding() {
       
-      hvacId_ = 0;
+      building_ = getDefaultInstance().getBuilding();
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string building = 1;</code>
+     */
+    public Builder setBuildingBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+      
+      building_ = value;
       onChanged();
       return this;
     }
 
-    private int temperature_ ;
+    private int coNow_ ;
     /**
-     * <code>int32 temperature = 2;</code>
+     * <code>int32 CoNow = 2;</code>
      */
-    public int getTemperature() {
-      return temperature_;
+    public int getCoNow() {
+      return coNow_;
     }
     /**
-     * <code>int32 temperature = 2;</code>
+     * <code>int32 CoNow = 2;</code>
      */
-    public Builder setTemperature(int value) {
+    public Builder setCoNow(int value) {
       
-      temperature_ = value;
+      coNow_ = value;
       onChanged();
       return this;
     }
     /**
-     * <code>int32 temperature = 2;</code>
+     * <code>int32 CoNow = 2;</code>
      */
-    public Builder clearTemperature() {
+    public Builder clearCoNow() {
       
-      temperature_ = 0;
+      coNow_ = 0;
       onChanged();
       return this;
     }
@@ -488,41 +557,41 @@ private static final long serialVersionUID = 0L;
     }
 
 
-    // @@protoc_insertion_point(builder_scope:climate.TempRequest)
+    // @@protoc_insertion_point(builder_scope:climate.CoLevel)
   }
 
-  // @@protoc_insertion_point(class_scope:climate.TempRequest)
-  private static final grpc.services.climate.TempRequest DEFAULT_INSTANCE;
+  // @@protoc_insertion_point(class_scope:climate.CoLevel)
+  private static final grpc.services.climate.CoLevel DEFAULT_INSTANCE;
   static {
-    DEFAULT_INSTANCE = new grpc.services.climate.TempRequest();
+    DEFAULT_INSTANCE = new grpc.services.climate.CoLevel();
   }
 
-  public static grpc.services.climate.TempRequest getDefaultInstance() {
+  public static grpc.services.climate.CoLevel getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<TempRequest>
-      PARSER = new com.google.protobuf.AbstractParser<TempRequest>() {
+  private static final com.google.protobuf.Parser<CoLevel>
+      PARSER = new com.google.protobuf.AbstractParser<CoLevel>() {
     @java.lang.Override
-    public TempRequest parsePartialFrom(
+    public CoLevel parsePartialFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return new TempRequest(input, extensionRegistry);
+      return new CoLevel(input, extensionRegistry);
     }
   };
 
-  public static com.google.protobuf.Parser<TempRequest> parser() {
+  public static com.google.protobuf.Parser<CoLevel> parser() {
     return PARSER;
   }
 
   @java.lang.Override
-  public com.google.protobuf.Parser<TempRequest> getParserForType() {
+  public com.google.protobuf.Parser<CoLevel> getParserForType() {
     return PARSER;
   }
 
   @java.lang.Override
-  public grpc.services.climate.TempRequest getDefaultInstanceForType() {
+  public grpc.services.climate.CoLevel getDefaultInstanceForType() {
     return DEFAULT_INSTANCE;
   }
 

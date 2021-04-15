@@ -27,94 +27,94 @@ public final class ClimateServiceGrpc {
   public static final String SERVICE_NAME = "climate.ClimateService";
 
   // Static method descriptors that strictly reflect the proto.
-  private static volatile io.grpc.MethodDescriptor<grpc.services.climate.HVACStatusRequest,
-      grpc.services.climate.HVACStatusResponse> getShowHVACStatusMethod;
+  private static volatile io.grpc.MethodDescriptor<grpc.services.climate.HvacStatusRequest,
+      grpc.services.climate.HvacResponse> getShowHvacStatusMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
-      fullMethodName = SERVICE_NAME + '/' + "showHVACStatus",
-      requestType = grpc.services.climate.HVACStatusRequest.class,
-      responseType = grpc.services.climate.HVACStatusResponse.class,
+      fullMethodName = SERVICE_NAME + '/' + "showHvacStatus",
+      requestType = grpc.services.climate.HvacStatusRequest.class,
+      responseType = grpc.services.climate.HvacResponse.class,
       methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<grpc.services.climate.HVACStatusRequest,
-      grpc.services.climate.HVACStatusResponse> getShowHVACStatusMethod() {
-    io.grpc.MethodDescriptor<grpc.services.climate.HVACStatusRequest, grpc.services.climate.HVACStatusResponse> getShowHVACStatusMethod;
-    if ((getShowHVACStatusMethod = ClimateServiceGrpc.getShowHVACStatusMethod) == null) {
+  public static io.grpc.MethodDescriptor<grpc.services.climate.HvacStatusRequest,
+      grpc.services.climate.HvacResponse> getShowHvacStatusMethod() {
+    io.grpc.MethodDescriptor<grpc.services.climate.HvacStatusRequest, grpc.services.climate.HvacResponse> getShowHvacStatusMethod;
+    if ((getShowHvacStatusMethod = ClimateServiceGrpc.getShowHvacStatusMethod) == null) {
       synchronized (ClimateServiceGrpc.class) {
-        if ((getShowHVACStatusMethod = ClimateServiceGrpc.getShowHVACStatusMethod) == null) {
-          ClimateServiceGrpc.getShowHVACStatusMethod = getShowHVACStatusMethod = 
-              io.grpc.MethodDescriptor.<grpc.services.climate.HVACStatusRequest, grpc.services.climate.HVACStatusResponse>newBuilder()
+        if ((getShowHvacStatusMethod = ClimateServiceGrpc.getShowHvacStatusMethod) == null) {
+          ClimateServiceGrpc.getShowHvacStatusMethod = getShowHvacStatusMethod = 
+              io.grpc.MethodDescriptor.<grpc.services.climate.HvacStatusRequest, grpc.services.climate.HvacResponse>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(
-                  "climate.ClimateService", "showHVACStatus"))
+                  "climate.ClimateService", "showHvacStatus"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  grpc.services.climate.HVACStatusRequest.getDefaultInstance()))
+                  grpc.services.climate.HvacStatusRequest.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  grpc.services.climate.HVACStatusResponse.getDefaultInstance()))
-                  .setSchemaDescriptor(new ClimateServiceMethodDescriptorSupplier("showHVACStatus"))
+                  grpc.services.climate.HvacResponse.getDefaultInstance()))
+                  .setSchemaDescriptor(new ClimateServiceMethodDescriptorSupplier("showHvacStatus"))
                   .build();
           }
         }
      }
-     return getShowHVACStatusMethod;
+     return getShowHvacStatusMethod;
   }
 
   private static volatile io.grpc.MethodDescriptor<grpc.services.climate.TempRequest,
-      grpc.services.climate.TempResponse> getSetHVACtempMethod;
+      grpc.services.climate.HvacResponse> getSetHvacTempMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
-      fullMethodName = SERVICE_NAME + '/' + "setHVACtemp",
+      fullMethodName = SERVICE_NAME + '/' + "setHvacTemp",
       requestType = grpc.services.climate.TempRequest.class,
-      responseType = grpc.services.climate.TempResponse.class,
-      methodType = io.grpc.MethodDescriptor.MethodType.CLIENT_STREAMING)
+      responseType = grpc.services.climate.HvacResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
   public static io.grpc.MethodDescriptor<grpc.services.climate.TempRequest,
-      grpc.services.climate.TempResponse> getSetHVACtempMethod() {
-    io.grpc.MethodDescriptor<grpc.services.climate.TempRequest, grpc.services.climate.TempResponse> getSetHVACtempMethod;
-    if ((getSetHVACtempMethod = ClimateServiceGrpc.getSetHVACtempMethod) == null) {
+      grpc.services.climate.HvacResponse> getSetHvacTempMethod() {
+    io.grpc.MethodDescriptor<grpc.services.climate.TempRequest, grpc.services.climate.HvacResponse> getSetHvacTempMethod;
+    if ((getSetHvacTempMethod = ClimateServiceGrpc.getSetHvacTempMethod) == null) {
       synchronized (ClimateServiceGrpc.class) {
-        if ((getSetHVACtempMethod = ClimateServiceGrpc.getSetHVACtempMethod) == null) {
-          ClimateServiceGrpc.getSetHVACtempMethod = getSetHVACtempMethod = 
-              io.grpc.MethodDescriptor.<grpc.services.climate.TempRequest, grpc.services.climate.TempResponse>newBuilder()
-              .setType(io.grpc.MethodDescriptor.MethodType.CLIENT_STREAMING)
+        if ((getSetHvacTempMethod = ClimateServiceGrpc.getSetHvacTempMethod) == null) {
+          ClimateServiceGrpc.getSetHvacTempMethod = getSetHvacTempMethod = 
+              io.grpc.MethodDescriptor.<grpc.services.climate.TempRequest, grpc.services.climate.HvacResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
               .setFullMethodName(generateFullMethodName(
-                  "climate.ClimateService", "setHVACtemp"))
+                  "climate.ClimateService", "setHvacTemp"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
                   grpc.services.climate.TempRequest.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  grpc.services.climate.TempResponse.getDefaultInstance()))
-                  .setSchemaDescriptor(new ClimateServiceMethodDescriptorSupplier("setHVACtemp"))
+                  grpc.services.climate.HvacResponse.getDefaultInstance()))
+                  .setSchemaDescriptor(new ClimateServiceMethodDescriptorSupplier("setHvacTemp"))
                   .build();
           }
         }
      }
-     return getSetHVACtempMethod;
+     return getSetHvacTempMethod;
   }
 
   private static volatile io.grpc.MethodDescriptor<grpc.services.climate.CoLevelRequest,
-      grpc.services.climate.CoLevelResponse> getCheckCOMethod;
+      grpc.services.climate.ExtractionResponse> getCheckCOMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
       fullMethodName = SERVICE_NAME + '/' + "checkCO",
       requestType = grpc.services.climate.CoLevelRequest.class,
-      responseType = grpc.services.climate.CoLevelResponse.class,
-      methodType = io.grpc.MethodDescriptor.MethodType.BIDI_STREAMING)
+      responseType = grpc.services.climate.ExtractionResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
   public static io.grpc.MethodDescriptor<grpc.services.climate.CoLevelRequest,
-      grpc.services.climate.CoLevelResponse> getCheckCOMethod() {
-    io.grpc.MethodDescriptor<grpc.services.climate.CoLevelRequest, grpc.services.climate.CoLevelResponse> getCheckCOMethod;
+      grpc.services.climate.ExtractionResponse> getCheckCOMethod() {
+    io.grpc.MethodDescriptor<grpc.services.climate.CoLevelRequest, grpc.services.climate.ExtractionResponse> getCheckCOMethod;
     if ((getCheckCOMethod = ClimateServiceGrpc.getCheckCOMethod) == null) {
       synchronized (ClimateServiceGrpc.class) {
         if ((getCheckCOMethod = ClimateServiceGrpc.getCheckCOMethod) == null) {
           ClimateServiceGrpc.getCheckCOMethod = getCheckCOMethod = 
-              io.grpc.MethodDescriptor.<grpc.services.climate.CoLevelRequest, grpc.services.climate.CoLevelResponse>newBuilder()
-              .setType(io.grpc.MethodDescriptor.MethodType.BIDI_STREAMING)
+              io.grpc.MethodDescriptor.<grpc.services.climate.CoLevelRequest, grpc.services.climate.ExtractionResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(
                   "climate.ClimateService", "checkCO"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
                   grpc.services.climate.CoLevelRequest.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  grpc.services.climate.CoLevelResponse.getDefaultInstance()))
+                  grpc.services.climate.ExtractionResponse.getDefaultInstance()))
                   .setSchemaDescriptor(new ClimateServiceMethodDescriptorSupplier("checkCO"))
                   .build();
           }
@@ -152,47 +152,47 @@ public final class ClimateServiceGrpc {
 
     /**
      */
-    public void showHVACStatus(grpc.services.climate.HVACStatusRequest request,
-        io.grpc.stub.StreamObserver<grpc.services.climate.HVACStatusResponse> responseObserver) {
-      asyncUnimplementedUnaryCall(getShowHVACStatusMethod(), responseObserver);
+    public void showHvacStatus(grpc.services.climate.HvacStatusRequest request,
+        io.grpc.stub.StreamObserver<grpc.services.climate.HvacResponse> responseObserver) {
+      asyncUnimplementedUnaryCall(getShowHvacStatusMethod(), responseObserver);
     }
 
     /**
      */
-    public io.grpc.stub.StreamObserver<grpc.services.climate.TempRequest> setHVACtemp(
-        io.grpc.stub.StreamObserver<grpc.services.climate.TempResponse> responseObserver) {
-      return asyncUnimplementedStreamingCall(getSetHVACtempMethod(), responseObserver);
+    public void setHvacTemp(grpc.services.climate.TempRequest request,
+        io.grpc.stub.StreamObserver<grpc.services.climate.HvacResponse> responseObserver) {
+      asyncUnimplementedUnaryCall(getSetHvacTempMethod(), responseObserver);
     }
 
     /**
      */
-    public io.grpc.stub.StreamObserver<grpc.services.climate.CoLevelRequest> checkCO(
-        io.grpc.stub.StreamObserver<grpc.services.climate.CoLevelResponse> responseObserver) {
-      return asyncUnimplementedStreamingCall(getCheckCOMethod(), responseObserver);
+    public void checkCO(grpc.services.climate.CoLevelRequest request,
+        io.grpc.stub.StreamObserver<grpc.services.climate.ExtractionResponse> responseObserver) {
+      asyncUnimplementedUnaryCall(getCheckCOMethod(), responseObserver);
     }
 
     @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
       return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
           .addMethod(
-            getShowHVACStatusMethod(),
+            getShowHvacStatusMethod(),
             asyncUnaryCall(
               new MethodHandlers<
-                grpc.services.climate.HVACStatusRequest,
-                grpc.services.climate.HVACStatusResponse>(
-                  this, METHODID_SHOW_HVACSTATUS)))
+                grpc.services.climate.HvacStatusRequest,
+                grpc.services.climate.HvacResponse>(
+                  this, METHODID_SHOW_HVAC_STATUS)))
           .addMethod(
-            getSetHVACtempMethod(),
-            asyncClientStreamingCall(
+            getSetHvacTempMethod(),
+            asyncServerStreamingCall(
               new MethodHandlers<
                 grpc.services.climate.TempRequest,
-                grpc.services.climate.TempResponse>(
-                  this, METHODID_SET_HVACTEMP)))
+                grpc.services.climate.HvacResponse>(
+                  this, METHODID_SET_HVAC_TEMP)))
           .addMethod(
             getCheckCOMethod(),
-            asyncBidiStreamingCall(
+            asyncUnaryCall(
               new MethodHandlers<
                 grpc.services.climate.CoLevelRequest,
-                grpc.services.climate.CoLevelResponse>(
+                grpc.services.climate.ExtractionResponse>(
                   this, METHODID_CHECK_CO)))
           .build();
     }
@@ -218,26 +218,26 @@ public final class ClimateServiceGrpc {
 
     /**
      */
-    public void showHVACStatus(grpc.services.climate.HVACStatusRequest request,
-        io.grpc.stub.StreamObserver<grpc.services.climate.HVACStatusResponse> responseObserver) {
+    public void showHvacStatus(grpc.services.climate.HvacStatusRequest request,
+        io.grpc.stub.StreamObserver<grpc.services.climate.HvacResponse> responseObserver) {
       asyncUnaryCall(
-          getChannel().newCall(getShowHVACStatusMethod(), getCallOptions()), request, responseObserver);
+          getChannel().newCall(getShowHvacStatusMethod(), getCallOptions()), request, responseObserver);
     }
 
     /**
      */
-    public io.grpc.stub.StreamObserver<grpc.services.climate.TempRequest> setHVACtemp(
-        io.grpc.stub.StreamObserver<grpc.services.climate.TempResponse> responseObserver) {
-      return asyncClientStreamingCall(
-          getChannel().newCall(getSetHVACtempMethod(), getCallOptions()), responseObserver);
+    public void setHvacTemp(grpc.services.climate.TempRequest request,
+        io.grpc.stub.StreamObserver<grpc.services.climate.HvacResponse> responseObserver) {
+      asyncServerStreamingCall(
+          getChannel().newCall(getSetHvacTempMethod(), getCallOptions()), request, responseObserver);
     }
 
     /**
      */
-    public io.grpc.stub.StreamObserver<grpc.services.climate.CoLevelRequest> checkCO(
-        io.grpc.stub.StreamObserver<grpc.services.climate.CoLevelResponse> responseObserver) {
-      return asyncBidiStreamingCall(
-          getChannel().newCall(getCheckCOMethod(), getCallOptions()), responseObserver);
+    public void checkCO(grpc.services.climate.CoLevelRequest request,
+        io.grpc.stub.StreamObserver<grpc.services.climate.ExtractionResponse> responseObserver) {
+      asyncUnaryCall(
+          getChannel().newCall(getCheckCOMethod(), getCallOptions()), request, responseObserver);
     }
   }
 
@@ -261,9 +261,24 @@ public final class ClimateServiceGrpc {
 
     /**
      */
-    public grpc.services.climate.HVACStatusResponse showHVACStatus(grpc.services.climate.HVACStatusRequest request) {
+    public grpc.services.climate.HvacResponse showHvacStatus(grpc.services.climate.HvacStatusRequest request) {
       return blockingUnaryCall(
-          getChannel(), getShowHVACStatusMethod(), getCallOptions(), request);
+          getChannel(), getShowHvacStatusMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
+    public java.util.Iterator<grpc.services.climate.HvacResponse> setHvacTemp(
+        grpc.services.climate.TempRequest request) {
+      return blockingServerStreamingCall(
+          getChannel(), getSetHvacTempMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
+    public grpc.services.climate.ExtractionResponse checkCO(grpc.services.climate.CoLevelRequest request) {
+      return blockingUnaryCall(
+          getChannel(), getCheckCOMethod(), getCallOptions(), request);
     }
   }
 
@@ -287,15 +302,23 @@ public final class ClimateServiceGrpc {
 
     /**
      */
-    public com.google.common.util.concurrent.ListenableFuture<grpc.services.climate.HVACStatusResponse> showHVACStatus(
-        grpc.services.climate.HVACStatusRequest request) {
+    public com.google.common.util.concurrent.ListenableFuture<grpc.services.climate.HvacResponse> showHvacStatus(
+        grpc.services.climate.HvacStatusRequest request) {
       return futureUnaryCall(
-          getChannel().newCall(getShowHVACStatusMethod(), getCallOptions()), request);
+          getChannel().newCall(getShowHvacStatusMethod(), getCallOptions()), request);
+    }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<grpc.services.climate.ExtractionResponse> checkCO(
+        grpc.services.climate.CoLevelRequest request) {
+      return futureUnaryCall(
+          getChannel().newCall(getCheckCOMethod(), getCallOptions()), request);
     }
   }
 
-  private static final int METHODID_SHOW_HVACSTATUS = 0;
-  private static final int METHODID_SET_HVACTEMP = 1;
+  private static final int METHODID_SHOW_HVAC_STATUS = 0;
+  private static final int METHODID_SET_HVAC_TEMP = 1;
   private static final int METHODID_CHECK_CO = 2;
 
   private static final class MethodHandlers<Req, Resp> implements
@@ -315,9 +338,17 @@ public final class ClimateServiceGrpc {
     @java.lang.SuppressWarnings("unchecked")
     public void invoke(Req request, io.grpc.stub.StreamObserver<Resp> responseObserver) {
       switch (methodId) {
-        case METHODID_SHOW_HVACSTATUS:
-          serviceImpl.showHVACStatus((grpc.services.climate.HVACStatusRequest) request,
-              (io.grpc.stub.StreamObserver<grpc.services.climate.HVACStatusResponse>) responseObserver);
+        case METHODID_SHOW_HVAC_STATUS:
+          serviceImpl.showHvacStatus((grpc.services.climate.HvacStatusRequest) request,
+              (io.grpc.stub.StreamObserver<grpc.services.climate.HvacResponse>) responseObserver);
+          break;
+        case METHODID_SET_HVAC_TEMP:
+          serviceImpl.setHvacTemp((grpc.services.climate.TempRequest) request,
+              (io.grpc.stub.StreamObserver<grpc.services.climate.HvacResponse>) responseObserver);
+          break;
+        case METHODID_CHECK_CO:
+          serviceImpl.checkCO((grpc.services.climate.CoLevelRequest) request,
+              (io.grpc.stub.StreamObserver<grpc.services.climate.ExtractionResponse>) responseObserver);
           break;
         default:
           throw new AssertionError();
@@ -329,12 +360,6 @@ public final class ClimateServiceGrpc {
     public io.grpc.stub.StreamObserver<Req> invoke(
         io.grpc.stub.StreamObserver<Resp> responseObserver) {
       switch (methodId) {
-        case METHODID_SET_HVACTEMP:
-          return (io.grpc.stub.StreamObserver<Req>) serviceImpl.setHVACtemp(
-              (io.grpc.stub.StreamObserver<grpc.services.climate.TempResponse>) responseObserver);
-        case METHODID_CHECK_CO:
-          return (io.grpc.stub.StreamObserver<Req>) serviceImpl.checkCO(
-              (io.grpc.stub.StreamObserver<grpc.services.climate.CoLevelResponse>) responseObserver);
         default:
           throw new AssertionError();
       }
@@ -386,8 +411,8 @@ public final class ClimateServiceGrpc {
         if (result == null) {
           serviceDescriptor = result = io.grpc.ServiceDescriptor.newBuilder(SERVICE_NAME)
               .setSchemaDescriptor(new ClimateServiceFileDescriptorSupplier())
-              .addMethod(getShowHVACStatusMethod())
-              .addMethod(getSetHVACtempMethod())
+              .addMethod(getShowHvacStatusMethod())
+              .addMethod(getSetHvacTempMethod())
               .addMethod(getCheckCOMethod())
               .build();
         }

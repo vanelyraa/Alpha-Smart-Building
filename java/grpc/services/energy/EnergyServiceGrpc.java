@@ -59,28 +59,28 @@ public final class EnergyServiceGrpc {
      return getSwitchDevicesMethod;
   }
 
-  private static volatile io.grpc.MethodDescriptor<grpc.services.energy.LightsSwitchRequest,
+  private static volatile io.grpc.MethodDescriptor<grpc.services.energy.LightsOnRequest,
       grpc.services.energy.LightsResponse> getSwitchLightsOnMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
       fullMethodName = SERVICE_NAME + '/' + "switchLightsOn",
-      requestType = grpc.services.energy.LightsSwitchRequest.class,
+      requestType = grpc.services.energy.LightsOnRequest.class,
       responseType = grpc.services.energy.LightsResponse.class,
       methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<grpc.services.energy.LightsSwitchRequest,
+  public static io.grpc.MethodDescriptor<grpc.services.energy.LightsOnRequest,
       grpc.services.energy.LightsResponse> getSwitchLightsOnMethod() {
-    io.grpc.MethodDescriptor<grpc.services.energy.LightsSwitchRequest, grpc.services.energy.LightsResponse> getSwitchLightsOnMethod;
+    io.grpc.MethodDescriptor<grpc.services.energy.LightsOnRequest, grpc.services.energy.LightsResponse> getSwitchLightsOnMethod;
     if ((getSwitchLightsOnMethod = EnergyServiceGrpc.getSwitchLightsOnMethod) == null) {
       synchronized (EnergyServiceGrpc.class) {
         if ((getSwitchLightsOnMethod = EnergyServiceGrpc.getSwitchLightsOnMethod) == null) {
           EnergyServiceGrpc.getSwitchLightsOnMethod = getSwitchLightsOnMethod = 
-              io.grpc.MethodDescriptor.<grpc.services.energy.LightsSwitchRequest, grpc.services.energy.LightsResponse>newBuilder()
+              io.grpc.MethodDescriptor.<grpc.services.energy.LightsOnRequest, grpc.services.energy.LightsResponse>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(
                   "energy.EnergyService", "switchLightsOn"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  grpc.services.energy.LightsSwitchRequest.getDefaultInstance()))
+                  grpc.services.energy.LightsOnRequest.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
                   grpc.services.energy.LightsResponse.getDefaultInstance()))
                   .setSchemaDescriptor(new EnergyServiceMethodDescriptorSupplier("switchLightsOn"))
@@ -92,29 +92,29 @@ public final class EnergyServiceGrpc {
   }
 
   private static volatile io.grpc.MethodDescriptor<grpc.services.energy.LightAdjustRequest,
-      grpc.services.energy.LightAdjustResponse> getLightIntensityMethod;
+      grpc.services.energy.LightsResponse> getLightIntensityMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
       fullMethodName = SERVICE_NAME + '/' + "lightIntensity",
       requestType = grpc.services.energy.LightAdjustRequest.class,
-      responseType = grpc.services.energy.LightAdjustResponse.class,
-      methodType = io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
+      responseType = grpc.services.energy.LightsResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.CLIENT_STREAMING)
   public static io.grpc.MethodDescriptor<grpc.services.energy.LightAdjustRequest,
-      grpc.services.energy.LightAdjustResponse> getLightIntensityMethod() {
-    io.grpc.MethodDescriptor<grpc.services.energy.LightAdjustRequest, grpc.services.energy.LightAdjustResponse> getLightIntensityMethod;
+      grpc.services.energy.LightsResponse> getLightIntensityMethod() {
+    io.grpc.MethodDescriptor<grpc.services.energy.LightAdjustRequest, grpc.services.energy.LightsResponse> getLightIntensityMethod;
     if ((getLightIntensityMethod = EnergyServiceGrpc.getLightIntensityMethod) == null) {
       synchronized (EnergyServiceGrpc.class) {
         if ((getLightIntensityMethod = EnergyServiceGrpc.getLightIntensityMethod) == null) {
           EnergyServiceGrpc.getLightIntensityMethod = getLightIntensityMethod = 
-              io.grpc.MethodDescriptor.<grpc.services.energy.LightAdjustRequest, grpc.services.energy.LightAdjustResponse>newBuilder()
-              .setType(io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
+              io.grpc.MethodDescriptor.<grpc.services.energy.LightAdjustRequest, grpc.services.energy.LightsResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.CLIENT_STREAMING)
               .setFullMethodName(generateFullMethodName(
                   "energy.EnergyService", "lightIntensity"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
                   grpc.services.energy.LightAdjustRequest.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  grpc.services.energy.LightAdjustResponse.getDefaultInstance()))
+                  grpc.services.energy.LightsResponse.getDefaultInstance()))
                   .setSchemaDescriptor(new EnergyServiceMethodDescriptorSupplier("lightIntensity"))
                   .build();
           }
@@ -159,16 +159,16 @@ public final class EnergyServiceGrpc {
 
     /**
      */
-    public void switchLightsOn(grpc.services.energy.LightsSwitchRequest request,
+    public void switchLightsOn(grpc.services.energy.LightsOnRequest request,
         io.grpc.stub.StreamObserver<grpc.services.energy.LightsResponse> responseObserver) {
       asyncUnimplementedUnaryCall(getSwitchLightsOnMethod(), responseObserver);
     }
 
     /**
      */
-    public void lightIntensity(grpc.services.energy.LightAdjustRequest request,
-        io.grpc.stub.StreamObserver<grpc.services.energy.LightAdjustResponse> responseObserver) {
-      asyncUnimplementedUnaryCall(getLightIntensityMethod(), responseObserver);
+    public io.grpc.stub.StreamObserver<grpc.services.energy.LightAdjustRequest> lightIntensity(
+        io.grpc.stub.StreamObserver<grpc.services.energy.LightsResponse> responseObserver) {
+      return asyncUnimplementedStreamingCall(getLightIntensityMethod(), responseObserver);
     }
 
     @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
@@ -184,15 +184,15 @@ public final class EnergyServiceGrpc {
             getSwitchLightsOnMethod(),
             asyncUnaryCall(
               new MethodHandlers<
-                grpc.services.energy.LightsSwitchRequest,
+                grpc.services.energy.LightsOnRequest,
                 grpc.services.energy.LightsResponse>(
                   this, METHODID_SWITCH_LIGHTS_ON)))
           .addMethod(
             getLightIntensityMethod(),
-            asyncServerStreamingCall(
+            asyncClientStreamingCall(
               new MethodHandlers<
                 grpc.services.energy.LightAdjustRequest,
-                grpc.services.energy.LightAdjustResponse>(
+                grpc.services.energy.LightsResponse>(
                   this, METHODID_LIGHT_INTENSITY)))
           .build();
     }
@@ -226,7 +226,7 @@ public final class EnergyServiceGrpc {
 
     /**
      */
-    public void switchLightsOn(grpc.services.energy.LightsSwitchRequest request,
+    public void switchLightsOn(grpc.services.energy.LightsOnRequest request,
         io.grpc.stub.StreamObserver<grpc.services.energy.LightsResponse> responseObserver) {
       asyncUnaryCall(
           getChannel().newCall(getSwitchLightsOnMethod(), getCallOptions()), request, responseObserver);
@@ -234,10 +234,10 @@ public final class EnergyServiceGrpc {
 
     /**
      */
-    public void lightIntensity(grpc.services.energy.LightAdjustRequest request,
-        io.grpc.stub.StreamObserver<grpc.services.energy.LightAdjustResponse> responseObserver) {
-      asyncServerStreamingCall(
-          getChannel().newCall(getLightIntensityMethod(), getCallOptions()), request, responseObserver);
+    public io.grpc.stub.StreamObserver<grpc.services.energy.LightAdjustRequest> lightIntensity(
+        io.grpc.stub.StreamObserver<grpc.services.energy.LightsResponse> responseObserver) {
+      return asyncClientStreamingCall(
+          getChannel().newCall(getLightIntensityMethod(), getCallOptions()), responseObserver);
     }
   }
 
@@ -268,17 +268,9 @@ public final class EnergyServiceGrpc {
 
     /**
      */
-    public grpc.services.energy.LightsResponse switchLightsOn(grpc.services.energy.LightsSwitchRequest request) {
+    public grpc.services.energy.LightsResponse switchLightsOn(grpc.services.energy.LightsOnRequest request) {
       return blockingUnaryCall(
           getChannel(), getSwitchLightsOnMethod(), getCallOptions(), request);
-    }
-
-    /**
-     */
-    public java.util.Iterator<grpc.services.energy.LightAdjustResponse> lightIntensity(
-        grpc.services.energy.LightAdjustRequest request) {
-      return blockingServerStreamingCall(
-          getChannel(), getLightIntensityMethod(), getCallOptions(), request);
     }
   }
 
@@ -311,7 +303,7 @@ public final class EnergyServiceGrpc {
     /**
      */
     public com.google.common.util.concurrent.ListenableFuture<grpc.services.energy.LightsResponse> switchLightsOn(
-        grpc.services.energy.LightsSwitchRequest request) {
+        grpc.services.energy.LightsOnRequest request) {
       return futureUnaryCall(
           getChannel().newCall(getSwitchLightsOnMethod(), getCallOptions()), request);
     }
@@ -343,12 +335,8 @@ public final class EnergyServiceGrpc {
               (io.grpc.stub.StreamObserver<grpc.services.energy.DevicesOffResponse>) responseObserver);
           break;
         case METHODID_SWITCH_LIGHTS_ON:
-          serviceImpl.switchLightsOn((grpc.services.energy.LightsSwitchRequest) request,
+          serviceImpl.switchLightsOn((grpc.services.energy.LightsOnRequest) request,
               (io.grpc.stub.StreamObserver<grpc.services.energy.LightsResponse>) responseObserver);
-          break;
-        case METHODID_LIGHT_INTENSITY:
-          serviceImpl.lightIntensity((grpc.services.energy.LightAdjustRequest) request,
-              (io.grpc.stub.StreamObserver<grpc.services.energy.LightAdjustResponse>) responseObserver);
           break;
         default:
           throw new AssertionError();
@@ -360,6 +348,9 @@ public final class EnergyServiceGrpc {
     public io.grpc.stub.StreamObserver<Req> invoke(
         io.grpc.stub.StreamObserver<Resp> responseObserver) {
       switch (methodId) {
+        case METHODID_LIGHT_INTENSITY:
+          return (io.grpc.stub.StreamObserver<Req>) serviceImpl.lightIntensity(
+              (io.grpc.stub.StreamObserver<grpc.services.energy.LightsResponse>) responseObserver);
         default:
           throw new AssertionError();
       }

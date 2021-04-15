@@ -16,7 +16,7 @@ private static final long serialVersionUID = 0L;
     super(builder);
   }
   private CameraSwitchRequest() {
-    cameraId_ = 0;
+    cameraOn_ = false;
   }
 
   @java.lang.Override
@@ -45,7 +45,7 @@ private static final long serialVersionUID = 0L;
             break;
           case 8: {
 
-            cameraId_ = input.readInt32();
+            cameraOn_ = input.readBool();
             break;
           }
           default: {
@@ -80,13 +80,13 @@ private static final long serialVersionUID = 0L;
             grpc.services.occupancy.CameraSwitchRequest.class, grpc.services.occupancy.CameraSwitchRequest.Builder.class);
   }
 
-  public static final int CAMERAID_FIELD_NUMBER = 1;
-  private int cameraId_;
+  public static final int CAMERAON_FIELD_NUMBER = 1;
+  private boolean cameraOn_;
   /**
-   * <code>int32 cameraId = 1;</code>
+   * <code>bool cameraOn = 1;</code>
    */
-  public int getCameraId() {
-    return cameraId_;
+  public boolean getCameraOn() {
+    return cameraOn_;
   }
 
   private byte memoizedIsInitialized = -1;
@@ -103,8 +103,8 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
-    if (cameraId_ != 0) {
-      output.writeInt32(1, cameraId_);
+    if (cameraOn_ != false) {
+      output.writeBool(1, cameraOn_);
     }
     unknownFields.writeTo(output);
   }
@@ -115,9 +115,9 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
-    if (cameraId_ != 0) {
+    if (cameraOn_ != false) {
       size += com.google.protobuf.CodedOutputStream
-        .computeInt32Size(1, cameraId_);
+        .computeBoolSize(1, cameraOn_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -135,8 +135,8 @@ private static final long serialVersionUID = 0L;
     grpc.services.occupancy.CameraSwitchRequest other = (grpc.services.occupancy.CameraSwitchRequest) obj;
 
     boolean result = true;
-    result = result && (getCameraId()
-        == other.getCameraId());
+    result = result && (getCameraOn()
+        == other.getCameraOn());
     result = result && unknownFields.equals(other.unknownFields);
     return result;
   }
@@ -148,8 +148,9 @@ private static final long serialVersionUID = 0L;
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + CAMERAID_FIELD_NUMBER;
-    hash = (53 * hash) + getCameraId();
+    hash = (37 * hash) + CAMERAON_FIELD_NUMBER;
+    hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+        getCameraOn());
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -283,7 +284,7 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public Builder clear() {
       super.clear();
-      cameraId_ = 0;
+      cameraOn_ = false;
 
       return this;
     }
@@ -311,7 +312,7 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public grpc.services.occupancy.CameraSwitchRequest buildPartial() {
       grpc.services.occupancy.CameraSwitchRequest result = new grpc.services.occupancy.CameraSwitchRequest(this);
-      result.cameraId_ = cameraId_;
+      result.cameraOn_ = cameraOn_;
       onBuilt();
       return result;
     }
@@ -360,8 +361,8 @@ private static final long serialVersionUID = 0L;
 
     public Builder mergeFrom(grpc.services.occupancy.CameraSwitchRequest other) {
       if (other == grpc.services.occupancy.CameraSwitchRequest.getDefaultInstance()) return this;
-      if (other.getCameraId() != 0) {
-        setCameraId(other.getCameraId());
+      if (other.getCameraOn() != false) {
+        setCameraOn(other.getCameraOn());
       }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
@@ -392,28 +393,28 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private int cameraId_ ;
+    private boolean cameraOn_ ;
     /**
-     * <code>int32 cameraId = 1;</code>
+     * <code>bool cameraOn = 1;</code>
      */
-    public int getCameraId() {
-      return cameraId_;
+    public boolean getCameraOn() {
+      return cameraOn_;
     }
     /**
-     * <code>int32 cameraId = 1;</code>
+     * <code>bool cameraOn = 1;</code>
      */
-    public Builder setCameraId(int value) {
+    public Builder setCameraOn(boolean value) {
       
-      cameraId_ = value;
+      cameraOn_ = value;
       onChanged();
       return this;
     }
     /**
-     * <code>int32 cameraId = 1;</code>
+     * <code>bool cameraOn = 1;</code>
      */
-    public Builder clearCameraId() {
+    public Builder clearCameraOn() {
       
-      cameraId_ = 0;
+      cameraOn_ = false;
       onChanged();
       return this;
     }

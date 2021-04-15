@@ -3,8 +3,8 @@
 
 package grpc.services.climate;
 
-public interface CoLevelRequestOrBuilder extends
-    // @@protoc_insertion_point(interface_extends:climate.CoLevelRequest)
+public interface CoLevelOrBuilder extends
+    // @@protoc_insertion_point(interface_extends:climate.CoLevel)
     com.google.protobuf.MessageOrBuilder {
 
   /**
@@ -16,4 +16,9 @@ public interface CoLevelRequestOrBuilder extends
    */
   com.google.protobuf.ByteString
       getBuildingBytes();
+
+  /**
+   * <code>int32 CoNow = 2;</code>
+   */
+  int getCoNow();
 }

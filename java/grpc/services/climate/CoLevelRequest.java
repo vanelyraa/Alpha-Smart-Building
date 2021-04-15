@@ -17,7 +17,6 @@ private static final long serialVersionUID = 0L;
   }
   private CoLevelRequest() {
     building_ = "";
-    room_ = "";
   }
 
   @java.lang.Override
@@ -48,12 +47,6 @@ private static final long serialVersionUID = 0L;
             java.lang.String s = input.readStringRequireUtf8();
 
             building_ = s;
-            break;
-          }
-          case 18: {
-            java.lang.String s = input.readStringRequireUtf8();
-
-            room_ = s;
             break;
           }
           default: {
@@ -122,40 +115,6 @@ private static final long serialVersionUID = 0L;
     }
   }
 
-  public static final int ROOM_FIELD_NUMBER = 2;
-  private volatile java.lang.Object room_;
-  /**
-   * <code>string room = 2;</code>
-   */
-  public java.lang.String getRoom() {
-    java.lang.Object ref = room_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = 
-          (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      room_ = s;
-      return s;
-    }
-  }
-  /**
-   * <code>string room = 2;</code>
-   */
-  public com.google.protobuf.ByteString
-      getRoomBytes() {
-    java.lang.Object ref = room_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b = 
-          com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
-      room_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
-  }
-
   private byte memoizedIsInitialized = -1;
   @java.lang.Override
   public final boolean isInitialized() {
@@ -173,9 +132,6 @@ private static final long serialVersionUID = 0L;
     if (!getBuildingBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 1, building_);
     }
-    if (!getRoomBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, room_);
-    }
     unknownFields.writeTo(output);
   }
 
@@ -187,9 +143,6 @@ private static final long serialVersionUID = 0L;
     size = 0;
     if (!getBuildingBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, building_);
-    }
-    if (!getRoomBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, room_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -209,8 +162,6 @@ private static final long serialVersionUID = 0L;
     boolean result = true;
     result = result && getBuilding()
         .equals(other.getBuilding());
-    result = result && getRoom()
-        .equals(other.getRoom());
     result = result && unknownFields.equals(other.unknownFields);
     return result;
   }
@@ -224,8 +175,6 @@ private static final long serialVersionUID = 0L;
     hash = (19 * hash) + getDescriptor().hashCode();
     hash = (37 * hash) + BUILDING_FIELD_NUMBER;
     hash = (53 * hash) + getBuilding().hashCode();
-    hash = (37 * hash) + ROOM_FIELD_NUMBER;
-    hash = (53 * hash) + getRoom().hashCode();
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -361,8 +310,6 @@ private static final long serialVersionUID = 0L;
       super.clear();
       building_ = "";
 
-      room_ = "";
-
       return this;
     }
 
@@ -390,7 +337,6 @@ private static final long serialVersionUID = 0L;
     public grpc.services.climate.CoLevelRequest buildPartial() {
       grpc.services.climate.CoLevelRequest result = new grpc.services.climate.CoLevelRequest(this);
       result.building_ = building_;
-      result.room_ = room_;
       onBuilt();
       return result;
     }
@@ -441,10 +387,6 @@ private static final long serialVersionUID = 0L;
       if (other == grpc.services.climate.CoLevelRequest.getDefaultInstance()) return this;
       if (!other.getBuilding().isEmpty()) {
         building_ = other.building_;
-        onChanged();
-      }
-      if (!other.getRoom().isEmpty()) {
-        room_ = other.room_;
         onChanged();
       }
       this.mergeUnknownFields(other.unknownFields);
@@ -541,75 +483,6 @@ private static final long serialVersionUID = 0L;
   checkByteStringIsUtf8(value);
       
       building_ = value;
-      onChanged();
-      return this;
-    }
-
-    private java.lang.Object room_ = "";
-    /**
-     * <code>string room = 2;</code>
-     */
-    public java.lang.String getRoom() {
-      java.lang.Object ref = room_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs =
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        room_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
-    }
-    /**
-     * <code>string room = 2;</code>
-     */
-    public com.google.protobuf.ByteString
-        getRoomBytes() {
-      java.lang.Object ref = room_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        room_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-    /**
-     * <code>string room = 2;</code>
-     */
-    public Builder setRoom(
-        java.lang.String value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  
-      room_ = value;
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>string room = 2;</code>
-     */
-    public Builder clearRoom() {
-      
-      room_ = getDefaultInstance().getRoom();
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>string room = 2;</code>
-     */
-    public Builder setRoomBytes(
-        com.google.protobuf.ByteString value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-      
-      room_ = value;
       onChanged();
       return this;
     }

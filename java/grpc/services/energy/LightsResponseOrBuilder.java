@@ -8,12 +8,15 @@ public interface LightsResponseOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>string lightOn = 2;</code>
+   * <code>.energy.Lights light = 1;</code>
    */
-  java.lang.String getLightOn();
+  boolean hasLight();
   /**
-   * <code>string lightOn = 2;</code>
+   * <code>.energy.Lights light = 1;</code>
    */
-  com.google.protobuf.ByteString
-      getLightOnBytes();
+  grpc.services.energy.Lights getLight();
+  /**
+   * <code>.energy.Lights light = 1;</code>
+   */
+  grpc.services.energy.LightsOrBuilder getLightOrBuilder();
 }

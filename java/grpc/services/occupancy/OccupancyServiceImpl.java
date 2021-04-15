@@ -15,15 +15,20 @@ public final class OccupancyServiceImpl {
         (com.google.protobuf.ExtensionRegistryLite) registry);
   }
   static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_occupancy_Personnel_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_occupancy_Personnel_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
     internal_static_occupancy_LocalRequest_descriptor;
   static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_occupancy_LocalRequest_fieldAccessorTable;
   static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_occupancy_OccupancyLevel_descriptor;
+    internal_static_occupancy_OccupancyResponse_descriptor;
   static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_occupancy_OccupancyLevel_fieldAccessorTable;
+      internal_static_occupancy_OccupancyResponse_fieldAccessorTable;
   static final com.google.protobuf.Descriptors.Descriptor
     internal_static_occupancy_CameraSwitchRequest_descriptor;
   static final 
@@ -35,15 +40,15 @@ public final class OccupancyServiceImpl {
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_occupancy_CameraResponse_fieldAccessorTable;
   static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_occupancy_VisitorsRequest_descriptor;
+    internal_static_occupancy_FindListDay_descriptor;
   static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_occupancy_VisitorsRequest_fieldAccessorTable;
+      internal_static_occupancy_FindListDay_fieldAccessorTable;
   static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_occupancy_VisitorResponse_descriptor;
+    internal_static_occupancy_ListResponse_descriptor;
   static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_occupancy_VisitorResponse_fieldAccessorTable;
+      internal_static_occupancy_ListResponse_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -53,23 +58,22 @@ public final class OccupancyServiceImpl {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\030personnelOccupancy.proto\022\toccupancy\".\n" +
-      "\014LocalRequest\022\020\n\010building\030\001 \001(\t\022\014\n\004room\030" +
-      "\002 \001(\t\":\n\016OccupancyLevel\022\020\n\010currtime\030\001 \001(" +
-      "\003\022\026\n\016localOccupancy\030\002 \001(\005\"\'\n\023CameraSwitc" +
-      "hRequest\022\020\n\010cameraId\030\001 \001(\005\"\"\n\016CameraResp" +
-      "onse\022\020\n\010cameraOn\030\002 \001(\t\"#\n\017VisitorsReques" +
-      "t\022\020\n\010building\030\001 \001(\t\"J\n\017VisitorResponse\022\020" +
-      "\n\010building\030\001 \001(\t\022\020\n\010currtime\030\002 \001(\003\022\023\n\013vi" +
-      "sitorList\030\003 \001(\t2\371\001\n\020OccupancyService\022H\n\014" +
-      "getOccupancy\022\027.occupancy.LocalRequest\032\031." +
-      "occupancy.OccupancyLevel\"\000(\0010\001\022M\n\016switch" +
-      "CameraOn\022\036.occupancy.CameraSwitchRequest" +
-      "\032\031.occupancy.CameraResponse\"\000\022L\n\016getVisi" +
-      "torList\022\032.occupancy.VisitorsRequest\032\032.oc" +
-      "cupancy.VisitorResponse\"\0000\001B1\n\027grpc.serv" +
-      "ices.occupancyB\024OccupancyServiceImplP\001b\006" +
-      "proto3"
+      "\n\030personnelOccupancy.proto\022\toccupancy\"1\n" +
+      "\tPersonnel\022\014\n\004room\030\001 \001(\t\022\026\n\016localOccupan" +
+      "cy\030\002 \001(\005\"\034\n\014LocalRequest\022\014\n\004room\030\001 \001(\t\"<" +
+      "\n\021OccupancyResponse\022\'\n\tpersonnel\030\001 \001(\0132\024" +
+      ".occupancy.Personnel\"\'\n\023CameraSwitchRequ" +
+      "est\022\020\n\010cameraOn\030\001 \001(\010\"\"\n\016CameraResponse\022" +
+      "\020\n\010cameraOn\030\001 \001(\010\"\032\n\013FindListDay\022\013\n\003day\030" +
+      "\001 \001(\t\")\n\014ListResponse\022\013\n\003day\030\001 \001(\t\022\014\n\004li" +
+      "st\030\002 \001(\t2\361\001\n\020OccupancyService\022G\n\014getOccu" +
+      "pancy\022\027.occupancy.LocalRequest\032\034.occupan" +
+      "cy.OccupancyResponse\"\000\022M\n\016switchCameraOn" +
+      "\022\036.occupancy.CameraSwitchRequest\032\031.occup" +
+      "ancy.CameraResponse\"\000\022E\n\014getVisitList\022\026." +
+      "occupancy.FindListDay\032\027.occupancy.ListRe" +
+      "sponse\"\000(\0010\001B1\n\027grpc.services.occupancyB" +
+      "\024OccupancyServiceImplP\001b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -83,42 +87,48 @@ public final class OccupancyServiceImpl {
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
         }, assigner);
-    internal_static_occupancy_LocalRequest_descriptor =
+    internal_static_occupancy_Personnel_descriptor =
       getDescriptor().getMessageTypes().get(0);
+    internal_static_occupancy_Personnel_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_occupancy_Personnel_descriptor,
+        new java.lang.String[] { "Room", "LocalOccupancy", });
+    internal_static_occupancy_LocalRequest_descriptor =
+      getDescriptor().getMessageTypes().get(1);
     internal_static_occupancy_LocalRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_occupancy_LocalRequest_descriptor,
-        new java.lang.String[] { "Building", "Room", });
-    internal_static_occupancy_OccupancyLevel_descriptor =
-      getDescriptor().getMessageTypes().get(1);
-    internal_static_occupancy_OccupancyLevel_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_occupancy_OccupancyLevel_descriptor,
-        new java.lang.String[] { "Currtime", "LocalOccupancy", });
-    internal_static_occupancy_CameraSwitchRequest_descriptor =
+        new java.lang.String[] { "Room", });
+    internal_static_occupancy_OccupancyResponse_descriptor =
       getDescriptor().getMessageTypes().get(2);
+    internal_static_occupancy_OccupancyResponse_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_occupancy_OccupancyResponse_descriptor,
+        new java.lang.String[] { "Personnel", });
+    internal_static_occupancy_CameraSwitchRequest_descriptor =
+      getDescriptor().getMessageTypes().get(3);
     internal_static_occupancy_CameraSwitchRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_occupancy_CameraSwitchRequest_descriptor,
-        new java.lang.String[] { "CameraId", });
+        new java.lang.String[] { "CameraOn", });
     internal_static_occupancy_CameraResponse_descriptor =
-      getDescriptor().getMessageTypes().get(3);
+      getDescriptor().getMessageTypes().get(4);
     internal_static_occupancy_CameraResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_occupancy_CameraResponse_descriptor,
         new java.lang.String[] { "CameraOn", });
-    internal_static_occupancy_VisitorsRequest_descriptor =
-      getDescriptor().getMessageTypes().get(4);
-    internal_static_occupancy_VisitorsRequest_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_occupancy_VisitorsRequest_descriptor,
-        new java.lang.String[] { "Building", });
-    internal_static_occupancy_VisitorResponse_descriptor =
+    internal_static_occupancy_FindListDay_descriptor =
       getDescriptor().getMessageTypes().get(5);
-    internal_static_occupancy_VisitorResponse_fieldAccessorTable = new
+    internal_static_occupancy_FindListDay_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_occupancy_VisitorResponse_descriptor,
-        new java.lang.String[] { "Building", "Currtime", "VisitorList", });
+        internal_static_occupancy_FindListDay_descriptor,
+        new java.lang.String[] { "Day", });
+    internal_static_occupancy_ListResponse_descriptor =
+      getDescriptor().getMessageTypes().get(6);
+    internal_static_occupancy_ListResponse_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_occupancy_ListResponse_descriptor,
+        new java.lang.String[] { "Day", "List", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

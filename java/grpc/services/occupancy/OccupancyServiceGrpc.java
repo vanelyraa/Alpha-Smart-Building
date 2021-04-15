@@ -28,29 +28,29 @@ public final class OccupancyServiceGrpc {
 
   // Static method descriptors that strictly reflect the proto.
   private static volatile io.grpc.MethodDescriptor<grpc.services.occupancy.LocalRequest,
-      grpc.services.occupancy.OccupancyLevel> getGetOccupancyMethod;
+      grpc.services.occupancy.OccupancyResponse> getGetOccupancyMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
       fullMethodName = SERVICE_NAME + '/' + "getOccupancy",
       requestType = grpc.services.occupancy.LocalRequest.class,
-      responseType = grpc.services.occupancy.OccupancyLevel.class,
-      methodType = io.grpc.MethodDescriptor.MethodType.BIDI_STREAMING)
+      responseType = grpc.services.occupancy.OccupancyResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
   public static io.grpc.MethodDescriptor<grpc.services.occupancy.LocalRequest,
-      grpc.services.occupancy.OccupancyLevel> getGetOccupancyMethod() {
-    io.grpc.MethodDescriptor<grpc.services.occupancy.LocalRequest, grpc.services.occupancy.OccupancyLevel> getGetOccupancyMethod;
+      grpc.services.occupancy.OccupancyResponse> getGetOccupancyMethod() {
+    io.grpc.MethodDescriptor<grpc.services.occupancy.LocalRequest, grpc.services.occupancy.OccupancyResponse> getGetOccupancyMethod;
     if ((getGetOccupancyMethod = OccupancyServiceGrpc.getGetOccupancyMethod) == null) {
       synchronized (OccupancyServiceGrpc.class) {
         if ((getGetOccupancyMethod = OccupancyServiceGrpc.getGetOccupancyMethod) == null) {
           OccupancyServiceGrpc.getGetOccupancyMethod = getGetOccupancyMethod = 
-              io.grpc.MethodDescriptor.<grpc.services.occupancy.LocalRequest, grpc.services.occupancy.OccupancyLevel>newBuilder()
-              .setType(io.grpc.MethodDescriptor.MethodType.BIDI_STREAMING)
+              io.grpc.MethodDescriptor.<grpc.services.occupancy.LocalRequest, grpc.services.occupancy.OccupancyResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(
                   "occupancy.OccupancyService", "getOccupancy"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
                   grpc.services.occupancy.LocalRequest.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  grpc.services.occupancy.OccupancyLevel.getDefaultInstance()))
+                  grpc.services.occupancy.OccupancyResponse.getDefaultInstance()))
                   .setSchemaDescriptor(new OccupancyServiceMethodDescriptorSupplier("getOccupancy"))
                   .build();
           }
@@ -91,36 +91,36 @@ public final class OccupancyServiceGrpc {
      return getSwitchCameraOnMethod;
   }
 
-  private static volatile io.grpc.MethodDescriptor<grpc.services.occupancy.VisitorsRequest,
-      grpc.services.occupancy.VisitorResponse> getGetVisitorListMethod;
+  private static volatile io.grpc.MethodDescriptor<grpc.services.occupancy.FindListDay,
+      grpc.services.occupancy.ListResponse> getGetVisitListMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
-      fullMethodName = SERVICE_NAME + '/' + "getVisitorList",
-      requestType = grpc.services.occupancy.VisitorsRequest.class,
-      responseType = grpc.services.occupancy.VisitorResponse.class,
-      methodType = io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
-  public static io.grpc.MethodDescriptor<grpc.services.occupancy.VisitorsRequest,
-      grpc.services.occupancy.VisitorResponse> getGetVisitorListMethod() {
-    io.grpc.MethodDescriptor<grpc.services.occupancy.VisitorsRequest, grpc.services.occupancy.VisitorResponse> getGetVisitorListMethod;
-    if ((getGetVisitorListMethod = OccupancyServiceGrpc.getGetVisitorListMethod) == null) {
+      fullMethodName = SERVICE_NAME + '/' + "getVisitList",
+      requestType = grpc.services.occupancy.FindListDay.class,
+      responseType = grpc.services.occupancy.ListResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.BIDI_STREAMING)
+  public static io.grpc.MethodDescriptor<grpc.services.occupancy.FindListDay,
+      grpc.services.occupancy.ListResponse> getGetVisitListMethod() {
+    io.grpc.MethodDescriptor<grpc.services.occupancy.FindListDay, grpc.services.occupancy.ListResponse> getGetVisitListMethod;
+    if ((getGetVisitListMethod = OccupancyServiceGrpc.getGetVisitListMethod) == null) {
       synchronized (OccupancyServiceGrpc.class) {
-        if ((getGetVisitorListMethod = OccupancyServiceGrpc.getGetVisitorListMethod) == null) {
-          OccupancyServiceGrpc.getGetVisitorListMethod = getGetVisitorListMethod = 
-              io.grpc.MethodDescriptor.<grpc.services.occupancy.VisitorsRequest, grpc.services.occupancy.VisitorResponse>newBuilder()
-              .setType(io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
+        if ((getGetVisitListMethod = OccupancyServiceGrpc.getGetVisitListMethod) == null) {
+          OccupancyServiceGrpc.getGetVisitListMethod = getGetVisitListMethod = 
+              io.grpc.MethodDescriptor.<grpc.services.occupancy.FindListDay, grpc.services.occupancy.ListResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.BIDI_STREAMING)
               .setFullMethodName(generateFullMethodName(
-                  "occupancy.OccupancyService", "getVisitorList"))
+                  "occupancy.OccupancyService", "getVisitList"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  grpc.services.occupancy.VisitorsRequest.getDefaultInstance()))
+                  grpc.services.occupancy.FindListDay.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  grpc.services.occupancy.VisitorResponse.getDefaultInstance()))
-                  .setSchemaDescriptor(new OccupancyServiceMethodDescriptorSupplier("getVisitorList"))
+                  grpc.services.occupancy.ListResponse.getDefaultInstance()))
+                  .setSchemaDescriptor(new OccupancyServiceMethodDescriptorSupplier("getVisitList"))
                   .build();
           }
         }
      }
-     return getGetVisitorListMethod;
+     return getGetVisitListMethod;
   }
 
   /**
@@ -152,9 +152,9 @@ public final class OccupancyServiceGrpc {
 
     /**
      */
-    public io.grpc.stub.StreamObserver<grpc.services.occupancy.LocalRequest> getOccupancy(
-        io.grpc.stub.StreamObserver<grpc.services.occupancy.OccupancyLevel> responseObserver) {
-      return asyncUnimplementedStreamingCall(getGetOccupancyMethod(), responseObserver);
+    public void getOccupancy(grpc.services.occupancy.LocalRequest request,
+        io.grpc.stub.StreamObserver<grpc.services.occupancy.OccupancyResponse> responseObserver) {
+      asyncUnimplementedUnaryCall(getGetOccupancyMethod(), responseObserver);
     }
 
     /**
@@ -166,19 +166,19 @@ public final class OccupancyServiceGrpc {
 
     /**
      */
-    public void getVisitorList(grpc.services.occupancy.VisitorsRequest request,
-        io.grpc.stub.StreamObserver<grpc.services.occupancy.VisitorResponse> responseObserver) {
-      asyncUnimplementedUnaryCall(getGetVisitorListMethod(), responseObserver);
+    public io.grpc.stub.StreamObserver<grpc.services.occupancy.FindListDay> getVisitList(
+        io.grpc.stub.StreamObserver<grpc.services.occupancy.ListResponse> responseObserver) {
+      return asyncUnimplementedStreamingCall(getGetVisitListMethod(), responseObserver);
     }
 
     @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
       return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
           .addMethod(
             getGetOccupancyMethod(),
-            asyncBidiStreamingCall(
+            asyncUnaryCall(
               new MethodHandlers<
                 grpc.services.occupancy.LocalRequest,
-                grpc.services.occupancy.OccupancyLevel>(
+                grpc.services.occupancy.OccupancyResponse>(
                   this, METHODID_GET_OCCUPANCY)))
           .addMethod(
             getSwitchCameraOnMethod(),
@@ -188,12 +188,12 @@ public final class OccupancyServiceGrpc {
                 grpc.services.occupancy.CameraResponse>(
                   this, METHODID_SWITCH_CAMERA_ON)))
           .addMethod(
-            getGetVisitorListMethod(),
-            asyncServerStreamingCall(
+            getGetVisitListMethod(),
+            asyncBidiStreamingCall(
               new MethodHandlers<
-                grpc.services.occupancy.VisitorsRequest,
-                grpc.services.occupancy.VisitorResponse>(
-                  this, METHODID_GET_VISITOR_LIST)))
+                grpc.services.occupancy.FindListDay,
+                grpc.services.occupancy.ListResponse>(
+                  this, METHODID_GET_VISIT_LIST)))
           .build();
     }
   }
@@ -218,10 +218,10 @@ public final class OccupancyServiceGrpc {
 
     /**
      */
-    public io.grpc.stub.StreamObserver<grpc.services.occupancy.LocalRequest> getOccupancy(
-        io.grpc.stub.StreamObserver<grpc.services.occupancy.OccupancyLevel> responseObserver) {
-      return asyncBidiStreamingCall(
-          getChannel().newCall(getGetOccupancyMethod(), getCallOptions()), responseObserver);
+    public void getOccupancy(grpc.services.occupancy.LocalRequest request,
+        io.grpc.stub.StreamObserver<grpc.services.occupancy.OccupancyResponse> responseObserver) {
+      asyncUnaryCall(
+          getChannel().newCall(getGetOccupancyMethod(), getCallOptions()), request, responseObserver);
     }
 
     /**
@@ -234,10 +234,10 @@ public final class OccupancyServiceGrpc {
 
     /**
      */
-    public void getVisitorList(grpc.services.occupancy.VisitorsRequest request,
-        io.grpc.stub.StreamObserver<grpc.services.occupancy.VisitorResponse> responseObserver) {
-      asyncServerStreamingCall(
-          getChannel().newCall(getGetVisitorListMethod(), getCallOptions()), request, responseObserver);
+    public io.grpc.stub.StreamObserver<grpc.services.occupancy.FindListDay> getVisitList(
+        io.grpc.stub.StreamObserver<grpc.services.occupancy.ListResponse> responseObserver) {
+      return asyncBidiStreamingCall(
+          getChannel().newCall(getGetVisitListMethod(), getCallOptions()), responseObserver);
     }
   }
 
@@ -261,17 +261,16 @@ public final class OccupancyServiceGrpc {
 
     /**
      */
-    public grpc.services.occupancy.CameraResponse switchCameraOn(grpc.services.occupancy.CameraSwitchRequest request) {
+    public grpc.services.occupancy.OccupancyResponse getOccupancy(grpc.services.occupancy.LocalRequest request) {
       return blockingUnaryCall(
-          getChannel(), getSwitchCameraOnMethod(), getCallOptions(), request);
+          getChannel(), getGetOccupancyMethod(), getCallOptions(), request);
     }
 
     /**
      */
-    public java.util.Iterator<grpc.services.occupancy.VisitorResponse> getVisitorList(
-        grpc.services.occupancy.VisitorsRequest request) {
-      return blockingServerStreamingCall(
-          getChannel(), getGetVisitorListMethod(), getCallOptions(), request);
+    public grpc.services.occupancy.CameraResponse switchCameraOn(grpc.services.occupancy.CameraSwitchRequest request) {
+      return blockingUnaryCall(
+          getChannel(), getSwitchCameraOnMethod(), getCallOptions(), request);
     }
   }
 
@@ -295,6 +294,14 @@ public final class OccupancyServiceGrpc {
 
     /**
      */
+    public com.google.common.util.concurrent.ListenableFuture<grpc.services.occupancy.OccupancyResponse> getOccupancy(
+        grpc.services.occupancy.LocalRequest request) {
+      return futureUnaryCall(
+          getChannel().newCall(getGetOccupancyMethod(), getCallOptions()), request);
+    }
+
+    /**
+     */
     public com.google.common.util.concurrent.ListenableFuture<grpc.services.occupancy.CameraResponse> switchCameraOn(
         grpc.services.occupancy.CameraSwitchRequest request) {
       return futureUnaryCall(
@@ -302,9 +309,9 @@ public final class OccupancyServiceGrpc {
     }
   }
 
-  private static final int METHODID_SWITCH_CAMERA_ON = 0;
-  private static final int METHODID_GET_VISITOR_LIST = 1;
-  private static final int METHODID_GET_OCCUPANCY = 2;
+  private static final int METHODID_GET_OCCUPANCY = 0;
+  private static final int METHODID_SWITCH_CAMERA_ON = 1;
+  private static final int METHODID_GET_VISIT_LIST = 2;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -323,13 +330,13 @@ public final class OccupancyServiceGrpc {
     @java.lang.SuppressWarnings("unchecked")
     public void invoke(Req request, io.grpc.stub.StreamObserver<Resp> responseObserver) {
       switch (methodId) {
+        case METHODID_GET_OCCUPANCY:
+          serviceImpl.getOccupancy((grpc.services.occupancy.LocalRequest) request,
+              (io.grpc.stub.StreamObserver<grpc.services.occupancy.OccupancyResponse>) responseObserver);
+          break;
         case METHODID_SWITCH_CAMERA_ON:
           serviceImpl.switchCameraOn((grpc.services.occupancy.CameraSwitchRequest) request,
               (io.grpc.stub.StreamObserver<grpc.services.occupancy.CameraResponse>) responseObserver);
-          break;
-        case METHODID_GET_VISITOR_LIST:
-          serviceImpl.getVisitorList((grpc.services.occupancy.VisitorsRequest) request,
-              (io.grpc.stub.StreamObserver<grpc.services.occupancy.VisitorResponse>) responseObserver);
           break;
         default:
           throw new AssertionError();
@@ -341,9 +348,9 @@ public final class OccupancyServiceGrpc {
     public io.grpc.stub.StreamObserver<Req> invoke(
         io.grpc.stub.StreamObserver<Resp> responseObserver) {
       switch (methodId) {
-        case METHODID_GET_OCCUPANCY:
-          return (io.grpc.stub.StreamObserver<Req>) serviceImpl.getOccupancy(
-              (io.grpc.stub.StreamObserver<grpc.services.occupancy.OccupancyLevel>) responseObserver);
+        case METHODID_GET_VISIT_LIST:
+          return (io.grpc.stub.StreamObserver<Req>) serviceImpl.getVisitList(
+              (io.grpc.stub.StreamObserver<grpc.services.occupancy.ListResponse>) responseObserver);
         default:
           throw new AssertionError();
       }
@@ -397,7 +404,7 @@ public final class OccupancyServiceGrpc {
               .setSchemaDescriptor(new OccupancyServiceFileDescriptorSupplier())
               .addMethod(getGetOccupancyMethod())
               .addMethod(getSwitchCameraOnMethod())
-              .addMethod(getGetVisitorListMethod())
+              .addMethod(getGetVisitListMethod())
               .build();
         }
       }

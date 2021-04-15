@@ -8,7 +8,7 @@ public interface CameraSwitchRequestOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>int32 cameraId = 1;</code>
+   * <code>bool cameraOn = 1;</code>
    */
-  int getCameraId();
+  boolean getCameraOn();
 }
