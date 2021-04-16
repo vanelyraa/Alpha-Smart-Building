@@ -1,0 +1,51 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "grpc.services.climate";
+option java_outer_classname = "ClimateServiceImpl";
+
+package climate;
+
+service ClimateService {
+
+	rpc showHvacStatus(HvacStatusRequest) returns (HvacResponse) {}; //Unary
+
+	rpc setHvacTemp(TempRequest) returns (stream HvacResponse) {}; //server-side stream
+	
+	rpc checkCO (CoLevelRequest) returns ( ExtractionResponse) {}; //unary 
+}
+
+message Hvac{
+	int32 HvacId = 1;
+	string status = 2;
+	int32 temperature = 3;
+}
+
+message HvacStatusRequest{
+	int32 HvacId = 1;
+}
+
+message HvacResponse {
+	Hvac hvac = 1;
+}
+
+message TempRequest {
+	int32 HvacId = 1;
+	int32 temperature = 2;
+}
+
+message CoLevel{
+	string building = 1;
+	int32 CoNow = 2;
+}
+
+message CoLevelRequest {
+	string building = 1;
+}
+
+message ExtractionResponse {
+	CoLevel coLevel = 1;
+	
+}
+
+
