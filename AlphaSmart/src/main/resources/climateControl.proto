@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 syntax = "proto3";
 
 option java_multiple_files = true;
@@ -49,3 +50,51 @@ message ExtractionResponse {
 }
 
 
+=======
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "services.climate";
+
+package climate;
+
+service ClimateUtility {
+
+	rpc showHVACStatus(HVACStatusRequest) returns (HVACStatusResponse) {}; //Unary
+
+	rpc setHVACtemp(stream TempRequest) returns (TempResponse) {}; //client-side stream
+	
+	rpc checkCO (stream CoLevelRequest) returns (stream CoLevelResponse) {}; //bidirecional-side stream
+		
+}
+
+message HVACStatusRequest{
+	int32 HVACId = 1;
+}
+
+message HVACStatusResponse {
+	string status = 1;
+}
+
+message TempRequest {
+	int32 HVACId = 1;
+	int32 temperature = 2;
+}
+
+message TempResponse {
+	string status = 1;
+}
+
+message CoLevelRequest {
+	string building = 1;
+	string room = 2;
+}
+
+message CoLevelResponse {
+	double Colevel = 1;
+	string HVACId = 2;
+	
+}
+
+
+>>>>>>> 30520d2517acaf6dc5e0ec3ce0028e175347c53a
