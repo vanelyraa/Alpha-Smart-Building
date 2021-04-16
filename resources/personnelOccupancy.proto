@@ -1,0 +1,47 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "grpc.services.occupancy";
+option java_outer_classname = "OccupancyServiceImpl";
+
+package occupancy;
+
+service OccupancyService {
+
+	rpc getOccupancy(LocalRequest) returns (OccupancyResponse) {}; //unary streaming RPC
+	
+	rpc switchCameraOn (CameraSwitchRequest) returns (CameraResponse) {};//unary RPC DONE
+	
+	rpc getVisitList(stream FindListDay) returns (stream ListResponse) {}; //bidirectional RPC DONE
+}
+
+message Personnel{
+	string room = 1;
+	int32 localOccupancy = 2;
+}
+
+message LocalRequest {
+ 	string room = 1;
+}
+  
+message OccupancyResponse {
+	Personnel personnel = 1;
+}
+
+message CameraSwitchRequest {
+	bool cameraOn = 1;
+}
+
+message CameraResponse {
+	bool cameraOn = 1;
+}
+
+message FindListDay {
+  	string day = 1;
+}  
+  
+message ListResponse {
+	string day = 1;
+	string list = 2;
+}
+
