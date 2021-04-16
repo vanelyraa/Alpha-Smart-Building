@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 syntax = "proto3";
 
 option java_multiple_files = true;
@@ -42,3 +43,50 @@ message ListResponse {
 	string list = 2;
 }
 
+=======
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "services.occupancy";
+
+package occupancy;
+
+service OccupancyControl {
+
+	rpc getOccupancy(stream LocalRequest) returns (stream OccupancyLevel) {}; //bidirectional streaming RPC
+	
+	rpc switchCameraOn (CameraSwitchRequest) returns (CameraResponse) {};//unary RPC
+	
+	rpc getVisitorList(VisitorsRequest) returns (stream VisitorResponse) {}; //bidirectional streaming RPC
+}
+
+message LocalRequest {
+ 	string building = 1;
+ 	string room = 2;
+}
+  
+message OccupancyLevel {
+	int64 currtime = 1;
+	double localOccupancy = 2;
+}
+
+message CameraSwitchRequest {
+	int32 cameraId = 1;
+}
+
+message CameraResponse {
+	string cameraOn = 2;
+}
+
+message VisitorsRequest {
+  string building = 1;
+}  
+  
+message VisitorResponse {
+	string building = 1;
+	int64 currtime = 2;
+	string visitorList = 3;
+}
+
+}
+>>>>>>> 30520d2517acaf6dc5e0ec3ce0028e175347c53a
