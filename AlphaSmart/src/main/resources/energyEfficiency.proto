@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 syntax = "proto3";
 
 option java_multiple_files = true;
@@ -43,3 +44,46 @@ message LightAdjustRequest {
 }
 
 
+=======
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "services.energy";
+
+package energy;
+
+service EnergyUtility {
+
+	rpc switchDevices (DevicesOffRequest) returns (DevicesOffResponse) {}; //unary RPC
+
+	rpc switchLightsOn (LightsSwitchRequest) returns (LightsResponse) {};//unary RPC
+	
+	rpc lightIntensity (LightAdjustRequest) returns (stream LightAdjustResponse) {};//server stream RPC
+}
+
+message DevicesOffRequest {
+	string deviceOff = 1;
+}
+
+message DevicesOffResponse {
+	string deviceOff = 1;
+}
+
+message LightsSwitchRequest {
+	int32 lightId = 1;
+}
+
+message LightsResponse {
+	string lightOn = 2;
+}
+
+message LightAdjustRequest {
+	int32 lightId = 1;
+	string adjust = 2;
+}
+
+message LightAdjustResponse {
+	string adjustMade = 1;
+}
+
+>>>>>>> 30520d2517acaf6dc5e0ec3ce0028e175347c53a
