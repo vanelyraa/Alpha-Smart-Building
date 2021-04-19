@@ -1,6 +1,7 @@
 package grpc.services.energy;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import grpc.services.energy.EnergyServiceGrpc.EnergyServiceImplBase;
 import io.grpc.Server;
@@ -60,31 +61,42 @@ public static void main(String[] args) {
 	//LIGHTS - Unary RPC implementation
 	@Override
 	public void switchLightsOn(LightsOnRequest request, StreamObserver<LightsResponse> responseObserver) {
-System.out.println("Request received to turn lights on");
+ArrayList<grpc.services.energy.Lights> light_list = LightsData.getInstance();
 		
-		int lightId = request.getLightId();
-				
-		LightsResponse.Builder response = LightsResponse.newBuilder();
-		System.out.println("Turn on lights with ID: " + lightId);
-				
-		//for()
-		response.setLight(1).setResponseMessage("Light ID:" + lightId + "on");
+		for(int i=0; i < light_list.size(); i++) {
+			grpc.services.energy.Lights light = (grpc.services.energy.Lights) light_list.get(i);
+			LightsData.lightsdata.clear();
+			
+			LightsData.lightsdata.add(grpc.services.energy.Lights.newBuilder()
+					.setLightId(light.getLightId())
+					.setLightStatus("ON")
+					.setAdjust(light.getAdjust())//turning off the heater 
+					.build());
+		}
 		
-		responseObserver.onNext(response);
-		responseObserver.onCompleted();
+		//need to loop through all fans in array
+		for(grpc.services.energy.Lights light : LightsData.lightsdata) {
+			LightsResponse response = LightsResponse.newBuilder().setLight(light).build();
+			
+			//this is the next response to send
+			responseObserver.onNext(response);
+			//send the message to let server know we are finished sending
+			responseObserver.onCompleted();
+			return;
+		}
 
 	}
 
 	@Override
 	public StreamObserver<LightAdjustRequest> lightIntensity(StreamObserver<LightsResponse> responseObserver) {
 		return new StreamObserver<LightAdjustRequest>() {
-			
-			int setting = 0;
+			//initializing variable to handle input
+			int adjust = 0;
 			
 			public void onNext(LightAdjustRequest lsr) {
 				// set the variable equal to the value of the incoming request
-				setting = lsr.getLightId();
-				System.out.println("Request recieved to adjust lights to: " + setting);
+				adjust = lsr.getAdjust();
+				System.out.println("Request recieved to adjust lights to: " + adjust);
 			}
 			
 			public void onError(Throwable t) {
@@ -92,13 +104,14 @@ System.out.println("Request received to turn lights on");
 			}
 			// build the response using the setting variable
 			public void onCompleted() {
-				LightsResponse response = LightsResponse.newBuilder().setLightId(lightId).build();
-				responseObserver.onNext(response);
-				responseObserver.onCompleted();
+				System.out.println("Lights adjust");
+				responseObserver.onNext(LightsResponse.newBuilder().setLights(adjust).build());
+				
 			}
 		};
-
 	}
+	
+	
 
 	
 }
