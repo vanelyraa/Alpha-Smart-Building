@@ -18,9 +18,9 @@ public class UtilityServer extends UtilityServiceImplBase{
 
 		try {
 			Server server = ServerBuilder.forPort(port)
-					.addService(utilityserver)
-					.build()
-					.start();
+				.addService(utilityserver)
+				.build()
+				.start();
 
 			System.out.println("Server started with Port:" + server.getPort());
 		    server.awaitTermination();
@@ -55,7 +55,6 @@ public class UtilityServer extends UtilityServiceImplBase{
 
 	}
 	
-
 	@Override
 	public void switchCameraOn(CameraRequest request, StreamObserver<CameraResponse> responseObserver) {
 		
@@ -76,12 +75,11 @@ public class UtilityServer extends UtilityServiceImplBase{
 
 	}
 	
-	
-
 	@Override
 	public StreamObserver<PrinterRequest> printList(StreamObserver<PrinterResponse> responseObserver) {
 		return new StreamObserver<PrinterRequest>() {
-	        public void onNext(PrinterRequest request) {
+	        
+			public void onNext(PrinterRequest request) {
 	            StringBuilder pList = new StringBuilder(); 
 	  
 	            pList.append(request.getPList());
@@ -90,18 +88,17 @@ public class UtilityServer extends UtilityServiceImplBase{
 	            PrinterResponse toPrint = PrinterResponse.newBuilder().setPList(pList.toString()).build();
 	      
 	            responseObserver.onNext(toPrint);
-	          }
+			}
 
 	        public void onError(Throwable t) {
-	          System.out.println("Error on printing service");
+	        	System.out.println("Error on printing service");
 	        }
+	        
 	        public void onCompleted() {
 	          responseObserver.onCompleted();
 	        }
-	      };
+		};
 	}
-
-	
 }
 	
 
