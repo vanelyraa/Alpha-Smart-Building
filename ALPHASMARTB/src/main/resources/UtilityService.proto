@@ -8,11 +8,11 @@ package Utility;
 
 service UtilityService {
 
-	rpc switchDevices (DevicesRequest) returns (DevicesResponse) {}; //unary RPC 
+	rpc switchDevices (DevicesRequest) returns (DevicesResponse) {}; //unary RPC S
 
-	rpc switchCameraOn (CameraRequest) returns (CameraResponse) {};//unary RPC 
+	rpc switchCameraOn (CameraRequest) returns (CameraResponse) {};//unary RPC S
 	
-	rpc printList(stream PrinterRequest) returns (stream PrinterResponse) {}; //bidirectional RPC missing
+	rpc printList(stream PrinterRequest) returns (stream PrinterResponse) {}; //bidirectional RPC S C
 }
 
 message DevicesRequest {
