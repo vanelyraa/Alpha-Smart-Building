@@ -16,8 +16,6 @@ private static final long serialVersionUID = 0L;
     super(builder);
   }
   private OccupancyResponse() {
-    room_ = "";
-    localOccupancy_ = 0;
   }
 
   @java.lang.Override
@@ -44,15 +42,17 @@ private static final long serialVersionUID = 0L;
           case 0:
             done = true;
             break;
-          case 10: {
-            java.lang.String s = input.readStringRequireUtf8();
+          case 18: {
+            grpc.services.occupancy.Occupancy.Builder subBuilder = null;
+            if (occupancy_ != null) {
+              subBuilder = occupancy_.toBuilder();
+            }
+            occupancy_ = input.readMessage(grpc.services.occupancy.Occupancy.parser(), extensionRegistry);
+            if (subBuilder != null) {
+              subBuilder.mergeFrom(occupancy_);
+              occupancy_ = subBuilder.buildPartial();
+            }
 
-            room_ = s;
-            break;
-          }
-          case 16: {
-
-            localOccupancy_ = input.readInt32();
             break;
           }
           default: {
@@ -87,47 +87,25 @@ private static final long serialVersionUID = 0L;
             grpc.services.occupancy.OccupancyResponse.class, grpc.services.occupancy.OccupancyResponse.Builder.class);
   }
 
-  public static final int ROOM_FIELD_NUMBER = 1;
-  private volatile java.lang.Object room_;
+  public static final int OCCUPANCY_FIELD_NUMBER = 2;
+  private grpc.services.occupancy.Occupancy occupancy_;
   /**
-   * <code>string room = 1;</code>
+   * <code>.occupancy.Occupancy occupancy = 2;</code>
    */
-  public java.lang.String getRoom() {
-    java.lang.Object ref = room_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = 
-          (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      room_ = s;
-      return s;
-    }
+  public boolean hasOccupancy() {
+    return occupancy_ != null;
   }
   /**
-   * <code>string room = 1;</code>
+   * <code>.occupancy.Occupancy occupancy = 2;</code>
    */
-  public com.google.protobuf.ByteString
-      getRoomBytes() {
-    java.lang.Object ref = room_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b = 
-          com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
-      room_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+  public grpc.services.occupancy.Occupancy getOccupancy() {
+    return occupancy_ == null ? grpc.services.occupancy.Occupancy.getDefaultInstance() : occupancy_;
   }
-
-  public static final int LOCALOCCUPANCY_FIELD_NUMBER = 2;
-  private int localOccupancy_;
   /**
-   * <code>int32 localOccupancy = 2;</code>
+   * <code>.occupancy.Occupancy occupancy = 2;</code>
    */
-  public int getLocalOccupancy() {
-    return localOccupancy_;
+  public grpc.services.occupancy.OccupancyOrBuilder getOccupancyOrBuilder() {
+    return getOccupancy();
   }
 
   private byte memoizedIsInitialized = -1;
@@ -144,11 +122,8 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
-    if (!getRoomBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, room_);
-    }
-    if (localOccupancy_ != 0) {
-      output.writeInt32(2, localOccupancy_);
+    if (occupancy_ != null) {
+      output.writeMessage(2, getOccupancy());
     }
     unknownFields.writeTo(output);
   }
@@ -159,12 +134,9 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
-    if (!getRoomBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, room_);
-    }
-    if (localOccupancy_ != 0) {
+    if (occupancy_ != null) {
       size += com.google.protobuf.CodedOutputStream
-        .computeInt32Size(2, localOccupancy_);
+        .computeMessageSize(2, getOccupancy());
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -182,10 +154,11 @@ private static final long serialVersionUID = 0L;
     grpc.services.occupancy.OccupancyResponse other = (grpc.services.occupancy.OccupancyResponse) obj;
 
     boolean result = true;
-    result = result && getRoom()
-        .equals(other.getRoom());
-    result = result && (getLocalOccupancy()
-        == other.getLocalOccupancy());
+    result = result && (hasOccupancy() == other.hasOccupancy());
+    if (hasOccupancy()) {
+      result = result && getOccupancy()
+          .equals(other.getOccupancy());
+    }
     result = result && unknownFields.equals(other.unknownFields);
     return result;
   }
@@ -197,10 +170,10 @@ private static final long serialVersionUID = 0L;
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + ROOM_FIELD_NUMBER;
-    hash = (53 * hash) + getRoom().hashCode();
-    hash = (37 * hash) + LOCALOCCUPANCY_FIELD_NUMBER;
-    hash = (53 * hash) + getLocalOccupancy();
+    if (hasOccupancy()) {
+      hash = (37 * hash) + OCCUPANCY_FIELD_NUMBER;
+      hash = (53 * hash) + getOccupancy().hashCode();
+    }
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -334,10 +307,12 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public Builder clear() {
       super.clear();
-      room_ = "";
-
-      localOccupancy_ = 0;
-
+      if (occupancyBuilder_ == null) {
+        occupancy_ = null;
+      } else {
+        occupancy_ = null;
+        occupancyBuilder_ = null;
+      }
       return this;
     }
 
@@ -364,8 +339,11 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public grpc.services.occupancy.OccupancyResponse buildPartial() {
       grpc.services.occupancy.OccupancyResponse result = new grpc.services.occupancy.OccupancyResponse(this);
-      result.room_ = room_;
-      result.localOccupancy_ = localOccupancy_;
+      if (occupancyBuilder_ == null) {
+        result.occupancy_ = occupancy_;
+      } else {
+        result.occupancy_ = occupancyBuilder_.build();
+      }
       onBuilt();
       return result;
     }
@@ -414,12 +392,8 @@ private static final long serialVersionUID = 0L;
 
     public Builder mergeFrom(grpc.services.occupancy.OccupancyResponse other) {
       if (other == grpc.services.occupancy.OccupancyResponse.getDefaultInstance()) return this;
-      if (!other.getRoom().isEmpty()) {
-        room_ = other.room_;
-        onChanged();
-      }
-      if (other.getLocalOccupancy() != 0) {
-        setLocalOccupancy(other.getLocalOccupancy());
+      if (other.hasOccupancy()) {
+        mergeOccupancy(other.getOccupancy());
       }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
@@ -450,99 +424,121 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object room_ = "";
+    private grpc.services.occupancy.Occupancy occupancy_ = null;
+    private com.google.protobuf.SingleFieldBuilderV3<
+        grpc.services.occupancy.Occupancy, grpc.services.occupancy.Occupancy.Builder, grpc.services.occupancy.OccupancyOrBuilder> occupancyBuilder_;
     /**
-     * <code>string room = 1;</code>
+     * <code>.occupancy.Occupancy occupancy = 2;</code>
      */
-    public java.lang.String getRoom() {
-      java.lang.Object ref = room_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs =
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        room_ = s;
-        return s;
+    public boolean hasOccupancy() {
+      return occupancyBuilder_ != null || occupancy_ != null;
+    }
+    /**
+     * <code>.occupancy.Occupancy occupancy = 2;</code>
+     */
+    public grpc.services.occupancy.Occupancy getOccupancy() {
+      if (occupancyBuilder_ == null) {
+        return occupancy_ == null ? grpc.services.occupancy.Occupancy.getDefaultInstance() : occupancy_;
       } else {
-        return (java.lang.String) ref;
+        return occupancyBuilder_.getMessage();
       }
     }
     /**
-     * <code>string room = 1;</code>
+     * <code>.occupancy.Occupancy occupancy = 2;</code>
      */
-    public com.google.protobuf.ByteString
-        getRoomBytes() {
-      java.lang.Object ref = room_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        room_ = b;
-        return b;
+    public Builder setOccupancy(grpc.services.occupancy.Occupancy value) {
+      if (occupancyBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        occupancy_ = value;
+        onChanged();
       } else {
-        return (com.google.protobuf.ByteString) ref;
+        occupancyBuilder_.setMessage(value);
       }
-    }
-    /**
-     * <code>string room = 1;</code>
-     */
-    public Builder setRoom(
-        java.lang.String value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  
-      room_ = value;
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>string room = 1;</code>
-     */
-    public Builder clearRoom() {
-      
-      room_ = getDefaultInstance().getRoom();
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>string room = 1;</code>
-     */
-    public Builder setRoomBytes(
-        com.google.protobuf.ByteString value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-      
-      room_ = value;
-      onChanged();
-      return this;
-    }
 
-    private int localOccupancy_ ;
-    /**
-     * <code>int32 localOccupancy = 2;</code>
-     */
-    public int getLocalOccupancy() {
-      return localOccupancy_;
-    }
-    /**
-     * <code>int32 localOccupancy = 2;</code>
-     */
-    public Builder setLocalOccupancy(int value) {
-      
-      localOccupancy_ = value;
-      onChanged();
       return this;
     }
     /**
-     * <code>int32 localOccupancy = 2;</code>
+     * <code>.occupancy.Occupancy occupancy = 2;</code>
      */
-    public Builder clearLocalOccupancy() {
-      
-      localOccupancy_ = 0;
-      onChanged();
+    public Builder setOccupancy(
+        grpc.services.occupancy.Occupancy.Builder builderForValue) {
+      if (occupancyBuilder_ == null) {
+        occupancy_ = builderForValue.build();
+        onChanged();
+      } else {
+        occupancyBuilder_.setMessage(builderForValue.build());
+      }
+
       return this;
+    }
+    /**
+     * <code>.occupancy.Occupancy occupancy = 2;</code>
+     */
+    public Builder mergeOccupancy(grpc.services.occupancy.Occupancy value) {
+      if (occupancyBuilder_ == null) {
+        if (occupancy_ != null) {
+          occupancy_ =
+            grpc.services.occupancy.Occupancy.newBuilder(occupancy_).mergeFrom(value).buildPartial();
+        } else {
+          occupancy_ = value;
+        }
+        onChanged();
+      } else {
+        occupancyBuilder_.mergeFrom(value);
+      }
+
+      return this;
+    }
+    /**
+     * <code>.occupancy.Occupancy occupancy = 2;</code>
+     */
+    public Builder clearOccupancy() {
+      if (occupancyBuilder_ == null) {
+        occupancy_ = null;
+        onChanged();
+      } else {
+        occupancy_ = null;
+        occupancyBuilder_ = null;
+      }
+
+      return this;
+    }
+    /**
+     * <code>.occupancy.Occupancy occupancy = 2;</code>
+     */
+    public grpc.services.occupancy.Occupancy.Builder getOccupancyBuilder() {
+      
+      onChanged();
+      return getOccupancyFieldBuilder().getBuilder();
+    }
+    /**
+     * <code>.occupancy.Occupancy occupancy = 2;</code>
+     */
+    public grpc.services.occupancy.OccupancyOrBuilder getOccupancyOrBuilder() {
+      if (occupancyBuilder_ != null) {
+        return occupancyBuilder_.getMessageOrBuilder();
+      } else {
+        return occupancy_ == null ?
+            grpc.services.occupancy.Occupancy.getDefaultInstance() : occupancy_;
+      }
+    }
+    /**
+     * <code>.occupancy.Occupancy occupancy = 2;</code>
+     */
+    private com.google.protobuf.SingleFieldBuilderV3<
+        grpc.services.occupancy.Occupancy, grpc.services.occupancy.Occupancy.Builder, grpc.services.occupancy.OccupancyOrBuilder> 
+        getOccupancyFieldBuilder() {
+      if (occupancyBuilder_ == null) {
+        occupancyBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+            grpc.services.occupancy.Occupancy, grpc.services.occupancy.Occupancy.Builder, grpc.services.occupancy.OccupancyOrBuilder>(
+                getOccupancy(),
+                getParentForChildren(),
+                isClean());
+        occupancy_ = null;
+      }
+      return occupancyBuilder_;
     }
     @java.lang.Override
     public final Builder setUnknownFields(
