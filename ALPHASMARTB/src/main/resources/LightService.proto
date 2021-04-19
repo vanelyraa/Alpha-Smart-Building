@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "grpc.services.light";
+option java_outer_classname = "LightServiceImpl";
+
+package Light;
+
+service LightService {
+
+	rpc lighting (Empty) returns (LightingResponse) {};//unary RPC 
+
+	rpc LightsOnOff (LightsRequest) returns (LightsResponse) {};//unary RPC 
+	
+	rpc lightIntensity (stream IntensityRequest) returns (IntensityResponse) {};//client stream RPC missing
+}
+
+message LightingResponse{
+	string lightId = 1;
+	string status = 2;
+	int32 intensity = 3;
+}
+
+message LightsRequest {
+	bool switch = 1;
+}
+
+message LightsResponse {
+	bool switch = 1;
+}
+
+message IntensityResponse {
+	int32 intensity = 1;
+}
+
+message IntensityRequest {
+	int32 intensity = 1;
+}
+
+message Empty {
+}
