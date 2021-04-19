@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "grpc.services.utility";
+option java_outer_classname = "UtilityServiceImpl";
+
+package Utility;
+
+service UtilityService {
+
+	rpc switchDevices (DevicesRequest) returns (DevicesResponse) {}; //unary RPC 
+
+	rpc switchCameraOn (CameraRequest) returns (CameraResponse) {};//unary RPC 
+	
+	rpc printList(stream PrinterRequest) returns (stream PrinterResponse) {}; //bidirectional RPC missing
+}
+
+message DevicesRequest {
+	bool devices = 1;
+}
+
+message DevicesResponse {
+	bool devices = 1;
+}
+
+message CameraRequest {
+	bool camera = 1;
+}
+
+message CameraResponse {
+	bool camera = 1;
+}
+
+message PrinterRequest {
+    string pList = 1;
+}
+
+message PrinterResponse {
+    string pList = 1;
+}
