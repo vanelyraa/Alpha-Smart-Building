@@ -8,17 +8,15 @@ public interface OccupancyResponseOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>string room = 1;</code>
+   * <code>.occupancy.Occupancy occupancy = 2;</code>
    */
-  java.lang.String getRoom();
+  boolean hasOccupancy();
   /**
-   * <code>string room = 1;</code>
+   * <code>.occupancy.Occupancy occupancy = 2;</code>
    */
-  com.google.protobuf.ByteString
-      getRoomBytes();
-
+  grpc.services.occupancy.Occupancy getOccupancy();
   /**
-   * <code>int32 localOccupancy = 2;</code>
+   * <code>.occupancy.Occupancy occupancy = 2;</code>
    */
-  int getLocalOccupancy();
+  grpc.services.occupancy.OccupancyOrBuilder getOccupancyOrBuilder();
 }
