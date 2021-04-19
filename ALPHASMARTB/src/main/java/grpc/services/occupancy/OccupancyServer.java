@@ -1,6 +1,14 @@
 package grpc.services.occupancy;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import grpc.services.climate.CoLevels;
+import grpc.services.climate.ExtractionResponse;
 import grpc.services.occupancy.OccupancyServiceGrpc.OccupancyServiceImplBase;
+import io.grpc.Server;
+import io.grpc.ServerBuilder;
 import io.grpc.stub.StreamObserver;
 
 public class OccupancyServer extends OccupancyServiceImplBase  {
@@ -32,35 +40,21 @@ public static void main(String[] args) {
 	}//main
 	
 	private List<ListResponse> listResponse;
+	
 
 
 	@Override
 	public void getOccupancy(LocalRequest request, StreamObserver<OccupancyResponse> responseObserver) {
-		ListResponse inTheRoom = ListResponse.newBuilder().setRoom("Conference").setLocalOccupancy(4).build();
-		ListResponse inTheRoom2 = ListResponse.newBuilder().setRoom("Auditorium").setLocalOccupancy(10).build();
-		ListResponse inTheRoom3 = ListResponse.newBuilder().setRoom("Office 1").setLocalOccupancy(3).build();
-		ListResponse inTheRoom4 = ListResponse.newBuilder().setRoom("Office 2").setLocalOccupancy(2).build();
-		
-		
-		listResponse.add(inTheRoom);
-		listResponse.add(inTheRoom2);
-		listResponse.add(inTheRoom3);
-		listResponse.add(inTheRoom4);
-				
-		for (ListResponse Person : listResponse) {
-			if (Person.getDay().equals(request.getDay())){ //((DayOrBuilder) request).getDay()))
-				continue;
-			}
-			String day = Person.getDay();
-			String list = Person.getList();
-			
-			responseObserver.onNext(Person);
-			
-			System.out.println(Person);
+		for (grpc.services.occupancy.Occupancy occupancy : Occupancys.getInstance()) {
+	        if (occupancy.getRoom() == request.getRoom()) {
+	        	OccupancyResponse response = OccupancyResponse.newBuilder().setOccupancy(occupancy).build();
+	        	responseObserver.onNext(response);
+	        	responseObserver.onCompleted();
+	            return;
+	        }
 		}
-		responseObserver.onCompleted();
-
 	}
+	
 
 	@Override
 	public void switchCameraOn(CameraSwitchRequest request, StreamObserver<CameraResponse> responseObserver) {
@@ -84,6 +78,7 @@ System.out.println("Sensor captured motion in room");
 
 	@Override
 	public StreamObserver<FindListDay> getVisitList(StreamObserver<ListResponse> responseObserver) {
+		listResponse = new ArrayList<ListResponse>();
 		ListResponse visitor1 = ListResponse.newBuilder().setDay("Monday").setList("Yan Connor").build();
 		ListResponse visitor2 = ListResponse.newBuilder().setDay("Tuesday").setList("Ben Harper").build();
 		ListResponse visitor3 = ListResponse.newBuilder().setDay("Wednesday").setList("Kristian Coton").build();
@@ -96,8 +91,8 @@ System.out.println("Sensor captured motion in room");
 		listResponse.add(visitor4);
 		listResponse.add(visitor5);
 		
-		for (ListResponse Person : listResponse) {
-			if (Person.getDay().equals(request.getDay())){ //((DayOrBuilder) request).getDay()))
+		for (ListResponse person : listResponse) {
+			if (person.getDay() == request.getDay()){ //
 				continue;
 			}
 			String day = Person.getDay();
@@ -109,7 +104,7 @@ System.out.println("Sensor captured motion in room");
 		}
 		responseObserver.onCompleted();
 
-		return super.getVisitList(responseObserver);
+		//return super.getVisitList(responseObserver);
 	}
 
 	
