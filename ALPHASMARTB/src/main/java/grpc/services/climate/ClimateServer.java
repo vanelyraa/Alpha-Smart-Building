@@ -1,7 +1,6 @@
 package grpc.services.climate;
 
 import java.io.IOException;
-
 import grpc.services.climate.ClimateServiceGrpc.ClimateServiceImplBase;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
@@ -18,9 +17,9 @@ public class ClimateServer extends ClimateServiceImplBase  {
 
 		try {
 			Server server = ServerBuilder.forPort(port)
-					.addService(climateserver)
-					.build()
-					.start();
+				.addService(climateserver)
+				.build()
+				.start();
 
 			System.out.println("Server started with Port:" + server.getPort());
 		    server.awaitTermination();
@@ -71,7 +70,7 @@ public class ClimateServer extends ClimateServiceImplBase  {
 	@Override
 	public void checkCO(CoLevelRequest request, StreamObserver<ExtractionResponse> responseObserver) {
 
-System.out.println("Checking CO levels in the office!");
+		System.out.println("Checking CO levels in the office!");
 		
 		int CoLv = request.getLevel();
        
