@@ -4,11 +4,11 @@
 package grpc.services.climate;
 
 /**
- * Protobuf type {@code climate.ExtractionResponse}
+ * Protobuf type {@code Climate.ExtractionResponse}
  */
 public  final class ExtractionResponse extends
     com.google.protobuf.GeneratedMessageV3 implements
-    // @@protoc_insertion_point(message_implements:climate.ExtractionResponse)
+    // @@protoc_insertion_point(message_implements:Climate.ExtractionResponse)
     ExtractionResponseOrBuilder {
 private static final long serialVersionUID = 0L;
   // Use ExtractionResponse.newBuilder() to construct.
@@ -16,6 +16,7 @@ private static final long serialVersionUID = 0L;
     super(builder);
   }
   private ExtractionResponse() {
+    level_ = 0;
   }
 
   @java.lang.Override
@@ -42,17 +43,9 @@ private static final long serialVersionUID = 0L;
           case 0:
             done = true;
             break;
-          case 10: {
-            grpc.services.climate.CoLevel.Builder subBuilder = null;
-            if (coLevel_ != null) {
-              subBuilder = coLevel_.toBuilder();
-            }
-            coLevel_ = input.readMessage(grpc.services.climate.CoLevel.parser(), extensionRegistry);
-            if (subBuilder != null) {
-              subBuilder.mergeFrom(coLevel_);
-              coLevel_ = subBuilder.buildPartial();
-            }
+          case 8: {
 
+            level_ = input.readInt32();
             break;
           }
           default: {
@@ -76,36 +69,24 @@ private static final long serialVersionUID = 0L;
   }
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
-    return grpc.services.climate.ClimateServiceImpl.internal_static_climate_ExtractionResponse_descriptor;
+    return grpc.services.climate.ClimateServiceImpl.internal_static_Climate_ExtractionResponse_descriptor;
   }
 
   @java.lang.Override
   protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internalGetFieldAccessorTable() {
-    return grpc.services.climate.ClimateServiceImpl.internal_static_climate_ExtractionResponse_fieldAccessorTable
+    return grpc.services.climate.ClimateServiceImpl.internal_static_Climate_ExtractionResponse_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
             grpc.services.climate.ExtractionResponse.class, grpc.services.climate.ExtractionResponse.Builder.class);
   }
 
-  public static final int COLEVEL_FIELD_NUMBER = 1;
-  private grpc.services.climate.CoLevel coLevel_;
+  public static final int LEVEL_FIELD_NUMBER = 1;
+  private int level_;
   /**
-   * <code>.climate.CoLevel coLevel = 1;</code>
+   * <code>int32 level = 1;</code>
    */
-  public boolean hasCoLevel() {
-    return coLevel_ != null;
-  }
-  /**
-   * <code>.climate.CoLevel coLevel = 1;</code>
-   */
-  public grpc.services.climate.CoLevel getCoLevel() {
-    return coLevel_ == null ? grpc.services.climate.CoLevel.getDefaultInstance() : coLevel_;
-  }
-  /**
-   * <code>.climate.CoLevel coLevel = 1;</code>
-   */
-  public grpc.services.climate.CoLevelOrBuilder getCoLevelOrBuilder() {
-    return getCoLevel();
+  public int getLevel() {
+    return level_;
   }
 
   private byte memoizedIsInitialized = -1;
@@ -122,8 +103,8 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
-    if (coLevel_ != null) {
-      output.writeMessage(1, getCoLevel());
+    if (level_ != 0) {
+      output.writeInt32(1, level_);
     }
     unknownFields.writeTo(output);
   }
@@ -134,9 +115,9 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
-    if (coLevel_ != null) {
+    if (level_ != 0) {
       size += com.google.protobuf.CodedOutputStream
-        .computeMessageSize(1, getCoLevel());
+        .computeInt32Size(1, level_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -154,11 +135,8 @@ private static final long serialVersionUID = 0L;
     grpc.services.climate.ExtractionResponse other = (grpc.services.climate.ExtractionResponse) obj;
 
     boolean result = true;
-    result = result && (hasCoLevel() == other.hasCoLevel());
-    if (hasCoLevel()) {
-      result = result && getCoLevel()
-          .equals(other.getCoLevel());
-    }
+    result = result && (getLevel()
+        == other.getLevel());
     result = result && unknownFields.equals(other.unknownFields);
     return result;
   }
@@ -170,10 +148,8 @@ private static final long serialVersionUID = 0L;
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
-    if (hasCoLevel()) {
-      hash = (37 * hash) + COLEVEL_FIELD_NUMBER;
-      hash = (53 * hash) + getCoLevel().hashCode();
-    }
+    hash = (37 * hash) + LEVEL_FIELD_NUMBER;
+    hash = (53 * hash) + getLevel();
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -270,21 +246,21 @@ private static final long serialVersionUID = 0L;
     return builder;
   }
   /**
-   * Protobuf type {@code climate.ExtractionResponse}
+   * Protobuf type {@code Climate.ExtractionResponse}
    */
   public static final class Builder extends
       com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-      // @@protoc_insertion_point(builder_implements:climate.ExtractionResponse)
+      // @@protoc_insertion_point(builder_implements:Climate.ExtractionResponse)
       grpc.services.climate.ExtractionResponseOrBuilder {
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return grpc.services.climate.ClimateServiceImpl.internal_static_climate_ExtractionResponse_descriptor;
+      return grpc.services.climate.ClimateServiceImpl.internal_static_Climate_ExtractionResponse_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return grpc.services.climate.ClimateServiceImpl.internal_static_climate_ExtractionResponse_fieldAccessorTable
+      return grpc.services.climate.ClimateServiceImpl.internal_static_Climate_ExtractionResponse_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               grpc.services.climate.ExtractionResponse.class, grpc.services.climate.ExtractionResponse.Builder.class);
     }
@@ -307,19 +283,15 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public Builder clear() {
       super.clear();
-      if (coLevelBuilder_ == null) {
-        coLevel_ = null;
-      } else {
-        coLevel_ = null;
-        coLevelBuilder_ = null;
-      }
+      level_ = 0;
+
       return this;
     }
 
     @java.lang.Override
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
-      return grpc.services.climate.ClimateServiceImpl.internal_static_climate_ExtractionResponse_descriptor;
+      return grpc.services.climate.ClimateServiceImpl.internal_static_Climate_ExtractionResponse_descriptor;
     }
 
     @java.lang.Override
@@ -339,11 +311,7 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public grpc.services.climate.ExtractionResponse buildPartial() {
       grpc.services.climate.ExtractionResponse result = new grpc.services.climate.ExtractionResponse(this);
-      if (coLevelBuilder_ == null) {
-        result.coLevel_ = coLevel_;
-      } else {
-        result.coLevel_ = coLevelBuilder_.build();
-      }
+      result.level_ = level_;
       onBuilt();
       return result;
     }
@@ -392,8 +360,8 @@ private static final long serialVersionUID = 0L;
 
     public Builder mergeFrom(grpc.services.climate.ExtractionResponse other) {
       if (other == grpc.services.climate.ExtractionResponse.getDefaultInstance()) return this;
-      if (other.hasCoLevel()) {
-        mergeCoLevel(other.getCoLevel());
+      if (other.getLevel() != 0) {
+        setLevel(other.getLevel());
       }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
@@ -424,121 +392,30 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private grpc.services.climate.CoLevel coLevel_ = null;
-    private com.google.protobuf.SingleFieldBuilderV3<
-        grpc.services.climate.CoLevel, grpc.services.climate.CoLevel.Builder, grpc.services.climate.CoLevelOrBuilder> coLevelBuilder_;
+    private int level_ ;
     /**
-     * <code>.climate.CoLevel coLevel = 1;</code>
+     * <code>int32 level = 1;</code>
      */
-    public boolean hasCoLevel() {
-      return coLevelBuilder_ != null || coLevel_ != null;
+    public int getLevel() {
+      return level_;
     }
     /**
-     * <code>.climate.CoLevel coLevel = 1;</code>
+     * <code>int32 level = 1;</code>
      */
-    public grpc.services.climate.CoLevel getCoLevel() {
-      if (coLevelBuilder_ == null) {
-        return coLevel_ == null ? grpc.services.climate.CoLevel.getDefaultInstance() : coLevel_;
-      } else {
-        return coLevelBuilder_.getMessage();
-      }
-    }
-    /**
-     * <code>.climate.CoLevel coLevel = 1;</code>
-     */
-    public Builder setCoLevel(grpc.services.climate.CoLevel value) {
-      if (coLevelBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        coLevel_ = value;
-        onChanged();
-      } else {
-        coLevelBuilder_.setMessage(value);
-      }
-
-      return this;
-    }
-    /**
-     * <code>.climate.CoLevel coLevel = 1;</code>
-     */
-    public Builder setCoLevel(
-        grpc.services.climate.CoLevel.Builder builderForValue) {
-      if (coLevelBuilder_ == null) {
-        coLevel_ = builderForValue.build();
-        onChanged();
-      } else {
-        coLevelBuilder_.setMessage(builderForValue.build());
-      }
-
-      return this;
-    }
-    /**
-     * <code>.climate.CoLevel coLevel = 1;</code>
-     */
-    public Builder mergeCoLevel(grpc.services.climate.CoLevel value) {
-      if (coLevelBuilder_ == null) {
-        if (coLevel_ != null) {
-          coLevel_ =
-            grpc.services.climate.CoLevel.newBuilder(coLevel_).mergeFrom(value).buildPartial();
-        } else {
-          coLevel_ = value;
-        }
-        onChanged();
-      } else {
-        coLevelBuilder_.mergeFrom(value);
-      }
-
-      return this;
-    }
-    /**
-     * <code>.climate.CoLevel coLevel = 1;</code>
-     */
-    public Builder clearCoLevel() {
-      if (coLevelBuilder_ == null) {
-        coLevel_ = null;
-        onChanged();
-      } else {
-        coLevel_ = null;
-        coLevelBuilder_ = null;
-      }
-
-      return this;
-    }
-    /**
-     * <code>.climate.CoLevel coLevel = 1;</code>
-     */
-    public grpc.services.climate.CoLevel.Builder getCoLevelBuilder() {
+    public Builder setLevel(int value) {
       
+      level_ = value;
       onChanged();
-      return getCoLevelFieldBuilder().getBuilder();
+      return this;
     }
     /**
-     * <code>.climate.CoLevel coLevel = 1;</code>
+     * <code>int32 level = 1;</code>
      */
-    public grpc.services.climate.CoLevelOrBuilder getCoLevelOrBuilder() {
-      if (coLevelBuilder_ != null) {
-        return coLevelBuilder_.getMessageOrBuilder();
-      } else {
-        return coLevel_ == null ?
-            grpc.services.climate.CoLevel.getDefaultInstance() : coLevel_;
-      }
-    }
-    /**
-     * <code>.climate.CoLevel coLevel = 1;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-        grpc.services.climate.CoLevel, grpc.services.climate.CoLevel.Builder, grpc.services.climate.CoLevelOrBuilder> 
-        getCoLevelFieldBuilder() {
-      if (coLevelBuilder_ == null) {
-        coLevelBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-            grpc.services.climate.CoLevel, grpc.services.climate.CoLevel.Builder, grpc.services.climate.CoLevelOrBuilder>(
-                getCoLevel(),
-                getParentForChildren(),
-                isClean());
-        coLevel_ = null;
-      }
-      return coLevelBuilder_;
+    public Builder clearLevel() {
+      
+      level_ = 0;
+      onChanged();
+      return this;
     }
     @java.lang.Override
     public final Builder setUnknownFields(
@@ -553,10 +430,10 @@ private static final long serialVersionUID = 0L;
     }
 
 
-    // @@protoc_insertion_point(builder_scope:climate.ExtractionResponse)
+    // @@protoc_insertion_point(builder_scope:Climate.ExtractionResponse)
   }
 
-  // @@protoc_insertion_point(class_scope:climate.ExtractionResponse)
+  // @@protoc_insertion_point(class_scope:Climate.ExtractionResponse)
   private static final grpc.services.climate.ExtractionResponse DEFAULT_INSTANCE;
   static {
     DEFAULT_INSTANCE = new grpc.services.climate.ExtractionResponse();
