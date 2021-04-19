@@ -8,21 +8,23 @@ package occupancy;
 
 service OccupancyService {
 
-	rpc getOccupancy(LocalRequest) returns (OccupancyResponse) {}; //unary streaming RPC
+	rpc getOccupancy(LocalRequest) returns (OccupancyResponse) {}; //unary streaming RPC missing
 	
-	rpc switchCameraOn (CameraSwitchRequest) returns (CameraResponse) {};//unary RPC DONE
+	rpc switchCameraOn (CameraSwitchRequest) returns (CameraResponse) {};//unary RPC 
 	
-	rpc getVisitList(stream FindListDay) returns (stream ListResponse) {}; //bidirectional RPC DONE
+	rpc getVisitList(stream FindListDay) returns (stream ListResponse) {}; //bidirectional RPC missing
 }
 
-
+message Occupancy {
+ 	string room = 1;
+ 	int32 localOccupancy = 2;
+}
 message LocalRequest {
  	string room = 1;
 }
   
 message OccupancyResponse {
-	string room = 1;
-	int32 localOccupancy = 2;
+	Occupancy occupancy = 2;
 }
 
 message CameraSwitchRequest {
