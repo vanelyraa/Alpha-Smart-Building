@@ -4,16 +4,11 @@
 package grpc.services.climate;
 
 public interface CoLevelRequestOrBuilder extends
-    // @@protoc_insertion_point(interface_extends:climate.CoLevelRequest)
+    // @@protoc_insertion_point(interface_extends:Climate.CoLevelRequest)
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>string building = 1;</code>
+   * <code>int32 level = 1;</code>
    */
-  java.lang.String getBuilding();
-  /**
-   * <code>string building = 1;</code>
-   */
-  com.google.protobuf.ByteString
-      getBuildingBytes();
+  int getLevel();
 }
