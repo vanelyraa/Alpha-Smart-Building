@@ -8,11 +8,11 @@ package energy;
 
 service EnergyService {
 
-	rpc switchDevices (DevicesOffRequest) returns (DevicesOffResponse) {}; //unary RPC DONE
+	rpc switchDevices (DevicesOffRequest) returns (DevicesOffResponse) {}; //unary RPC 
 
-	rpc switchLightsOn (LightsOnRequest) returns (LightsResponse) {};//unary RPC DONE
+	rpc switchLightsOn (LightsOnRequest) returns (LightsResponse) {};//unary RPC 
 	
-	rpc lightIntensity (stream LightAdjustRequest) returns (LightsResponse) {};//client stream RPC
+	rpc lightIntensity (stream LightAdjustRequest) returns (LightsResponse) {};//client stream RPC missing
 }
 
 message DevicesOffRequest {
