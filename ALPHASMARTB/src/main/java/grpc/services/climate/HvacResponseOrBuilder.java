@@ -4,19 +4,11 @@
 package grpc.services.climate;
 
 public interface HvacResponseOrBuilder extends
-    // @@protoc_insertion_point(interface_extends:climate.HvacResponse)
+    // @@protoc_insertion_point(interface_extends:Climate.HvacResponse)
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>.climate.Hvac hvac = 1;</code>
+   * <code>int32 temp = 1;</code>
    */
-  boolean hasHvac();
-  /**
-   * <code>.climate.Hvac hvac = 1;</code>
-   */
-  grpc.services.climate.Hvac getHvac();
-  /**
-   * <code>.climate.Hvac hvac = 1;</code>
-   */
-  grpc.services.climate.HvacOrBuilder getHvacOrBuilder();
+  int getTemp();
 }
