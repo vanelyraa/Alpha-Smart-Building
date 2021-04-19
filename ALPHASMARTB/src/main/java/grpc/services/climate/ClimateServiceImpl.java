@@ -15,40 +15,35 @@ public final class ClimateServiceImpl {
         (com.google.protobuf.ExtensionRegistryLite) registry);
   }
   static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_climate_Hvac_descriptor;
+    internal_static_Climate_SwitchRequest_descriptor;
   static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_climate_Hvac_fieldAccessorTable;
+      internal_static_Climate_SwitchRequest_fieldAccessorTable;
   static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_climate_HvacStatusRequest_descriptor;
+    internal_static_Climate_SwitchResponse_descriptor;
   static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_climate_HvacStatusRequest_fieldAccessorTable;
+      internal_static_Climate_SwitchResponse_fieldAccessorTable;
   static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_climate_TempRequest_descriptor;
+    internal_static_Climate_HvacRequest_descriptor;
   static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_climate_TempRequest_fieldAccessorTable;
+      internal_static_Climate_HvacRequest_fieldAccessorTable;
   static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_climate_HvacResponse_descriptor;
+    internal_static_Climate_HvacResponse_descriptor;
   static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_climate_HvacResponse_fieldAccessorTable;
+      internal_static_Climate_HvacResponse_fieldAccessorTable;
   static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_climate_CoLevel_descriptor;
+    internal_static_Climate_CoLevelRequest_descriptor;
   static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_climate_CoLevel_fieldAccessorTable;
+      internal_static_Climate_CoLevelRequest_fieldAccessorTable;
   static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_climate_CoLevelRequest_descriptor;
+    internal_static_Climate_ExtractionResponse_descriptor;
   static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_climate_CoLevelRequest_fieldAccessorTable;
-  static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_climate_ExtractionResponse_descriptor;
-  static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_climate_ExtractionResponse_fieldAccessorTable;
+      internal_static_Climate_ExtractionResponse_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -58,22 +53,19 @@ public final class ClimateServiceImpl {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\024ClimateService.proto\022\007climate\";\n\004Hvac\022" +
-      "\016\n\006HvacId\030\001 \001(\005\022\016\n\006status\030\002 \001(\t\022\023\n\013tempe" +
-      "rature\030\003 \001(\005\"#\n\021HvacStatusRequest\022\016\n\006Hva" +
-      "cId\030\001 \001(\005\"2\n\013TempRequest\022\016\n\006HvacId\030\001 \001(\005" +
-      "\022\023\n\013temperature\030\002 \001(\005\"+\n\014HvacResponse\022\033\n" +
-      "\004hvac\030\001 \001(\0132\r.climate.Hvac\"*\n\007CoLevel\022\020\n" +
-      "\010building\030\001 \001(\t\022\r\n\005CoNow\030\002 \001(\005\"\"\n\016CoLeve" +
-      "lRequest\022\020\n\010building\030\001 \001(\t\"7\n\022Extraction" +
-      "Response\022!\n\007coLevel\030\001 \001(\0132\020.climate.CoLe" +
-      "vel2\332\001\n\016ClimateService\022E\n\016showHvacStatus" +
-      "\022\032.climate.HvacStatusRequest\032\025.climate.H" +
-      "vacResponse\"\000\022>\n\013setHvacTemp\022\024.climate.T" +
-      "empRequest\032\025.climate.HvacResponse\"\0000\001\022A\n" +
-      "\007checkCO\022\027.climate.CoLevelRequest\032\033.clim" +
-      "ate.ExtractionResponse\"\000B-\n\025grpc.service" +
-      "s.climateB\022ClimateServiceImplP\001b\006proto3"
+      "\n\024ClimateService.proto\022\007Climate\"\036\n\rSwitc" +
+      "hRequest\022\r\n\005power\030\001 \001(\010\"\037\n\016SwitchRespons" +
+      "e\022\r\n\005power\030\001 \001(\010\"\033\n\013HvacRequest\022\014\n\004temp\030" +
+      "\001 \001(\005\"\034\n\014HvacResponse\022\014\n\004temp\030\001 \001(\005\"\037\n\016C" +
+      "oLevelRequest\022\r\n\005level\030\001 \001(\005\"#\n\022Extracti" +
+      "onResponse\022\r\n\005level\030\001 \001(\0052\327\001\n\016ClimateSer" +
+      "vice\022>\n\tHvacOnOff\022\026.Climate.SwitchReques" +
+      "t\032\027.Climate.SwitchResponse\"\000\022B\n\017HvacTemp" +
+      "erature\022\024.Climate.HvacRequest\032\025.Climate." +
+      "HvacResponse\"\0000\001\022A\n\007checkCO\022\027.Climate.Co" +
+      "LevelRequest\032\033.Climate.ExtractionRespons" +
+      "e\"\000B-\n\025grpc.services.climateB\022ClimateSer" +
+      "viceImplP\001b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -87,48 +79,42 @@ public final class ClimateServiceImpl {
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
         }, assigner);
-    internal_static_climate_Hvac_descriptor =
+    internal_static_Climate_SwitchRequest_descriptor =
       getDescriptor().getMessageTypes().get(0);
-    internal_static_climate_Hvac_fieldAccessorTable = new
+    internal_static_Climate_SwitchRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_climate_Hvac_descriptor,
-        new java.lang.String[] { "HvacId", "Status", "Temperature", });
-    internal_static_climate_HvacStatusRequest_descriptor =
+        internal_static_Climate_SwitchRequest_descriptor,
+        new java.lang.String[] { "Power", });
+    internal_static_Climate_SwitchResponse_descriptor =
       getDescriptor().getMessageTypes().get(1);
-    internal_static_climate_HvacStatusRequest_fieldAccessorTable = new
+    internal_static_Climate_SwitchResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_climate_HvacStatusRequest_descriptor,
-        new java.lang.String[] { "HvacId", });
-    internal_static_climate_TempRequest_descriptor =
+        internal_static_Climate_SwitchResponse_descriptor,
+        new java.lang.String[] { "Power", });
+    internal_static_Climate_HvacRequest_descriptor =
       getDescriptor().getMessageTypes().get(2);
-    internal_static_climate_TempRequest_fieldAccessorTable = new
+    internal_static_Climate_HvacRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_climate_TempRequest_descriptor,
-        new java.lang.String[] { "HvacId", "Temperature", });
-    internal_static_climate_HvacResponse_descriptor =
+        internal_static_Climate_HvacRequest_descriptor,
+        new java.lang.String[] { "Temp", });
+    internal_static_Climate_HvacResponse_descriptor =
       getDescriptor().getMessageTypes().get(3);
-    internal_static_climate_HvacResponse_fieldAccessorTable = new
+    internal_static_Climate_HvacResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_climate_HvacResponse_descriptor,
-        new java.lang.String[] { "Hvac", });
-    internal_static_climate_CoLevel_descriptor =
+        internal_static_Climate_HvacResponse_descriptor,
+        new java.lang.String[] { "Temp", });
+    internal_static_Climate_CoLevelRequest_descriptor =
       getDescriptor().getMessageTypes().get(4);
-    internal_static_climate_CoLevel_fieldAccessorTable = new
+    internal_static_Climate_CoLevelRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_climate_CoLevel_descriptor,
-        new java.lang.String[] { "Building", "CoNow", });
-    internal_static_climate_CoLevelRequest_descriptor =
+        internal_static_Climate_CoLevelRequest_descriptor,
+        new java.lang.String[] { "Level", });
+    internal_static_Climate_ExtractionResponse_descriptor =
       getDescriptor().getMessageTypes().get(5);
-    internal_static_climate_CoLevelRequest_fieldAccessorTable = new
+    internal_static_Climate_ExtractionResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_climate_CoLevelRequest_descriptor,
-        new java.lang.String[] { "Building", });
-    internal_static_climate_ExtractionResponse_descriptor =
-      getDescriptor().getMessageTypes().get(6);
-    internal_static_climate_ExtractionResponse_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_climate_ExtractionResponse_descriptor,
-        new java.lang.String[] { "CoLevel", });
+        internal_static_Climate_ExtractionResponse_descriptor,
+        new java.lang.String[] { "Level", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)
