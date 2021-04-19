@@ -4,19 +4,11 @@
 package grpc.services.climate;
 
 public interface ExtractionResponseOrBuilder extends
-    // @@protoc_insertion_point(interface_extends:climate.ExtractionResponse)
+    // @@protoc_insertion_point(interface_extends:Climate.ExtractionResponse)
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>.climate.CoLevel coLevel = 1;</code>
+   * <code>int32 level = 1;</code>
    */
-  boolean hasCoLevel();
-  /**
-   * <code>.climate.CoLevel coLevel = 1;</code>
-   */
-  grpc.services.climate.CoLevel getCoLevel();
-  /**
-   * <code>.climate.CoLevel coLevel = 1;</code>
-   */
-  grpc.services.climate.CoLevelOrBuilder getCoLevelOrBuilder();
+  int getLevel();
 }
