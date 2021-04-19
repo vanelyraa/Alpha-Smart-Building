@@ -5,7 +5,6 @@ import grpc.services.light.LightServiceGrpc.LightServiceImplBase;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import io.grpc.stub.StreamObserver;
-import grpc.services.light.LightingResponse;
 
 public class LightServer extends LightServiceImplBase {
 	
@@ -20,9 +19,9 @@ public class LightServer extends LightServiceImplBase {
 
 		try {
 			Server server = ServerBuilder.forPort(port)
-					.addService(lightserver)
-					.build()
-					.start();
+				.addService(lightserver)
+				.build()
+				.start();
 
 			System.out.println("Server started with Port:" + server.getPort());
 		    server.awaitTermination();
@@ -48,8 +47,8 @@ public class LightServer extends LightServiceImplBase {
 		}
 		else {
 			  status ="Off";
-
 		}
+		
 		String lId = myLightdata.gettypeId();
 		String lStatus = status;
 		Integer lIntensity = myLightdata.getIntensity();
@@ -65,6 +64,7 @@ public class LightServer extends LightServiceImplBase {
 	public void lightsOnOff(LightsRequest request, StreamObserver<LightsResponse> responseObserver) {
 		
 		System.out.println("Request received to turn On/Off Lights");
+		
 		Boolean OnOffL = request.getSwitch();
 		myLightdata.setOn(OnOffL);
 		
@@ -85,7 +85,6 @@ public class LightServer extends LightServiceImplBase {
 				// Print the request when received
 				intensity = value.getIntensity();
 				System.out.println("Lights intensity changed to -> " + intensity);
-				
 			}
 			
 			public void onError(Throwable t) {
@@ -100,7 +99,4 @@ public class LightServer extends LightServiceImplBase {
 			}
 		};
 	}
-
-	
-	
 }
