@@ -4,11 +4,11 @@
 package grpc.services.climate;
 
 /**
- * Protobuf type {@code climate.CoLevelRequest}
+ * Protobuf type {@code Climate.CoLevelRequest}
  */
 public  final class CoLevelRequest extends
     com.google.protobuf.GeneratedMessageV3 implements
-    // @@protoc_insertion_point(message_implements:climate.CoLevelRequest)
+    // @@protoc_insertion_point(message_implements:Climate.CoLevelRequest)
     CoLevelRequestOrBuilder {
 private static final long serialVersionUID = 0L;
   // Use CoLevelRequest.newBuilder() to construct.
@@ -16,7 +16,7 @@ private static final long serialVersionUID = 0L;
     super(builder);
   }
   private CoLevelRequest() {
-    building_ = "";
+    level_ = 0;
   }
 
   @java.lang.Override
@@ -43,10 +43,9 @@ private static final long serialVersionUID = 0L;
           case 0:
             done = true;
             break;
-          case 10: {
-            java.lang.String s = input.readStringRequireUtf8();
+          case 8: {
 
-            building_ = s;
+            level_ = input.readInt32();
             break;
           }
           default: {
@@ -70,49 +69,24 @@ private static final long serialVersionUID = 0L;
   }
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
-    return grpc.services.climate.ClimateServiceImpl.internal_static_climate_CoLevelRequest_descriptor;
+    return grpc.services.climate.ClimateServiceImpl.internal_static_Climate_CoLevelRequest_descriptor;
   }
 
   @java.lang.Override
   protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internalGetFieldAccessorTable() {
-    return grpc.services.climate.ClimateServiceImpl.internal_static_climate_CoLevelRequest_fieldAccessorTable
+    return grpc.services.climate.ClimateServiceImpl.internal_static_Climate_CoLevelRequest_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
             grpc.services.climate.CoLevelRequest.class, grpc.services.climate.CoLevelRequest.Builder.class);
   }
 
-  public static final int BUILDING_FIELD_NUMBER = 1;
-  private volatile java.lang.Object building_;
+  public static final int LEVEL_FIELD_NUMBER = 1;
+  private int level_;
   /**
-   * <code>string building = 1;</code>
+   * <code>int32 level = 1;</code>
    */
-  public java.lang.String getBuilding() {
-    java.lang.Object ref = building_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = 
-          (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      building_ = s;
-      return s;
-    }
-  }
-  /**
-   * <code>string building = 1;</code>
-   */
-  public com.google.protobuf.ByteString
-      getBuildingBytes() {
-    java.lang.Object ref = building_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b = 
-          com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
-      building_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+  public int getLevel() {
+    return level_;
   }
 
   private byte memoizedIsInitialized = -1;
@@ -129,8 +103,8 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
-    if (!getBuildingBytes().isEmpty()) {
-      com.google.protobuf.GeneratedMessageV3.writeString(output, 1, building_);
+    if (level_ != 0) {
+      output.writeInt32(1, level_);
     }
     unknownFields.writeTo(output);
   }
@@ -141,8 +115,9 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
-    if (!getBuildingBytes().isEmpty()) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, building_);
+    if (level_ != 0) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeInt32Size(1, level_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -160,8 +135,8 @@ private static final long serialVersionUID = 0L;
     grpc.services.climate.CoLevelRequest other = (grpc.services.climate.CoLevelRequest) obj;
 
     boolean result = true;
-    result = result && getBuilding()
-        .equals(other.getBuilding());
+    result = result && (getLevel()
+        == other.getLevel());
     result = result && unknownFields.equals(other.unknownFields);
     return result;
   }
@@ -173,8 +148,8 @@ private static final long serialVersionUID = 0L;
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + BUILDING_FIELD_NUMBER;
-    hash = (53 * hash) + getBuilding().hashCode();
+    hash = (37 * hash) + LEVEL_FIELD_NUMBER;
+    hash = (53 * hash) + getLevel();
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -271,21 +246,21 @@ private static final long serialVersionUID = 0L;
     return builder;
   }
   /**
-   * Protobuf type {@code climate.CoLevelRequest}
+   * Protobuf type {@code Climate.CoLevelRequest}
    */
   public static final class Builder extends
       com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-      // @@protoc_insertion_point(builder_implements:climate.CoLevelRequest)
+      // @@protoc_insertion_point(builder_implements:Climate.CoLevelRequest)
       grpc.services.climate.CoLevelRequestOrBuilder {
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return grpc.services.climate.ClimateServiceImpl.internal_static_climate_CoLevelRequest_descriptor;
+      return grpc.services.climate.ClimateServiceImpl.internal_static_Climate_CoLevelRequest_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return grpc.services.climate.ClimateServiceImpl.internal_static_climate_CoLevelRequest_fieldAccessorTable
+      return grpc.services.climate.ClimateServiceImpl.internal_static_Climate_CoLevelRequest_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               grpc.services.climate.CoLevelRequest.class, grpc.services.climate.CoLevelRequest.Builder.class);
     }
@@ -308,7 +283,7 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public Builder clear() {
       super.clear();
-      building_ = "";
+      level_ = 0;
 
       return this;
     }
@@ -316,7 +291,7 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
-      return grpc.services.climate.ClimateServiceImpl.internal_static_climate_CoLevelRequest_descriptor;
+      return grpc.services.climate.ClimateServiceImpl.internal_static_Climate_CoLevelRequest_descriptor;
     }
 
     @java.lang.Override
@@ -336,7 +311,7 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public grpc.services.climate.CoLevelRequest buildPartial() {
       grpc.services.climate.CoLevelRequest result = new grpc.services.climate.CoLevelRequest(this);
-      result.building_ = building_;
+      result.level_ = level_;
       onBuilt();
       return result;
     }
@@ -385,9 +360,8 @@ private static final long serialVersionUID = 0L;
 
     public Builder mergeFrom(grpc.services.climate.CoLevelRequest other) {
       if (other == grpc.services.climate.CoLevelRequest.getDefaultInstance()) return this;
-      if (!other.getBuilding().isEmpty()) {
-        building_ = other.building_;
-        onChanged();
+      if (other.getLevel() != 0) {
+        setLevel(other.getLevel());
       }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
@@ -418,71 +392,28 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object building_ = "";
+    private int level_ ;
     /**
-     * <code>string building = 1;</code>
+     * <code>int32 level = 1;</code>
      */
-    public java.lang.String getBuilding() {
-      java.lang.Object ref = building_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs =
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        building_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
-      }
+    public int getLevel() {
+      return level_;
     }
     /**
-     * <code>string building = 1;</code>
+     * <code>int32 level = 1;</code>
      */
-    public com.google.protobuf.ByteString
-        getBuildingBytes() {
-      java.lang.Object ref = building_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        building_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-    /**
-     * <code>string building = 1;</code>
-     */
-    public Builder setBuilding(
-        java.lang.String value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  
-      building_ = value;
+    public Builder setLevel(int value) {
+      
+      level_ = value;
       onChanged();
       return this;
     }
     /**
-     * <code>string building = 1;</code>
+     * <code>int32 level = 1;</code>
      */
-    public Builder clearBuilding() {
+    public Builder clearLevel() {
       
-      building_ = getDefaultInstance().getBuilding();
-      onChanged();
-      return this;
-    }
-    /**
-     * <code>string building = 1;</code>
-     */
-    public Builder setBuildingBytes(
-        com.google.protobuf.ByteString value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-      
-      building_ = value;
+      level_ = 0;
       onChanged();
       return this;
     }
@@ -499,10 +430,10 @@ private static final long serialVersionUID = 0L;
     }
 
 
-    // @@protoc_insertion_point(builder_scope:climate.CoLevelRequest)
+    // @@protoc_insertion_point(builder_scope:Climate.CoLevelRequest)
   }
 
-  // @@protoc_insertion_point(class_scope:climate.CoLevelRequest)
+  // @@protoc_insertion_point(class_scope:Climate.CoLevelRequest)
   private static final grpc.services.climate.CoLevelRequest DEFAULT_INSTANCE;
   static {
     DEFAULT_INSTANCE = new grpc.services.climate.CoLevelRequest();
