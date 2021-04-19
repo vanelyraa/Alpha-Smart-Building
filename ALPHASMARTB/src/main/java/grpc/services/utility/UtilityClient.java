@@ -1,7 +1,10 @@
 package grpc.services.utility;
 
+import java.util.Random;
+
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
+import io.grpc.stub.StreamObserver;
 
 public class UtilityClient {
 	
@@ -18,49 +21,73 @@ public class UtilityClient {
 		switchDevices();
 		switchCameraOn();
 		printList();
-		
 	}
-		public static void printStatement(){
+	
+	public static void switchDevices(){
+		
+		DevicesRequest request = DevicesRequest.newBuilder().setDevices(false).build();
 
-			StreamObserver<PrintResponse> responseObserver = new StreamObserver<PrintResponse>() {
+		DevicesResponse response = blockingStub.switchDevices(request);
 
-				@Override
-				public void onNext(PrintResponse value) {
-					System.out.println("receiving statement to print -> " + value.getStatement());
-				}
+		if (response.getDevices()) {
+			System.out.println("Devices off!");
+		}
+		else {
+			System.out.println("Devices on!");
+		}
+	}
+		
+	public static void switchCameraOn(){
+		
+		CameraRequest request = CameraRequest.newBuilder().setCamera(false).build();
 
-				@Override
-				public void onError(Throwable t) {
+		CameraResponse response = blockingStub.switchCameraOn(request);
 
-				}
+		if (response.getCamera()) {
+			System.out.println("Motion detected, camera on!");
+		}
+		else {
+			System.out.println("Camera off!");
+		}
+	}
+	
+	public static void printList(){
 
-				@Override
-				public void onCompleted() {
+		StreamObserver<PrinterResponse> responseObserver = new StreamObserver<PrinterResponse>() {
 
-				}
+			@Override
+			public void onNext(PrinterResponse value) {
+				System.out.println("Printing following: " + value.getPList());
+			}
 
-			};
+			@Override
+			public void onError(Throwable t) {
+			}
 
-			StreamObserver<PrintRequest> requestObserver = asyncStub.printStatement(responseObserver);
+			@Override
+			public void onCompleted() {
+			}
+
+		};
+
+		StreamObserver<PrinterRequest> requestObserver = asyncStub.printList(responseObserver);
 			try {
-
-				requestObserver.onNext(PrintRequest.newBuilder().setStatement("Hello").build());
-				requestObserver.onNext(PrintRequest.newBuilder().setStatement("Please").build());
-				requestObserver.onNext(PrintRequest.newBuilder().setStatement("Print").build());
-				requestObserver.onNext(PrintRequest.newBuilder().setStatement("This").build());
-				requestObserver.onNext(PrintRequest.newBuilder().setStatement("Out").build());
+				requestObserver.onNext(PrinterRequest.newBuilder().setPList("Print").build());
+				requestObserver.onNext(PrinterRequest.newBuilder().setPList("These").build());
+				requestObserver.onNext(PrinterRequest.newBuilder().setPList("Files").build());
+				requestObserver.onNext(PrinterRequest.newBuilder().setPList("Please").build());
+				requestObserver.onNext(PrinterRequest.newBuilder().setPList("Thanks").build());
 				
-				Thread.sleep(new Random().nextInt(1000) + 500);
+				Thread.sleep(new Random().nextInt(500) + 1000);
 
 			} catch (RuntimeException e) {
 	            requestObserver.onError(e);
-	            throw e;
-	            } catch (InterruptedException e) {
-
-	                e.printStackTrace();
+	            	throw e;
+	            	
+	        } catch (InterruptedException e) {
+	        	e.printStackTrace();
 	        }
-
 			requestObserver.onCompleted();
-		}
 	}
 }
+
