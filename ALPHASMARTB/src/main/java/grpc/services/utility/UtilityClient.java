@@ -78,7 +78,7 @@ public class UtilityClient {
 				requestObserver.onNext(PrinterRequest.newBuilder().setPList("Please").build());
 				requestObserver.onNext(PrinterRequest.newBuilder().setPList("Thanks").build());
 				
-				Thread.sleep(new Random().nextInt(500) + 1000);
+				Thread.sleep(new Random().nextInt(1000) + 2000);
 
 			} catch (RuntimeException e) {
 	            requestObserver.onError(e);
