@@ -1,6 +1,14 @@
 package grpc.services.utility;
 
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.Random;
+
+import javax.jmdns.JmDNS;
+import javax.jmdns.ServiceEvent;
+import javax.jmdns.ServiceInfo;
+import javax.jmdns.ServiceListener;
 
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
@@ -8,15 +16,50 @@ import io.grpc.stub.StreamObserver;
 
 public class UtilityClient {
 	
-	private static UtilityServiceGrpc.UtilityServiceBlockingStub blockingStub;
-	private static UtilityServiceGrpc.UtilityServiceStub asyncStub;
+	private static UtilityServiceGrpc.UtilityServiceBlockingStub ublockingStub;
+	private static UtilityServiceGrpc.UtilityServiceStub uasyncStub;
+	
+	public static class Listener implements ServiceListener {
+        @Override
+        public void serviceAdded(ServiceEvent serviceEvent) {
+            System.out.println("Service added: " + serviceEvent.getInfo());
+        }
 
-	public static void main(String[] args) {
+        @Override
+        public void serviceRemoved(ServiceEvent serviceEvent) {
+            System.out.println("Service removed: " + serviceEvent.getInfo());
+        }
+
+        @Override
+        public void serviceResolved(ServiceEvent serviceEvent) {
+            System.out.println("Service resolved: " + serviceEvent.getInfo());
+            ServiceInfo info = serviceEvent.getInfo();
+            final int Port = serviceEvent.getInfo().getPort();
+            String address = info.getHostAddresses()[0];
+            //String address = "localhost";
+            
+            
+        }
+
+	public static void main(String[] args) throws Exception {
 		// TODO Auto-generated method stub
-		ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 50051).usePlaintext().build();
+		ManagedChannel utilitychannel = ManagedChannelBuilder.forAddress("localhost", 50051).usePlaintext().build();
 
-		blockingStub = UtilityServiceGrpc.newBlockingStub(channel);
-		asyncStub = UtilityServiceGrpc.newStub(channel);
+		ublockingStub = UtilityServiceGrpc.newBlockingStub(utilitychannel);
+		uasyncStub = UtilityServiceGrpc.newStub(utilitychannel);
+		
+		try {
+			// Create a JmDNS instance
+			JmDNS jmdns = JmDNS.create(InetAddress.getLocalHost());
+
+			// Add a service listener
+			jmdns.addServiceListener("_utility._tcp.local.", new Listener());
+
+		} catch (UnknownHostException e) {
+			System.out.println(e.getMessage());
+		} catch (IOException e) {
+			System.out.println(e.getMessage());
+		}
 
 		switchDevices();
 		switchCameraOn();
@@ -27,7 +70,7 @@ public class UtilityClient {
 		
 		DevicesRequest request = DevicesRequest.newBuilder().setDevices(false).build();
 
-		DevicesResponse response = blockingStub.switchDevices(request);
+		DevicesResponse response = ublockingStub.switchDevices(request);
 
 		if (response.getDevices()) {
 			System.out.println("Devices off!");
@@ -41,7 +84,7 @@ public class UtilityClient {
 		
 		CameraRequest request = CameraRequest.newBuilder().setCamera(false).build();
 
-		CameraResponse response = blockingStub.switchCameraOn(request);
+		CameraResponse response = ublockingStub.switchCameraOn(request);
 
 		if (response.getCamera()) {
 			System.out.println("Motion detected, camera on!");
@@ -70,7 +113,7 @@ public class UtilityClient {
 
 		};
 
-		StreamObserver<PrinterRequest> requestObserver = asyncStub.printList(responseObserver);
+		StreamObserver<PrinterRequest> requestObserver = uasyncStub.printList(responseObserver);
 			try {
 				requestObserver.onNext(PrinterRequest.newBuilder().setPList("Print").build());
 				requestObserver.onNext(PrinterRequest.newBuilder().setPList("These").build());
@@ -89,5 +132,6 @@ public class UtilityClient {
 	        }
 			requestObserver.onCompleted();
 	}
+}
 }
 
