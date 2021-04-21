@@ -1,6 +1,12 @@
 package grpc.services.utility;
 
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
+import javax.jmdns.JmDNS;
+import javax.jmdns.ServiceInfo;
+
 import grpc.services.utility.UtilityServiceGrpc.UtilityServiceImplBase;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
@@ -12,26 +18,29 @@ public class UtilityServer extends UtilityServiceImplBase{
 	public static void main(String[] args) throws IOException, InterruptedException {
 		// TODO Auto-generated method stub
 		System.out.println("Starting gRPC Server");
-		UtilityServer utilityserver = new UtilityServer();
-
-		int port = 50051;
-
+		
 		try {
-			Server server = ServerBuilder.forPort(port)
+			int port = 50051;
+			JmDNS jmdns = JmDNS.create(InetAddress.getLocalHost());
+	        ServiceInfo serviceInfo = ServiceInfo.create("_utility._tcp.local.", "utility", port, "Utility server: devices, camera and printer control");
+	        jmdns.registerService(serviceInfo);
+		
+		UtilityServer utilityserver = new UtilityServer();
+		Server server = ServerBuilder.forPort(port)
 				.addService(utilityserver)
 				.build()
 				.start();
 
-			System.out.println("Server started with Port:" + server.getPort());
+			System.out.println("Server started with Port:" + port);
 		    server.awaitTermination();
 
-		}//try
-		catch(IOException e){
-			e.printStackTrace();
-		}
-		catch(InterruptedException e) {
-			e.printStackTrace();
-		}
+		} catch (UnknownHostException e) {
+			System.out.println(e.getMessage());
+            e.printStackTrace();
+		} catch (IOException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
 
 	}//main
 
