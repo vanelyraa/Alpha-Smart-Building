@@ -1,6 +1,13 @@
 package grpc.services.light;
 
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
+
+import javax.jmdns.JmDNS;
+import javax.jmdns.ServiceInfo;
+
 import grpc.services.light.LightServiceGrpc.LightServiceImplBase;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
@@ -9,30 +16,33 @@ import io.grpc.stub.StreamObserver;
 public class LightServer extends LightServiceImplBase {
 	
 	public LightData myLightdata = new LightData();
-	
+		
 	public static void main(String[] args) throws IOException, InterruptedException {
-		// TODO Auto-generated method stub
+		
 		System.out.println("Starting gRPC Server");
-		LightServer lightserver = new LightServer();
-
-		int port = 50053;
+		
 
 		try {
+			int port = 50053;
+			JmDNS jmdns = JmDNS.create(InetAddress.getLocalHost());
+	        ServiceInfo serviceInfo = ServiceInfo.create("_light._tcp.local.", "light", port, "Lights Service");
+	        jmdns.registerService(serviceInfo);
+	        LightServer lightserver = new LightServer();
 			Server server = ServerBuilder.forPort(port)
 				.addService(lightserver)
 				.build()
 				.start();
 
-			System.out.println("Server started with Port:" + server.getPort());
-		    server.awaitTermination();
+			System.out.println("Server started with Port:" + port);
+			server.awaitTermination();
 
-		}//try
-		catch(IOException e){
-			e.printStackTrace();
-		}
-		catch(InterruptedException e) {
-			e.printStackTrace();
-		}
+		} catch (UnknownHostException e) {
+			System.out.println(e.getMessage());
+            e.printStackTrace();
+		} catch (IOException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
 
 	}//main
 
