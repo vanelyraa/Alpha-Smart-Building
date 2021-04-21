@@ -1,6 +1,12 @@
 package grpc.services.climate;
 
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
+import javax.jmdns.JmDNS;
+import javax.jmdns.ServiceInfo;
+
 import grpc.services.climate.ClimateServiceGrpc.ClimateServiceImplBase;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
@@ -11,26 +17,28 @@ public class ClimateServer extends ClimateServiceImplBase  {
 	public static void main(String[] args) throws IOException, InterruptedException {
 		
 		System.out.println("Starting gRPC Server");
-		ClimateServer climateserver = new ClimateServer();
-
-		int port = 50052;
-
+		
 		try {
+			int port = 50052;
+			JmDNS jmdns = JmDNS.create(InetAddress.getLocalHost());
+	        ServiceInfo serviceInfo = ServiceInfo.create("_climate._tcp.local.", "climate", port, "Climate server - HVAC control");
+	        jmdns.registerService(serviceInfo);
+	        ClimateServer climateserver = new ClimateServer();
 			Server server = ServerBuilder.forPort(port)
 				.addService(climateserver)
 				.build()
 				.start();
 
-			System.out.println("Server started with Port:" + server.getPort());
+			System.out.println("Server started with Port:" + port); //server.getPort());
 		    server.awaitTermination();
 
-		}//try
-		catch(IOException e){
-			e.printStackTrace();
-		}
-		catch(InterruptedException e) {
-			e.printStackTrace();
-		}
+		} catch (UnknownHostException e) {
+			System.out.println(e.getMessage());
+            e.printStackTrace();
+		} catch (IOException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
 
 	}//main
 
