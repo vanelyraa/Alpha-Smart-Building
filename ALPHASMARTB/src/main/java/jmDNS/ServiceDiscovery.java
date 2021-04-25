@@ -11,18 +11,7 @@ import javax.jmdns.ServiceListener;
 
 public class ServiceDiscovery {
 	
-	/*private static int ControlPort;
-
-	public int getControlPort() {
-		return ControlPort;
-	}
-
-	public void setControlPort(int controlPort) {
-		ControlPort = controlPort;
-	}*/
-
-
-private static class Listener implements ServiceListener {
+	private static class Listener implements ServiceListener {
 		
 		
 		public void serviceAdded(ServiceEvent event) {
@@ -39,11 +28,7 @@ private static class Listener implements ServiceListener {
 					System.out.println("Service resolved: " + event.getInfo());
 			
 					System.out.println("Get Name: " + event.getName() + " PORT: " + event.getInfo().getPort());
-					/*if (event.getName().equals("ControlSystem")) {
-						System.out.println("ControlSystem port found: " + event.getInfo().getPort());
-						ControlPort = event.getInfo().getPort();
-					}*/
-
+					
 		}
 	}
 
