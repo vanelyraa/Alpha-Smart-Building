@@ -18,89 +18,35 @@ import io.grpc.stub.StreamObserver;
 public class LightServer extends LightServiceImplBase {
 	
 	public LightData myLightdata = new LightData();
-	public static int lightPort;
-	private static final Logger logger = Logger.getLogger(LightServer.class.getName());
 	
-	private static class Listener implements ServiceListener {
-		 
-        public void serviceAdded(ServiceEvent event) {
-            System.out.println("Service added: " + event.getInfo());
-        }
-
+	public static void main(String[] args) throws IOException, InterruptedException {
+	
+	System.out.println("Starting gRPC Utilities Server");
+	
+	// Create & Register utilities service with jmDNS
+	try {
+		int PORT = 50053;
+		JmDNS jmdns = JmDNS.create(InetAddress.getLocalHost());
+        ServiceInfo serviceInfo = ServiceInfo.create("_light._tcp.local.", "light", PORT, "Light server");
+        jmdns.registerService(serviceInfo);
+        LightServer lightServer = new LightServer();
+        Server server = ServerBuilder.forPort(PORT)
+                .addService(lightServer)
+                .build()
+                .start();
+        System.out.println("Light server started, listening on " + PORT);
+        server.awaitTermination();
         
-        public void serviceRemoved(ServiceEvent event) {
-            System.out.println("Service removed: " + event.getInfo());
-        }
-
-        
-        public void serviceResolved(ServiceEvent event) {
-        	System.out.println("Service resolved: " + event.getInfo());
-            System.out.println("Get Name: " + event.getName()+" PORT: "+event.getInfo().getPort());
-            
-            //Start GRPC server with discovered device
-            if(event.getName().equals("Light")) {
-            	System.out.println("Found Light port: " + event.getInfo().getPort());
-	       		try {
-	       			lightPort = event.getInfo().getPort();
-					startGRPC(event.getInfo().getPort());
-	       		} 
-	       		catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} 
-	       		catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-
-            }
-          
-
-        }
+	} catch (UnknownHostException e) {
+		System.out.println(e.getMessage());
+        e.printStackTrace();
+	} catch (IOException e) {
+        System.out.println(e.getMessage());
+        e.printStackTrace();
     }
 	
-		
-	public static void main(String[] args) throws IOException, InterruptedException {
-		 startDiscovery();
-			}
-		
-	public static void startDiscovery() throws IOException, InterruptedException {
-		System.out.println("Starting light gRPC Server");
-		
-
-		try {
-			JmDNS jmdns = JmDNS.create(InetAddress.getLocalHost());
-			jmdns.addServiceListener("_http._tcp.local.", new Listener());
-		    System.out.println("Listener working");
-		    // Wait a bit
-		    Thread.sleep(20000);
-						
-		} catch (UnknownHostException e) {
-			System.out.println(e.getMessage());
-            e.printStackTrace();
-		} catch (IOException e) {
-            System.out.println(e.getMessage());
-            e.printStackTrace();
-        }
-
-	}//main
+}
 	
-	public int getLightPort() {
-		return lightPort;
-	}
-
-	public void setLightPort(int lightPort) {
-		LightServer.lightPort = lightPort;
-	}
-	
-	public static void startGRPC(int portNumber) throws IOException, InterruptedException {
-		LightServer lightServer = new LightServer();
-		    
-		Server server = ServerBuilder.forPort(portNumber).addService(lightServer).build().start();
-		logger.info("LightServer started, listening on " + portNumber);		     
-		server.awaitTermination();
-	 }
-
 	@Override
 	public void lighting(Empty request, StreamObserver<LightingResponse> responseObserver) {
 		
