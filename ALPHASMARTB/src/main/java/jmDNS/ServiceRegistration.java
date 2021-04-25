@@ -25,7 +25,7 @@ public class ServiceRegistration {
 				System.out.println("Register Service");
 				ServiceInfo serviceUtil = ServiceInfo.create("_http._tcp.local.", "utility", utilityPort, "path=index.html");
 				ServiceInfo serviceClime = ServiceInfo.create("_http._tcp.local.", "climate", climatePort, "path=index.html");
-				ServiceInfo serviceLight = ServiceInfo.create("_http._tcp.local.", myLightData.gettype(), lightPort,"path=index.html");
+				ServiceInfo serviceLight = ServiceInfo.create("_http._tcp.local.", "light", lightPort,"path=index.html");
 
 				jmdns.registerService(serviceUtil);
 				jmdns.registerService(serviceClime);
