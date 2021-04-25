@@ -19,61 +19,24 @@ import io.grpc.stub.StreamObserver;
 
 public class UtilityServer extends UtilityServiceImplBase{
 	
-	private static final Logger logger = Logger.getLogger(LightServer.class.getName());
-	public static int utilityPort;
-	
-	private static class Listener implements ServiceListener {
-		 
-        
-            @Override
-        	public void serviceAdded(ServiceEvent event) {
-        		System.out.println("Service added: " + event.getInfo());
-        	}
-
-
-        	@Override
-        	public void serviceRemoved(ServiceEvent event) {
-        		System.out.println("Service removed: " + event.getInfo());
-        		
-        	}
-
-
-        	@Override
-        	public void serviceResolved(ServiceEvent event) {
-        		System.out.println("Service resolved: " + event.getInfo());
-                System.out.println("Get Name: " + event.getName()+" PORT: "+event.getInfo().getPort());
-      
-        try {
-        	utilityPort = event.getInfo().getPort();
-			startGRPC(event.getInfo().getPort());
-   		} 
-   		catch (IOException e) {
-			e.printStackTrace();
-		} 
-   		catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-        }
-	}
-
-        
-        
-        
+	        
 	public static void main(String[] args) throws IOException, InterruptedException {
-		 startDiscovery();
-	}
-	
-	
-	public static void startDiscovery() throws IOException, InterruptedException {	
-		System.out.println("Starting utility gRPC Server");
+System.out.println("Starting gRPC Utilities Server");
 		
+		// Create & Register utilities service with jmDNS
 		try {
+			int PORT = 50052;
 			JmDNS jmdns = JmDNS.create(InetAddress.getLocalHost());
-			jmdns.addServiceListener("_http._tcp.local.", new Listener());
-			System.out.println("Listener service");
-		    // Wait a bit
-		    Thread.sleep(10000);
-			
+	        ServiceInfo serviceInfo = ServiceInfo.create("_utilitiy._tcp.local.", "utilitiy", PORT, "Utilitiy server");
+	        jmdns.registerService(serviceInfo);
+	        UtilityServer utilityServer = new UtilityServer();
+	        Server server = ServerBuilder.forPort(PORT)
+                    .addService(utilityServer)
+                    .build()
+                    .start();
+            System.out.println("Utility server started, listening on " + PORT);
+            server.awaitTermination();
+            
 		} catch (UnknownHostException e) {
 			System.out.println(e.getMessage());
             e.printStackTrace();
@@ -81,25 +44,10 @@ public class UtilityServer extends UtilityServiceImplBase{
             System.out.println(e.getMessage());
             e.printStackTrace();
         }
+		
 	}
 	
-	public int getUtilityPort() {
-		return utilityPort;
-	}
-
-	public void setUtilityPort(int utilityPort) {
-		UtilityServer.utilityPort = utilityPort;
-	}
 	
-	public static void startGRPC(int portNumber) throws IOException, InterruptedException {
-		UtilityServer utilityServer = new UtilityServer();
-		    
-		Server server = ServerBuilder.forPort(portNumber).addService(utilityServer).build().start();
-		logger.info("LightingServer started, listening on " + portNumber);		     
-		server.awaitTermination();
-	 }
-
-
 	@Override
 	public void switchDevices(DevicesRequest request, StreamObserver<DevicesResponse> responseObserver) {
 		
@@ -145,13 +93,9 @@ public class UtilityServer extends UtilityServiceImplBase{
 		return new StreamObserver<PrinterRequest>() {
 	        
 			public void onNext(PrinterRequest request) {
-	            StringBuilder pList = new StringBuilder(); 
-	  
-	            pList.append(request.getPList());
-	            System.out.println(pList);
-	        
-	            PrinterResponse toPrint = PrinterResponse.newBuilder().setPList(pList.toString()).build();
-	      
+	            StringBuilder sb = new StringBuilder(request.getPList()); 
+	            PrinterResponse toPrint = PrinterResponse.newBuilder().setPList(sb.toString()).build();
+	           
 	            responseObserver.onNext(toPrint);
 			}
 
