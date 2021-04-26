@@ -90,6 +90,7 @@ import javax.swing.event.ChangeEvent;
 import java.awt.Color;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
+import java.awt.SystemColor;
 
 public class SmartGUIclient{
 
@@ -109,12 +110,11 @@ public class SmartGUIclient{
 	public JLabel lightDataId;
 	public JLabel lightDataStatus;
 	public JLabel lightDataIntensity;
+	private static JTextArea messages;
+	int randomCo = (int)(Math.random() * 50 + 1);
 	
 	
 	
-	/**
-	 * Launch the application.
-	 */
 	
 	public static class Listener implements ServiceListener {
 	    @Override
@@ -141,6 +141,10 @@ public class SmartGUIclient{
 	        
 	    }
 	}
+	
+	/**
+	 * Launch the application.
+	 */
 		
 	public static void main(String[] args) {
 		
@@ -218,21 +222,102 @@ public class SmartGUIclient{
 
 
 	private void initialize() {
+		
+		/**
+		 * Frame, labels, separators
+		 */
+		
 		frame = new JFrame("Alpha Smart dashboard");
 		frame.getContentPane().setForeground(new Color(255, 228, 225));
-		frame.setBounds(100, 100, 413, 580);
+		frame.setBounds(100, 100, 413, 566);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		frame.getContentPane().setBackground(new Color(255, 228, 225));
+		frame.getContentPane().setBackground(SystemColor.inactiveCaptionBorder);
 		
 		JLabel TitleLabel = new JLabel("Alpha Smart Building Solutions");
-		TitleLabel.setForeground(new Color(220, 20, 60));
+		TitleLabel.setForeground(SystemColor.desktop);
 		TitleLabel.setFont(new Font("Microsoft Tai Le", Font.BOLD | Font.ITALIC, 26));
-		TitleLabel.setBounds(10, 7, 385, 52);
+		TitleLabel.setBounds(2, 0, 385, 52);
 		frame.getContentPane().add(TitleLabel);
+				
+		JLabel homeWelcome = new JLabel("Welcome to our Dashboard!");
+		homeWelcome.setForeground(SystemColor.desktop);
+		homeWelcome.setBounds(100, 50, 218, 16);
+		frame.getContentPane().add(homeWelcome);
+		homeWelcome.setFont(new Font("Tahoma", Font.BOLD, 15));
+		
+		JLabel logo = new JLabel("");
+		logo.setBounds(0, 406, 166, 128);
+		frame.getContentPane().add(logo);
 		ImageIcon img = new ImageIcon(this.getClass().getResource("/logo.png"));
+		logo.setIcon(img);
+		
+		JLabel climateMainLabel = new JLabel("ADJUSTS");
+		climateMainLabel.setForeground(SystemColor.desktop);
+		climateMainLabel.setBounds(32, 197, 81, 25);
+		frame.getContentPane().add(climateMainLabel);
+		climateMainLabel.setFont(new Font("Tahoma", Font.BOLD, 18));
+		
+		JLabel utilMainLabel = new JLabel("SWITCHES");
+		utilMainLabel.setForeground(SystemColor.desktop);
+		utilMainLabel.setBounds(32, 90, 114, 25);
+		frame.getContentPane().add(utilMainLabel);
+		utilMainLabel.setFont(new Font("Tahoma", Font.BOLD, 18));
+		
+		JLabel lblControls = new JLabel("CONTROLS");
+		lblControls.setForeground(SystemColor.desktop);
+		lblControls.setFont(new Font("Tahoma", Font.BOLD, 18));
+		lblControls.setBounds(32, 303, 105, 25);
+		frame.getContentPane().add(lblControls);
+		
+		JTextArea messages = new JTextArea();
+		messages.setBackground(SystemColor.inactiveCaptionBorder);
+		messages.setBounds(206, 452, 181, 63);
+		messages.setEditable(false);
+		frame.getContentPane().add(messages);
+		
+		JSeparator separator_1 = new JSeparator();
+		separator_1.setBounds(10, 77, 395, 2);
+		frame.getContentPane().add(separator_1);
+		
+		JSeparator separator_2 = new JSeparator();
+		separator_2.setBounds(10, 184, 377, 2);
+		frame.getContentPane().add(separator_2);
+		
+		JSeparator separator_2_1 = new JSeparator();
+		separator_2_1.setBounds(10, 291, 377, 2);
+		frame.getContentPane().add(separator_2_1);
+		
+		JSeparator separator_3 = new JSeparator();
+		separator_3.setOrientation(SwingConstants.VERTICAL);
+		separator_3.setBounds(194, 306, 2, 209);
+		frame.getContentPane().add(separator_3);
+				
+		
+		/**
+		 * Climate buttons and labels
+		 */
+				
+		JLabel hvacLabel = new JLabel("HVAC");
+		hvacLabel.setForeground(SystemColor.desktop);
+		hvacLabel.setBounds(179, 126, 41, 14);
+		frame.getContentPane().add(hvacLabel);
+		hvacLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		
+		JLabel coLabel = new JLabel("CO level");
+		coLabel.setForeground(SystemColor.desktop);
+		coLabel.setBounds(32, 341, 65, 14);
+		frame.getContentPane().add(coLabel);
+		coLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		
+		JLabel tempLabel = new JLabel("Temperature");
+		tempLabel.setForeground(SystemColor.desktop);
+		tempLabel.setBounds(277, 233, 79, 14);
+		frame.getContentPane().add(tempLabel);
+		tempLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		
 		JToggleButton hvacOnOff = new JToggleButton("On");
+		hvacOnOff.setFont(new Font("Tahoma", Font.BOLD, 11));
 		hvacOnOff.setBounds(166, 151, 65, 23);
 		frame.getContentPane().add(hvacOnOff);
 		hvacOnOff.setSelected(true);
@@ -249,16 +334,12 @@ public class SmartGUIclient{
 			}
 		});
 		
-		JLabel hvacLabel = new JLabel("HVAC");
-		hvacLabel.setForeground(new Color(220, 20, 60));
-		hvacLabel.setBounds(175, 126, 41, 14);
-		frame.getContentPane().add(hvacLabel);
-		hvacLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		
 		JButton coButton = new JButton("Check");
+		coButton.setFont(new Font("Tahoma", Font.BOLD, 11));
 		coButton.setBounds(91, 339, 75, 23);
 		coButton.setBorderPainted(false);
-		coButton.setBackground(new Color(240, 128, 128));
+		coButton.setBackground(SystemColor.activeCaption);
 		frame.getContentPane().add(coButton);
 		coButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -266,15 +347,10 @@ public class SmartGUIclient{
 			}
 		});
 		
-		JLabel coLabel = new JLabel("CO level");
-		coLabel.setForeground(new Color(220, 20, 60));
-		coLabel.setBounds(32, 341, 65, 14);
-		frame.getContentPane().add(coLabel);
-		coLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		
 		JButton tempPlus = new JButton("+");
+		tempPlus.setFont(new Font("Tahoma", Font.BOLD, 11));
 		tempPlus.setBorderPainted(false);
-		tempPlus.setBackground(new Color(240, 128, 128));
+		tempPlus.setBackground(SystemColor.activeCaption);
 		tempPlus.setBounds(277, 258, 41, 23);
 		frame.getContentPane().add(tempPlus);
 		tempPlus.addActionListener(new ActionListener() {
@@ -285,8 +361,9 @@ public class SmartGUIclient{
 		});
 		
 		JButton tempMinus = new JButton("-");
+		tempMinus.setFont(new Font("Tahoma", Font.BOLD, 11));
 		tempMinus.setBorderPainted(false);
-		tempMinus.setBackground(new Color(240, 128, 128));
+		tempMinus.setBackground(SystemColor.activeCaption);
 		tempMinus.setBounds(313, 258, 41, 23);
 		frame.getContentPane().add(tempMinus);
 		tempMinus.addActionListener(new ActionListener() {
@@ -296,111 +373,32 @@ public class SmartGUIclient{
 			}
 		});
 		
-		JLabel tempLabel = new JLabel("Temperature");
-		tempLabel.setForeground(new Color(220, 20, 60));
-		tempLabel.setBounds(277, 233, 79, 14);
-		frame.getContentPane().add(tempLabel);
-		tempLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		
-		JLabel climateMainLabel = new JLabel("ADJUSTS");
-		climateMainLabel.setForeground(new Color(220, 20, 60));
-		climateMainLabel.setBounds(32, 197, 81, 25);
-		frame.getContentPane().add(climateMainLabel);
-		climateMainLabel.setFont(new Font("Tahoma", Font.BOLD, 18));
-		
-		JLabel logo = new JLabel("");
-		logo.setBounds(0, 413, 166, 128);
-		frame.getContentPane().add(logo);
-		logo.setIcon(img);
-		
-		JLabel homeWelcome = new JLabel("Welcome to our Dashboard!");
-		homeWelcome.setForeground(new Color(220, 20, 60));
-		homeWelcome.setBounds(100, 63, 218, 16);
-		frame.getContentPane().add(homeWelcome);
-		homeWelcome.setFont(new Font("Tahoma", Font.BOLD, 15));
-		
-		JLabel lightMainLabel = new JLabel("LIGHTS");
-		lightMainLabel.setForeground(new Color(220, 20, 60));
-		lightMainLabel.setBounds(257, 304, 85, 22);
-		frame.getContentPane().add(lightMainLabel);
-		lightMainLabel.setFont(new Font("Tahoma", Font.BOLD, 18));
-		
-		JLabel lightChoice = new JLabel("Choose light:");
-		lightChoice.setForeground(new Color(220, 20, 60));
-		lightChoice.setBounds(219, 341, 102, 14);
-		frame.getContentPane().add(lightChoice);
-		lightChoice.setFont(new Font("Tahoma", Font.BOLD, 14));
-		
-		
-		JLabel intensityLabel = new JLabel("Brightness");
-		intensityLabel.setForeground(new Color(220, 20, 60));
-		intensityLabel.setBounds(32, 233, 102, 14);
-		frame.getContentPane().add(intensityLabel);
-		intensityLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		
-		JButton intensPlus = new JButton("+");
-		intensPlus.setBorderPainted(false);
-		intensPlus.setBackground(new Color(240, 128, 128));
-		intensPlus.setBounds(32, 258, 41, 23);
-		frame.getContentPane().add(intensPlus);
-		intensPlus.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				System.out.println(+1);
-				lightIntensity(1);
-			}
-		});
-		
-		JButton intensMinus = new JButton("-");
-		intensMinus.setBorderPainted(false);
-		intensMinus.setBackground(new Color(240, 128, 128));
-		intensMinus.setBounds(72, 258, 41, 23);
-		frame.getContentPane().add(intensMinus);
-		intensMinus.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				System.out.println(-1);
-				lightIntensity(-1);
-			}
-		});
-		
-		JLabel lightOnOff = new JLabel("Lights");
-		lightOnOff.setForeground(new Color(220, 20, 60));
-		lightOnOff.setBounds(239, 381, 59, 14);
-		frame.getContentPane().add(lightOnOff);
-		lightOnOff.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		
-		JToggleButton lightbutton = new JToggleButton("On");
-		lightbutton.setBounds(304, 379, 59, 23);
-		frame.getContentPane().add(lightbutton);
-		lightbutton.setSelected(true);
-		lightbutton.addChangeListener(new ChangeListener() {
-			
-			public void stateChanged(ChangeEvent e) {
-				if (lightbutton.isSelected()){
-					lightbutton.setText("On");
-					LightsOnOff(true);
-	            } 
-				 else {
-					 lightbutton.setText("Off");
-					 LightsOnOff(false);
-	            }
 				
-			}
-		});
-		
-		JLabel utilMainLabel = new JLabel("SWITCHES");
-		utilMainLabel.setForeground(new Color(220, 20, 60));
-		utilMainLabel.setBounds(34, 90, 114, 25);
-		frame.getContentPane().add(utilMainLabel);
-		utilMainLabel.setFont(new Font("Tahoma", Font.BOLD, 18));
+		/**
+		 * Utility buttons and labels
+		 */
 		
 		JLabel deviceLabel = new JLabel("Devices");
-		deviceLabel.setForeground(new Color(220, 20, 60));
-		deviceLabel.setBounds(33, 126, 52, 14);
+		deviceLabel.setForeground(SystemColor.desktop);
+		deviceLabel.setBounds(44, 126, 93, 14);
 		frame.getContentPane().add(deviceLabel);
 		deviceLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		
+		JLabel VisitLabel = new JLabel("Visit list");
+		VisitLabel.setForeground(SystemColor.desktop);
+		VisitLabel.setBounds(32, 381, 59, 14);
+		frame.getContentPane().add(VisitLabel);
+		VisitLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		
+		JLabel cameraLabel = new JLabel("Cameras");
+		cameraLabel.setForeground(SystemColor.desktop);
+		cameraLabel.setBounds(304, 126, 59, 14);
+		frame.getContentPane().add(cameraLabel);
+		cameraLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		
 		JToggleButton deviceOnOff = new JToggleButton("On");
-		deviceOnOff.setBounds(35, 151, 62, 23);
+		deviceOnOff.setFont(new Font("Tahoma", Font.BOLD, 11));
+		deviceOnOff.setBounds(32, 150, 62, 23);
 		frame.getContentPane().add(deviceOnOff);
 		deviceOnOff.setSelected(true);
 		deviceOnOff.addChangeListener(new ChangeListener() {
@@ -416,30 +414,21 @@ public class SmartGUIclient{
 			}
 		});
 		
-		JLabel VisitLabel = new JLabel("Visit list");
-		VisitLabel.setForeground(new Color(220, 20, 60));
-		VisitLabel.setBounds(32, 381, 59, 14);
-		frame.getContentPane().add(VisitLabel);
-		VisitLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		
 		JButton printLabel = new JButton("Print");
+		printLabel.setFont(new Font("Tahoma", Font.BOLD, 11));
 		printLabel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				printList();
 			}
 		});
 		printLabel.setBorderPainted(false);
-		printLabel.setBackground(new Color(240, 128, 128));
+		printLabel.setBackground(SystemColor.activeCaption);
 		printLabel.setBounds(91, 379, 75, 23);
 		frame.getContentPane().add(printLabel);
 		
-		JLabel cameraLabel = new JLabel("Cameras");
-		cameraLabel.setForeground(new Color(220, 20, 60));
-		cameraLabel.setBounds(304, 126, 59, 14);
-		frame.getContentPane().add(cameraLabel);
-		cameraLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		
 		JToggleButton cameraOnOff = new JToggleButton("On");
+		cameraOnOff.setFont(new Font("Tahoma", Font.BOLD, 11));
 		cameraOnOff.setBounds(304, 151, 59, 23);
 		frame.getContentPane().add(cameraOnOff);
 		cameraOnOff.setSelected(true);
@@ -456,50 +445,137 @@ public class SmartGUIclient{
 			}
 		});
 		
-		JLabel lblControls = new JLabel("CONTROLS");
-		lblControls.setForeground(new Color(220, 20, 60));
-		lblControls.setFont(new Font("Tahoma", Font.BOLD, 18));
-		lblControls.setBounds(32, 303, 105, 25);
-		frame.getContentPane().add(lblControls);
 		
-		JSeparator separator = new JSeparator();
-		separator.setBounds(0, 57, 395, 2);
-		frame.getContentPane().add(separator);
 		
-		JSeparator separator_1 = new JSeparator();
-		separator_1.setBounds(0, 87, 395, 2);
-		frame.getContentPane().add(separator_1);
+		/**
+		 * Light buttons and labels
+		 */
 		
-		JSeparator separator_2 = new JSeparator();
-		separator_2.setBounds(10, 184, 377, 2);
-		frame.getContentPane().add(separator_2);
+		JLabel lightMainLabel = new JLabel("LIGHTS");
+		lightMainLabel.setForeground(SystemColor.desktop);
+		lightMainLabel.setBounds(257, 304, 85, 22);
+		frame.getContentPane().add(lightMainLabel);
+		lightMainLabel.setFont(new Font("Tahoma", Font.BOLD, 18));
 		
-		JSeparator separator_2_1 = new JSeparator();
-		separator_2_1.setBounds(10, 291, 377, 2);
-		frame.getContentPane().add(separator_2_1);
+		JLabel intensityLabel = new JLabel("Brightness");
+		intensityLabel.setForeground(SystemColor.desktop);
+		intensityLabel.setBounds(42, 233, 75, 14);
+		frame.getContentPane().add(intensityLabel);
+		intensityLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		
-		JSeparator separator_3 = new JSeparator();
-		separator_3.setOrientation(SwingConstants.VERTICAL);
-		separator_3.setBounds(194, 306, 2, 209);
-		frame.getContentPane().add(separator_3);
+		JLabel office1light = new JLabel("Office 1");
+		office1light.setForeground(SystemColor.desktop);
+		office1light.setBounds(213, 341, 59, 14);
+		frame.getContentPane().add(office1light);
+		office1light.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		
-		String[] IdLights = {"Select a room","Conference Room", "Cafeteria", "Toilets", "Room 1", "Room 2"};
-		JComboBox comboBox = new JComboBox(IdLights);
-		comboBox.addActionListener(new ActionListener() {
+		JLabel office2light = new JLabel("Office 2");
+		office2light.setForeground(SystemColor.desktop);
+		office2light.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		office2light.setBounds(213, 381, 59, 14);
+		frame.getContentPane().add(office2light);
+		
+		JLabel receptionlight = new JLabel("Reception");
+		receptionlight.setForeground(SystemColor.desktop);
+		receptionlight.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		receptionlight.setBounds(213, 420, 75, 14);
+		frame.getContentPane().add(receptionlight);
+				
+		JButton intensPlus = new JButton("+");
+		intensPlus.setFont(new Font("Tahoma", Font.BOLD, 11));
+		intensPlus.setBorderPainted(false);
+		intensPlus.setBackground(SystemColor.activeCaption);
+		intensPlus.setBounds(32, 258, 41, 23);
+		frame.getContentPane().add(intensPlus);
+		intensPlus.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JComboBox comboBox = (JComboBox)e.getSource();
-		        String IdLights = (String)comboBox.getSelectedItem();
-		        getLightId();
+				System.out.println(+1);
+				lightIntensity(1);
 			}
 		});
-		comboBox.setBounds(324, 339, 30, 22);
-		frame.getContentPane().add(comboBox);
 		
+		JButton intensMinus = new JButton("-");
+		intensMinus.setFont(new Font("Tahoma", Font.BOLD, 11));
+		intensMinus.setBorderPainted(false);
+		intensMinus.setBackground(SystemColor.activeCaption);
+		intensMinus.setBounds(72, 258, 41, 23);
+		frame.getContentPane().add(intensMinus);
+		intensMinus.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println(-1);
+				lightIntensity(-1);
+			}
+		});
+				
+		JToggleButton of1lightbutton = new JToggleButton("On");
+		of1lightbutton.setFont(new Font("Tahoma", Font.BOLD, 11));
+		of1lightbutton.setBounds(295, 339, 59, 23);
+		frame.getContentPane().add(of1lightbutton);
+		of1lightbutton.setSelected(true);
+		of1lightbutton.addChangeListener(new ChangeListener() {
+			
+			public void stateChanged(ChangeEvent e) {
+				if (of1lightbutton.isSelected()){
+					of1lightbutton.setText("On");
+					LightsOnOff(true);
+	            } 
+				 else {
+					 of1lightbutton.setText("Off");
+					 LightsOnOff(false);
+	            }
+				
+			}
+		});
+				
+		JToggleButton of2lightbutton = new JToggleButton("On");
+		of2lightbutton.setFont(new Font("Tahoma", Font.BOLD, 11));
+		of2lightbutton.setSelected(true);
+		of2lightbutton.setBounds(295, 379, 59, 23);
+		frame.getContentPane().add(of2lightbutton);
+		of2lightbutton.addChangeListener(new ChangeListener() {
+			
+			public void stateChanged(ChangeEvent e) {
+				if (of2lightbutton.isSelected()){
+					of2lightbutton.setText("On");
+					LightsOnOff(true);
+	            } 
+				 else {
+					 of2lightbutton.setText("Off");
+					 LightsOnOff(false);
+	            }
+				
+			}
+		});
+		
+		JToggleButton reclightbutton = new JToggleButton("On");
+		reclightbutton.setFont(new Font("Tahoma", Font.BOLD, 11));
+		reclightbutton.setSelected(true);
+		reclightbutton.setBounds(295, 418, 59, 23);
+		frame.getContentPane().add(reclightbutton);
+		reclightbutton.addChangeListener(new ChangeListener() {
+			
+			public void stateChanged(ChangeEvent e) {
+				if (reclightbutton.isSelected()){
+					reclightbutton.setText("On");
+					LightsOnOff(true);
+	            } 
+				 else {
+					 reclightbutton.setText("Off");
+					 LightsOnOff(false);
+	            }
+				
+			}
+		});
 	}
-
-	//GRPC
 	
-	//HVAC SERVICES
+	/**
+	 * GRPC SERVICES
+	 */
+	
+	/**
+	 * HVAC SERVICES
+	 */	
+	
 	public static void Switch(boolean OnOffH){
 		
 		SwitchRequest request = SwitchRequest.newBuilder().setPower(OnOffH).build();
@@ -514,9 +590,11 @@ public class SmartGUIclient{
 		}
 		if (response.getPower()) {
 			System.out.println("HVAC on");
+			messages.setText("HVAC on");
 		}
 		else {
 			System.out.println("HVAC off");
+			messages.setText("HVAC off");
 		}
 	}
 
@@ -530,6 +608,8 @@ public class SmartGUIclient{
 			@Override
 			public void onNext(HvacResponse tempNew) {
 				System.out.println("Change to : " + tempNew + " Celsius");
+				messages.setText("Change to : " + tempNew + " Celsius");
+				
 			}
 	
 			@Override
@@ -539,7 +619,8 @@ public class SmartGUIclient{
 	
 			@Override
 			public void onCompleted() {
-				System.out.println("completed ");
+				System.out.println("Done");
+				messages.append("Done");
 			}
 
 		};
@@ -549,7 +630,7 @@ public class SmartGUIclient{
 			}
 	
 	public void checkCO(){
-		int CoNow = 45;
+		int CoNow = randomCo;
 		CoLevelRequest request = CoLevelRequest.newBuilder().setLevel(CoNow).build();
 		ExtractionResponse response;
 		
@@ -562,28 +643,20 @@ public class SmartGUIclient{
 		if (CoNow > 40) {
 			System.out.println("Co level is: " + response.getLevel() + "now");
 			System.out.println("High level of CO, extractor on!");
+			messages.setText("Co level is: " + response.getLevel() + "now");
+			messages.append("High level of CO, extractor on!");
 		}
 		else {
 			System.out.println("CO level OK!");
-		}
+			messages.append("CO level OK!");
+		}	
 		
-		
-		/*int CoNow = 45;
-		CoLevelRequest request = CoLevelRequest.newBuilder().setLevel(CoNow).build();
-
-		ExtractionResponse response = cblockingStub.checkCO(request);
-
-		if (response.getLevel() > 40) {
-			System.out.println("Co level is: " + response.getLevel() + "now");
-			System.out.println("High level of CO, extractor on!");
-		}
-		else {
-			System.out.println("CO level OK!");
-		}*/
 	}
 	
+	/**
+	 * LIGHTS SERVICES
+	 */
 	
-	//LIGHTS SERVICES
 	public void lighting(){
 		Empty emp = Empty.newBuilder().build();
 		
@@ -620,9 +693,11 @@ public class SmartGUIclient{
 		Boolean statusLight = response.getSwitch();
 		if (statusLight) {
 			lightDataStatus.setText("Lights turned on!");
+			messages.setText("Lights on!");
 		}
 		else {
 			lightDataStatus.setText("Lights off!");
+			messages.setText("Lights off!");
 		}
 	}
 	
@@ -634,7 +709,7 @@ public class SmartGUIclient{
 				// Print out response
 				System.out.println("Brightness has been set to level " + value);
 				String intensity = String.valueOf(value.getIntensity());
-				lightDataIntensity.setText("Brightness: "+intensity);
+				messages.setText("Brightness: "+intensity);
 			}
 
 			@Override
@@ -653,6 +728,7 @@ public class SmartGUIclient{
 			// send a stream of requests
 			requestObserver.onNext(IntensityRequest.newBuilder().setIntensity(bright).build());
 			System.out.println("Lights brightness changed");
+			messages.append("Lights brightness changed");
 						
 			Thread.sleep(new Random().nextInt(2000) + 1000);
 			// catch any errors
@@ -665,7 +741,10 @@ public class SmartGUIclient{
 		requestObserver.onCompleted();
 	}
 	
-	//DEVICES SERVICES
+	/**
+	 * DEVICES SERVICES
+	 */
+	
 	public static void switchDevices(boolean OnOffD){
 		
 		DevicesRequest request = DevicesRequest.newBuilder().setDevices(OnOffD).build();
@@ -680,9 +759,11 @@ public class SmartGUIclient{
 		}
 		if (response.getDevices()) {
 			System.out.println("Devices on");
+			messages.setText("Devices on");
 		}
 		else {
 			System.out.println("Devices off");
+			messages.setText("Devices off");
 		}
 	}
 		
@@ -700,10 +781,12 @@ public class SmartGUIclient{
 			return;
 		}
 		if (response.getCamera()) {
-			System.out.println("Motion detected, camera on!");
+			System.out.println("Camera on!");
+			messages.setText("Camera on!");
 		}
 		else {
 			System.out.println("Camera off!");
+			messages.setText("Camera off!");
 		}
 	}
 	
@@ -716,6 +799,7 @@ public class SmartGUIclient{
 			@Override
 			public void onNext(PrinterResponse value) {
 				System.out.println("Printing updated visit list: " + value.getPList());
+				messages.setText("Printing updated visit list: " + value.getPList());
 				listOfVisits.add(value.getPList());
 			}
 
@@ -730,6 +814,7 @@ public class SmartGUIclient{
 			public void onCompleted() {
 				 
 	               System.out.println("\nList completed");
+	               messages.append("\nList completed");
 			}
 
 		};
@@ -737,12 +822,9 @@ public class SmartGUIclient{
 		StreamObserver<PrinterRequest> requestObserver = uasyncStub.printList(responseObserver);
 		try {
 				requestObserver.onNext(PrinterRequest.newBuilder().setPList("Walter Knutz").build());
-				requestObserver.onNext(PrinterRequest.newBuilder().setPList("Maria Stunnten").build());
-			
-				requestObserver.onNext(PrinterRequest.newBuilder().setPList("Rodrigo Salez").build());
-			
-				requestObserver.onNext(PrinterRequest.newBuilder().setPList("Jessica Klint").build());
-		
+				requestObserver.onNext(PrinterRequest.newBuilder().setPList("Maria Stunnten").build());			
+				requestObserver.onNext(PrinterRequest.newBuilder().setPList("Rodrigo Salez").build());			
+				requestObserver.onNext(PrinterRequest.newBuilder().setPList("Jessica Klint").build());		
 				requestObserver.onNext(PrinterRequest.newBuilder().setPList("Jeniffer Kellei").build());
 			
 				 Thread.sleep(1000);
@@ -760,14 +842,13 @@ public class SmartGUIclient{
 			System.out.println("\nVisitor List: " + listOfVisits.size());
             for(String visits : listOfVisits) {
             	System.out.println(visits);
-                JOptionPane.showMessageDialog(null, visits);
+            	System.out.println(visits);
+                messages.append(visits);
             }
 				
 	}
 
-	public String getLightId() {
-		return IdLights;
-	}
+	
 }
 
 				
