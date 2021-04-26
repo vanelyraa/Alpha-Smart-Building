@@ -1,6 +1,6 @@
 package jmDNS;
 
-import java.io.IOException;
+/*import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
@@ -50,4 +50,4 @@ public class ServiceDiscovery {
 			System.out.println(e.getMessage());
 		}
 	}
-}
+}*/
