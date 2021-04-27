@@ -10,13 +10,11 @@ import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import io.grpc.stub.StreamObserver;
 
-
 public class UtilityServer extends UtilityServiceImplBase{
 	
 	public static void main(String[] args) throws IOException, InterruptedException {
 	
-	System.out.println("Starting gRPC Utilities Server");
-	
+	System.out.println("Starting gRPC Utilities Server");	
 	
 	try {
 		int PORT = 50098;
@@ -25,20 +23,18 @@ public class UtilityServer extends UtilityServiceImplBase{
         jmdns.registerService(serviceUtility);
         UtilityServer utilityServer = new UtilityServer();
         Server server = ServerBuilder.forPort(PORT)
-                .addService(utilityServer)
-                .build()
-                .start();
+        	.addService(utilityServer)
+            .build()
+             .start();
         System.out.println("Utility server started, listening on " + PORT);
-        server.awaitTermination();
-        
+        server.awaitTermination();        
 	} catch (UnknownHostException e) {
 		System.out.println(e.getMessage());
         e.printStackTrace();
 	} catch (IOException e) {
         System.out.println(e.getMessage());
         e.printStackTrace();
-    }
-	
+    }	
 }
 	
 	@Override
@@ -48,17 +44,14 @@ public class UtilityServer extends UtilityServiceImplBase{
 
         boolean OnOffD = request.getDevices();
         if (OnOffD) {
-        	System.out.println("Setting power to on!");
-        }
-        else {
-        	System.out.println("Setting power to off!");
+        	System.out.println("Setting devices off!");
+        } else {
+        	System.out.println("Setting devices on!");
         }
         
         DevicesResponse response = DevicesResponse.newBuilder().setDevices(OnOffD).build();
-
         responseObserver.onNext(response);
         responseObserver.onCompleted();
-
 	}
 	
 	@Override
@@ -68,14 +61,12 @@ public class UtilityServer extends UtilityServiceImplBase{
 
         boolean OnOffC = request.getCamera();
         if (OnOffC) {
-        	System.out.println("Setting power to on!");
-        }
-        else {
         	System.out.println("Setting power to off!");
+        } else {
+        	System.out.println("Setting power to on!");
         }
         
         CameraResponse response = CameraResponse.newBuilder().setCamera(OnOffC).build();
-
         responseObserver.onNext(response);
         responseObserver.onCompleted();
 
@@ -87,8 +78,7 @@ public class UtilityServer extends UtilityServiceImplBase{
 	        
 			public void onNext(PrinterRequest request) {
 	            StringBuilder sb = new StringBuilder(request.getPList()); 
-	            PrinterResponse toPrint = PrinterResponse.newBuilder().setPList(sb.toString()).build();
-	           
+	            PrinterResponse toPrint = PrinterResponse.newBuilder().setPList(sb.toString()).build();	           
 	            responseObserver.onNext(toPrint);
 			}
 
@@ -100,10 +90,7 @@ public class UtilityServer extends UtilityServiceImplBase{
 	          responseObserver.onCompleted();
 	        }
 		};
-	}
-
-
-	
+	}	
 }
 	
 
