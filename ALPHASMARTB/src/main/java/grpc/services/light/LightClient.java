@@ -1,15 +1,12 @@
 package grpc.services.light;
 
-/*import java.io.IOException;
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.Random;
-
 import javax.jmdns.JmDNS;
 import javax.jmdns.ServiceEvent;
 import javax.jmdns.ServiceInfo;
 import javax.jmdns.ServiceListener;
-
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.stub.StreamObserver;
@@ -35,27 +32,20 @@ public class LightClient {
             System.out.println("Service resolved: " + serviceEvent.getInfo());
             ServiceInfo info = serviceEvent.getInfo();
             final int Port = serviceEvent.getInfo().getPort();
-            String address = info.getHostAddresses()[0];
-            //String address = "localhost";
-            
-            
+            String address = info.getHostAddresses()[0];           
         }
     }
 		
 	public static void main(String[] args) throws Exception {
-		// TODO Auto-generated method stub
+		
 		ManagedChannel lightchannel = ManagedChannelBuilder.forAddress("localhost", 50097).usePlaintext().build();
 
 		lblockingStub = LightServiceGrpc.newBlockingStub(lightchannel);
 		lasyncStub = LightServiceGrpc.newStub(lightchannel);
 		
-		try {
-			// Create a JmDNS instance
+		try {			
 			JmDNS jmdns = JmDNS.create(InetAddress.getLocalHost());
-
-			// Add a service listener
 			jmdns.addServiceListener("_http._tcp.local.", new Listener());
-
 		} catch (UnknownHostException e) {
 			System.out.println(e.getMessage());
 		} catch (IOException e) {
@@ -68,35 +58,31 @@ public class LightClient {
 	}
 	
 	public static void lighting(){
+		
 		Empty emp = Empty.newBuilder().build();
 		
-		System.out.println("Lights");
-		LightingResponse response;
-		//Error Handling
+		LightingResponse response;		
 		try {
-			 response = lblockingStub.lighting(emp);
-			 String intens = String.valueOf(response.getIntensity());
-				System.out.println("LightID: " + response.getLightId());
-				System.out.println("Light status: " + response.getStatus());
-				System.out.println("Brightness: " + intens);
+			response = lblockingStub.lighting(emp);
+			String intens = String.valueOf(response.getIntensity());
+			System.out.println("LightID: " + response.getLightId());
+			System.out.println("Light status: " + response.getStatus());
+			System.out.println("Brightness: " + intens);				
 		}catch(io.grpc.StatusRuntimeException e) {
-			System.out.println("RPC lighiting failed:"+ e.getStatus());
+			System.out.println("Light client failed:"+ e.getStatus());
 			return;
 		}	
 	}
 
 	public static void LightsOnOff(){
 		LightsRequest request = LightsRequest.newBuilder().setSwitch(false).build();
-		
-		// check the response
+				
 		LightsResponse response = lblockingStub.lightsOnOff(request);
-		
-		// print appropriate message depending on response
 		if (response.getSwitch()) {
-			System.out.println("Lights turned on!");
+			System.out.println("Lights off!");
 		}
 		else {
-			System.out.println("Lights off!");
+			System.out.println("Lights on!");
 		}
 	}
 	
@@ -104,45 +90,41 @@ public class LightClient {
 		StreamObserver<IntensityResponse> responseObserver = new StreamObserver<IntensityResponse>() {
 
 			@Override
-			public void onNext(IntensityResponse intens) {
-				// Print out response
+			public void onNext(IntensityResponse intens) {				
 				System.out.println("Brightness has been set to level " + intens.getIntensity());
 			}
 
 			@Override
 			public void onError(Throwable t) {
-
+				t.printStackTrace();
 			}
 
 			@Override
 			public void onCompleted() {
-
+				System.out.println("Lights adjustment completed");
 			}
 		};
 
 		StreamObserver<IntensityRequest> requestObserver = lasyncStub.lightIntensity(responseObserver);
-		try {
-			// send a stream of requests
+		try {			
 			requestObserver.onNext(IntensityRequest.newBuilder().setIntensity(1).build());
-			System.out.println("Lights brightness changed");
+			System.out.println("Lights brightness changed to: 1");
 			requestObserver.onNext(IntensityRequest.newBuilder().setIntensity(3).build());
-			System.out.println("Lights brightness changed");
+			System.out.println("Lights brightness changed to: 3");
 			requestObserver.onNext(IntensityRequest.newBuilder().setIntensity(2).build());
-			System.out.println("Lights brightness changed");
+			System.out.println("Lights brightness changed to: 2");
 			requestObserver.onNext(IntensityRequest.newBuilder().setIntensity(5).build());
-			System.out.println("Lights brightness changed");
+			System.out.println("Lights brightness changed to: 5");			
 			
-			
-			Thread.sleep(new Random().nextInt(2000) + 1000);
+			Thread.sleep(2000);
 			// catch any errors
 		} catch (RuntimeException e) {
             requestObserver.onError(e);
             throw e;
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
 		requestObserver.onCompleted();
-	}
-	
-}*/
+	}	
+}
 
