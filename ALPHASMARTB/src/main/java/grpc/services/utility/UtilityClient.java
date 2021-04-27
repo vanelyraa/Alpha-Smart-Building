@@ -1,9 +1,10 @@
 package grpc.services.utility;
 
-import java.io.IOException;
+/*import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Random;
+import java.util.logging.Logger;
 
 import javax.jmdns.JmDNS;
 import javax.jmdns.ServiceEvent;
@@ -15,16 +16,52 @@ import io.grpc.ManagedChannelBuilder;
 import io.grpc.stub.StreamObserver;
 
 public class UtilityClient {
-	
+		
 	private static UtilityServiceGrpc.UtilityServiceBlockingStub ublockingStub;
 	private static UtilityServiceGrpc.UtilityServiceStub uasyncStub;
 	
+	public static class Listener implements ServiceListener {
+        @Override
+        public void serviceAdded(ServiceEvent serviceEvent) {
+            System.out.println("Service added: " + serviceEvent.getInfo());
+        }
+
+        @Override
+        public void serviceRemoved(ServiceEvent serviceEvent) {
+            System.out.println("Service removed: " + serviceEvent.getInfo());
+        }
+
+        @Override
+        public void serviceResolved(ServiceEvent serviceEvent) {
+            System.out.println("Service resolved: " + serviceEvent.getInfo());
+            ServiceInfo info = serviceEvent.getInfo();
+            final int Port = serviceEvent.getInfo().getPort();
+            String address = info.getHostAddresses()[0];
+            //String address = "localhost";
+            
+            
+        }
+    }
+		
 	public static void main(String[] args) throws Exception {
 		// TODO Auto-generated method stub
-		ManagedChannel utilitychannel = ManagedChannelBuilder.forAddress("localhost", 50052).usePlaintext().build();
+		ManagedChannel utilitychannel = ManagedChannelBuilder.forAddress("localhost", 50098).usePlaintext().build();
 
 		ublockingStub = UtilityServiceGrpc.newBlockingStub(utilitychannel);
 		uasyncStub = UtilityServiceGrpc.newStub(utilitychannel);
+		
+		try {
+			// Create a JmDNS instance
+			JmDNS jmdns = JmDNS.create(InetAddress.getLocalHost());
+
+			// Add a service listener
+			jmdns.addServiceListener("_http._tcp.local.", new Listener());
+
+		} catch (UnknownHostException e) {
+			System.out.println(e.getMessage());
+		} catch (IOException e) {
+			System.out.println(e.getMessage());
+		}
 		
 		switchDevices();
 		switchCameraOn();
@@ -80,11 +117,11 @@ public class UtilityClient {
 
 		StreamObserver<PrinterRequest> requestObserver = uasyncStub.printList(responseObserver);
 			try {
-				requestObserver.onNext(PrinterRequest.newBuilder().setPList("Print").build());
-				requestObserver.onNext(PrinterRequest.newBuilder().setPList("These").build());
-				requestObserver.onNext(PrinterRequest.newBuilder().setPList("Files").build());
-				requestObserver.onNext(PrinterRequest.newBuilder().setPList("Please").build());
-				requestObserver.onNext(PrinterRequest.newBuilder().setPList("Thanks").build());
+				requestObserver.onNext(PrinterRequest.newBuilder().setPList("Walter Knutz").build());
+				requestObserver.onNext(PrinterRequest.newBuilder().setPList("Maria Stunnten").build());
+				requestObserver.onNext(PrinterRequest.newBuilder().setPList("Rodrigo Salez").build());
+				requestObserver.onNext(PrinterRequest.newBuilder().setPList("Jessica Klint").build());
+				requestObserver.onNext(PrinterRequest.newBuilder().setPList("Jeniffer Kellei").build());
 				
 				Thread.sleep(new Random().nextInt(1000) + 2000);
 
@@ -97,6 +134,6 @@ public class UtilityClient {
 	        }
 			requestObserver.onCompleted();
 	}
-}
+}*/
 
 
