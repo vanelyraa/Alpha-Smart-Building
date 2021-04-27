@@ -1,7 +1,5 @@
 package grpc.services.light;
 
-import java.util.ArrayList;
-
 public class LightData {
 	
 	private String type, typeId;
@@ -14,7 +12,7 @@ public class LightData {
 		this.type="Lighs";
 		this.on=true;
 		this.typeId="Light ID";
-		this.intensity=4;
+		this.intensity=1;
 	}
 
 	public String gettype() {
@@ -54,8 +52,7 @@ public class LightData {
 			lights = new LightData();
 		}
 		return lights;
-	}
-	
+	}	
 }
 
 
