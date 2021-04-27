@@ -10,7 +10,6 @@ import java.awt.Insets;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.RowSpec;
-
 import grpc.services.climate.ClimateServer;
 import grpc.services.climate.ClimateServiceGrpc;
 import grpc.services.climate.CoLevelRequest;
@@ -48,14 +47,12 @@ import java.awt.Label;
 import com.jgoodies.forms.factories.DefaultComponentFactory;
 import java.awt.Font;
 import java.awt.Graphics;
-
 import javax.swing.JTextField;
 import javax.jmdns.JmDNS;
 import javax.jmdns.ServiceEvent;
 import javax.jmdns.ServiceListener;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
-
 import java.awt.BorderLayout;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JTextPane;
@@ -68,6 +65,8 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.awt.Canvas;
 import java.awt.List;
@@ -95,53 +94,53 @@ import java.awt.SystemColor;
 public class SmartGUIclient{
 
 	private JFrame frame;
-	private static int climatePort,utilityPort, lightPort = 0;
-	private static String host = "localhost";
+	//private static String host = "localhost";
 	private static ClimateServiceGrpc.ClimateServiceBlockingStub cblockingStub;
 	private static ClimateServiceGrpc.ClimateServiceStub casyncStub;
-	private static ClimateServiceGrpc.ClimateServiceFutureStub cfutureStub;
+	
 	private static LightServiceGrpc.LightServiceBlockingStub lblockingStub;
 	private static LightServiceGrpc.LightServiceStub lasyncStub;
-	private static LightServiceGrpc.LightServiceFutureStub lfutureStub;
+	
 	private static UtilityServiceGrpc.UtilityServiceBlockingStub ublockingStub;
 	private static UtilityServiceGrpc.UtilityServiceStub uasyncStub;
-	private static UtilityServiceGrpc.UtilityServiceFutureStub ufutureStub;
-	public String IdLights;
+	
+	private static int climatePort = 50099;
+	private static int lightPort = 50097;
+	private static int utilityPort = 50098;
 	public JLabel lightDataId;
 	public JLabel lightDataStatus;
 	public JLabel lightDataIntensity;
-	private static JTextArea messages;
-	int randomCo = (int)(Math.random() * 50 + 1);
-	
-	
-	
+	int randomCo = (int)(Math.random() * 100 + 1);
+	private static final int MIN = 1;
+	private static final int MAX = 5;
+	private static final int DEFAULT = 3;
+	public static JTextField HTemp;
+	public static  JTextField messages;
 	
 	public static class Listener implements ServiceListener {
-	    @Override
-	    public void serviceAdded(ServiceEvent serviceEvent) {
-	        System.out.println("Service added: " + serviceEvent.getInfo());
-	    }
+        @Override
+        public void serviceAdded(ServiceEvent serviceEvent) {
+            System.out.println("Service added: " + serviceEvent.getInfo());
+        }
 
-	    @Override
-	    public void serviceRemoved(ServiceEvent serviceEvent) {
-	        System.out.println("Service removed: " + serviceEvent.getInfo());
-	    }
+        @Override
+        public void serviceRemoved(ServiceEvent serviceEvent) {
+            System.out.println("Service removed: " + serviceEvent.getInfo());
+        }
 
-	    @Override
-	    public void serviceResolved(ServiceEvent serviceEvent) {
-	        System.out.println("Service resolved: " + serviceEvent.getInfo());
-	        if (serviceEvent.getName().equals("climate")) {
-	            climatePort = serviceEvent.getInfo().getPort();
-	        } else if (serviceEvent.getName().equals("utilitiy")) {
-	            utilityPort = serviceEvent.getInfo().getPort();
-	        } else if (serviceEvent.getName().equals("light")){
-	            lightPort = serviceEvent.getInfo().getPort();
-	        }
-	        
-	        
-	    }
-	}
-	
+        @Override
+        public void serviceResolved(ServiceEvent serviceEvent) {
+            System.out.println("Service resolved: " + serviceEvent.getInfo());
+            // the ports for the connections are assigned depending on the service event info received
+            if (serviceEvent.getName().equals("climate")) {
+            	climatePort = serviceEvent.getInfo().getPort();
+            } else if (serviceEvent.getName().equals("light")) {
+            	lightPort = serviceEvent.getInfo().getPort();
+            } else if (serviceEvent.getName().equals("utility")){
+            	utilityPort = serviceEvent.getInfo().getPort();
+            }
+        }
+    }	
 	/**
 	 * Launch the application.
 	 */
@@ -167,55 +166,42 @@ public class SmartGUIclient{
 	 */
 	public SmartGUIclient() throws InterruptedException, IOException {
 		
-		/*discoverService();
-		jmndsRegister(climatePort, lightPort, utilityPort);*/
 		
 		initialize();
-		
 		ServiceRegistration reg = new ServiceRegistration();
-		reg.jmndsRegister(climatePort, lightPort, utilityPort);
-		
-		discoverService();
+		//Start Item Registry, GRPC servers and channels then unregister
+		reg.jmdnsRegister(climatePort, lightPort, utilityPort);
+		try {
+            // create a JmDNS instance
+            JmDNS jmdns = JmDNS.create(InetAddress.getLocalHost());
+            // add service listeners for User, Utilities, and News server
+            jmdns.addServiceListener("_http._tcp.local.", new SmartGUIclient.Listener());
+            jmdns.addServiceListener("_http._tcp.local.", new SmartGUIclient.Listener());
+            jmdns.addServiceListener("_http._tcp.local.", new SmartGUIclient.Listener());
+        } catch (UnknownHostException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+		ManagedChannel climatechannel = ManagedChannelBuilder.forAddress("localhost", 50099).usePlaintext().build();
+		ManagedChannel lightchannel = ManagedChannelBuilder.forAddress("localhost", 50097).usePlaintext().build();
+		ManagedChannel utilitychannel = ManagedChannelBuilder.forAddress("localhost", 50098).usePlaintext().build();
+		cblockingStub = ClimateServiceGrpc.newBlockingStub(climatechannel);
+		casyncStub = ClimateServiceGrpc.newStub(climatechannel);
+		lblockingStub = LightServiceGrpc.newBlockingStub(lightchannel);
+		lasyncStub = LightServiceGrpc.newStub(lightchannel);
+		ublockingStub = UtilityServiceGrpc.newBlockingStub(utilitychannel);
+		uasyncStub = UtilityServiceGrpc.newStub(utilitychannel);
 		reg.unRegister();
-				
-		ManagedChannel climateChannel = ManagedChannelBuilder.forAddress("localhost",climatePort).usePlaintext().build();
-		ManagedChannel lightChannel = ManagedChannelBuilder.forAddress("localhost", lightPort).usePlaintext().build();
-		ManagedChannel utilitiesChannel = ManagedChannelBuilder.forAddress("localhost", utilityPort).usePlaintext().build();
-
-		cblockingStub = ClimateServiceGrpc.newBlockingStub(climateChannel);
-		casyncStub = ClimateServiceGrpc.newStub(climateChannel);
-		cfutureStub = ClimateServiceGrpc.newFutureStub(climateChannel);
-		
-		lblockingStub = LightServiceGrpc.newBlockingStub(lightChannel);
-		lasyncStub = LightServiceGrpc.newStub(lightChannel);
-		lfutureStub = LightServiceGrpc.newFutureStub(lightChannel);
-		
-		ublockingStub = UtilityServiceGrpc.newBlockingStub(utilitiesChannel);
-		uasyncStub = UtilityServiceGrpc.newStub(utilitiesChannel);
-		ufutureStub = UtilityServiceGrpc.newFutureStub(utilitiesChannel);
-		
-		
+		//InitialItem();
 	}
+	
+	/*public void InitialItem() throws IOException, InterruptedException {
+		lighting();
+	}*/
 		
-		private void discoverService() {
-			
-			
-			try {
-				// Create a JmDNS instance
-				JmDNS jmdns = JmDNS.create(InetAddress.getLocalHost());
-
-				jmdns.addServiceListener("_climate._tcp.local.", new SmartGUIclient.Listener());
-		            jmdns.addServiceListener("_utilitiy._tcp.local.", new SmartGUIclient.Listener());
-		            jmdns.addServiceListener("_light._tcp.local.", new SmartGUIclient.Listener());
-		        } catch (UnknownHostException e) {
-		            System.out.println(e.getMessage());
-		            e.printStackTrace();
-		        } catch (IOException e) {
-		            e.printStackTrace();
-		        }
-			}
-
-
+		
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -252,30 +238,24 @@ public class SmartGUIclient{
 		ImageIcon img = new ImageIcon(this.getClass().getResource("/logo.png"));
 		logo.setIcon(img);
 		
-		JLabel climateMainLabel = new JLabel("ADJUSTS");
-		climateMainLabel.setForeground(SystemColor.desktop);
-		climateMainLabel.setBounds(32, 197, 81, 25);
-		frame.getContentPane().add(climateMainLabel);
-		climateMainLabel.setFont(new Font("Tahoma", Font.BOLD, 18));
+		JLabel adjusts = new JLabel("ADJUSTS");
+		adjusts.setForeground(SystemColor.desktop);
+		adjusts.setBounds(32, 197, 81, 25);
+		frame.getContentPane().add(adjusts);
+		adjusts.setFont(new Font("Tahoma", Font.BOLD, 18));
 		
-		JLabel utilMainLabel = new JLabel("SWITCHES");
-		utilMainLabel.setForeground(SystemColor.desktop);
-		utilMainLabel.setBounds(32, 90, 114, 25);
-		frame.getContentPane().add(utilMainLabel);
-		utilMainLabel.setFont(new Font("Tahoma", Font.BOLD, 18));
+		JLabel switches = new JLabel("SWITCHES");
+		switches.setForeground(SystemColor.desktop);
+		switches.setBounds(32, 90, 114, 25);
+		frame.getContentPane().add(switches);
+		switches.setFont(new Font("Tahoma", Font.BOLD, 18));
 		
-		JLabel lblControls = new JLabel("CONTROLS");
-		lblControls.setForeground(SystemColor.desktop);
-		lblControls.setFont(new Font("Tahoma", Font.BOLD, 18));
-		lblControls.setBounds(32, 303, 105, 25);
-		frame.getContentPane().add(lblControls);
-		
-		JTextArea messages = new JTextArea();
-		messages.setBackground(SystemColor.inactiveCaptionBorder);
-		messages.setBounds(206, 452, 181, 63);
-		messages.setEditable(false);
-		frame.getContentPane().add(messages);
-		
+		JLabel Controls = new JLabel("CONTROLS");
+		Controls.setForeground(SystemColor.desktop);
+		Controls.setFont(new Font("Tahoma", Font.BOLD, 18));
+		Controls.setBounds(32, 303, 105, 25);
+		frame.getContentPane().add(Controls);
+						
 		JSeparator separator_1 = new JSeparator();
 		separator_1.setBounds(10, 77, 395, 2);
 		frame.getContentPane().add(separator_1);
@@ -316,19 +296,30 @@ public class SmartGUIclient{
 		frame.getContentPane().add(tempLabel);
 		tempLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		
-		JToggleButton hvacOnOff = new JToggleButton("On");
+		HTemp = new JTextField();
+		HTemp.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				HvacTemperature();
+			}
+		});
+		HTemp.setBounds(277, 258, 86, 20);
+		frame.getContentPane().add(HTemp);
+		HTemp.setColumns(10);
+		
+		JToggleButton hvacOnOff = new JToggleButton("Off");
 		hvacOnOff.setFont(new Font("Tahoma", Font.BOLD, 11));
 		hvacOnOff.setBounds(166, 151, 65, 23);
 		frame.getContentPane().add(hvacOnOff);
 		hvacOnOff.setSelected(true);
 		hvacOnOff.addChangeListener(new ChangeListener() {
+			@Override
 			public void stateChanged(ChangeEvent e) {
 				if (hvacOnOff.isSelected()){
-					hvacOnOff.setText("On");
+					hvacOnOff.setText("Off");
 					Switch(true);
 
 	            } else {
-	            	hvacOnOff.setText("Off");
+	            	hvacOnOff.setText("On");
 	            	Switch(false);
 	            }
 			}
@@ -344,32 +335,6 @@ public class SmartGUIclient{
 		coButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				checkCO();
-			}
-		});
-		
-		JButton tempPlus = new JButton("+");
-		tempPlus.setFont(new Font("Tahoma", Font.BOLD, 11));
-		tempPlus.setBorderPainted(false);
-		tempPlus.setBackground(SystemColor.activeCaption);
-		tempPlus.setBounds(277, 258, 41, 23);
-		frame.getContentPane().add(tempPlus);
-		tempPlus.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				System.out.println(+1);
-				HvacTemperature(1);
-			}
-		});
-		
-		JButton tempMinus = new JButton("-");
-		tempMinus.setFont(new Font("Tahoma", Font.BOLD, 11));
-		tempMinus.setBorderPainted(false);
-		tempMinus.setBackground(SystemColor.activeCaption);
-		tempMinus.setBounds(313, 258, 41, 23);
-		frame.getContentPane().add(tempMinus);
-		tempMinus.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				System.out.println(-1);
-				HvacTemperature(-1);
 			}
 		});
 		
@@ -396,7 +361,7 @@ public class SmartGUIclient{
 		frame.getContentPane().add(cameraLabel);
 		cameraLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		
-		JToggleButton deviceOnOff = new JToggleButton("On");
+		JToggleButton deviceOnOff = new JToggleButton("Off");
 		deviceOnOff.setFont(new Font("Tahoma", Font.BOLD, 11));
 		deviceOnOff.setBounds(32, 150, 62, 23);
 		frame.getContentPane().add(deviceOnOff);
@@ -404,11 +369,11 @@ public class SmartGUIclient{
 		deviceOnOff.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				if (deviceOnOff.isSelected()){
-					deviceOnOff.setText("On");
+					deviceOnOff.setText("Off");
 					switchDevices(true);
 	            } 
 				 else {
-					 deviceOnOff.setText("Off");
+					 deviceOnOff.setText("On");
 					 switchDevices(false);
 	            }
 			}
@@ -427,7 +392,7 @@ public class SmartGUIclient{
 		printLabel.setBounds(91, 379, 75, 23);
 		frame.getContentPane().add(printLabel);
 		
-		JToggleButton cameraOnOff = new JToggleButton("On");
+		JToggleButton cameraOnOff = new JToggleButton("Off");
 		cameraOnOff.setFont(new Font("Tahoma", Font.BOLD, 11));
 		cameraOnOff.setBounds(304, 151, 59, 23);
 		frame.getContentPane().add(cameraOnOff);
@@ -435,11 +400,11 @@ public class SmartGUIclient{
 		cameraOnOff.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				if (cameraOnOff.isSelected()){
-					cameraOnOff.setText("On");
+					cameraOnOff.setText("Off");
 					switchCameraOn(true);
 	            } 
 				 else {
-					 cameraOnOff.setText("Off");
+					 cameraOnOff.setText("On");
 					 switchCameraOn(false);
 	            }
 			}
@@ -481,33 +446,7 @@ public class SmartGUIclient{
 		receptionlight.setBounds(213, 420, 75, 14);
 		frame.getContentPane().add(receptionlight);
 				
-		JButton intensPlus = new JButton("+");
-		intensPlus.setFont(new Font("Tahoma", Font.BOLD, 11));
-		intensPlus.setBorderPainted(false);
-		intensPlus.setBackground(SystemColor.activeCaption);
-		intensPlus.setBounds(32, 258, 41, 23);
-		frame.getContentPane().add(intensPlus);
-		intensPlus.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				System.out.println(+1);
-				lightIntensity(1);
-			}
-		});
-		
-		JButton intensMinus = new JButton("-");
-		intensMinus.setFont(new Font("Tahoma", Font.BOLD, 11));
-		intensMinus.setBorderPainted(false);
-		intensMinus.setBackground(SystemColor.activeCaption);
-		intensMinus.setBounds(72, 258, 41, 23);
-		frame.getContentPane().add(intensMinus);
-		intensMinus.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				System.out.println(-1);
-				lightIntensity(-1);
-			}
-		});
-				
-		JToggleButton of1lightbutton = new JToggleButton("On");
+		JToggleButton of1lightbutton = new JToggleButton("Off");
 		of1lightbutton.setFont(new Font("Tahoma", Font.BOLD, 11));
 		of1lightbutton.setBounds(295, 339, 59, 23);
 		frame.getContentPane().add(of1lightbutton);
@@ -516,18 +455,18 @@ public class SmartGUIclient{
 			
 			public void stateChanged(ChangeEvent e) {
 				if (of1lightbutton.isSelected()){
-					of1lightbutton.setText("On");
+					of1lightbutton.setText("Off");
 					LightsOnOff(true);
 	            } 
 				 else {
-					 of1lightbutton.setText("Off");
+					 of1lightbutton.setText("On");
 					 LightsOnOff(false);
 	            }
 				
 			}
 		});
 				
-		JToggleButton of2lightbutton = new JToggleButton("On");
+		JToggleButton of2lightbutton = new JToggleButton("Off");
 		of2lightbutton.setFont(new Font("Tahoma", Font.BOLD, 11));
 		of2lightbutton.setSelected(true);
 		of2lightbutton.setBounds(295, 379, 59, 23);
@@ -536,36 +475,62 @@ public class SmartGUIclient{
 			
 			public void stateChanged(ChangeEvent e) {
 				if (of2lightbutton.isSelected()){
-					of2lightbutton.setText("On");
+					of2lightbutton.setText("Off");
 					LightsOnOff(true);
 	            } 
 				 else {
-					 of2lightbutton.setText("Off");
+					 of2lightbutton.setText("On");
 					 LightsOnOff(false);
 	            }
 				
 			}
 		});
 		
-		JToggleButton reclightbutton = new JToggleButton("On");
+		JToggleButton reclightbutton = new JToggleButton("Off");
 		reclightbutton.setFont(new Font("Tahoma", Font.BOLD, 11));
 		reclightbutton.setSelected(true);
 		reclightbutton.setBounds(295, 418, 59, 23);
 		frame.getContentPane().add(reclightbutton);
 		reclightbutton.addChangeListener(new ChangeListener() {
+		public void stateChanged(ChangeEvent e) {
+			if (reclightbutton.isSelected()){
+				reclightbutton.setText("Off");
+				LightsOnOff(true);
+            } 
+			 else {
+				 reclightbutton.setText("On");
+				 LightsOnOff(false);
+            }
 			
+		}
+	});
+		
+		JSlider sliderbritness = new JSlider(JSlider.HORIZONTAL,MIN, MAX, DEFAULT);
+		sliderbritness.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
-				if (reclightbutton.isSelected()){
-					reclightbutton.setText("On");
-					LightsOnOff(true);
-	            } 
-				 else {
-					 reclightbutton.setText("Off");
-					 LightsOnOff(false);
-	            }
-				
+				lightIntensity(sliderbritness.getValue());
 			}
 		});
+		sliderbritness.setBounds(32, 258, 200, 26);
+		frame.getContentPane().add(sliderbritness);
+				sliderbritness.setMajorTickSpacing(5);
+				sliderbritness.setMinorTickSpacing(1);
+				sliderbritness.setPaintTicks(true);
+				sliderbritness.setPaintLabels(true);
+			
+		
+		
+		messages = new JTextField();
+		messages.setBounds(219, 471, 168, 33);
+		frame.getContentPane().add(messages);
+		messages.setColumns(10);
+		
+		
+		
+		
+		
+			
+			
 	}
 	
 	/**
@@ -589,17 +554,58 @@ public class SmartGUIclient{
 			return;
 		}
 		if (response.getPower()) {
-			System.out.println("HVAC on");
-			messages.setText("HVAC on");
+			//System.out.println("HVAC on");
+			messages.setText("HVAC off");
 		}
 		else {
-			System.out.println("HVAC off");
-			messages.setText("HVAC off");
+			//System.out.println("HVAC off");
+			messages.setText("HVAC on");
 		}
 	}
 
-	public static void HvacTemperature(int temperature){
-		HvacRequest request = HvacRequest.newBuilder().setTemp(temperature).build();
+	public static void HvacTemperature(){
+		int newTemp = Integer.parseInt(HTemp.getText().toString());
+		HvacRequest request = HvacRequest.newBuilder().setTemp(newTemp).build();
+		
+		System.out.println("Requesting to set office aircon to "+newTemp+"°C");
+		
+		StreamObserver<HvacResponse> responseObserver = new StreamObserver<HvacResponse>() {
+			
+			@Override
+			public void onNext(HvacResponse value) {
+				if(newTemp > 35 || newTemp < 15 ) {//start if
+					messages.setText("Select temperature between 15°C and 35°C: ");
+					//System.out.println("Select temperature between 15°C and 35°C: ");
+				} else {
+				messages.setText("\nChanging to: "+value.getTemp()+"°C");
+				//System.out.println("Changing to: "+value.getTemp()+"°C");
+			}
+			}
+
+			@Override
+			public void onError(Throwable t) {
+				t.printStackTrace();
+
+			}
+
+			@Override
+			public void onCompleted() {
+				//System.out.println("Reached the selected temperature: "+newTemp+"°C");
+				messages.setText("\nTemperature acheived: "+newTemp+"°C");
+			}
+		};
+		
+		casyncStub.hvacTemperature(request, responseObserver);
+		
+		// stops the thread after 3 seconds
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+		
+		/*HvacRequest request = HvacRequest.newBuilder().setTemp(temperature).build();
 		System.out.println("Seting room temperature");
 
 		StreamObserver<HvacResponse> responseObserver = new StreamObserver<HvacResponse>() {
@@ -627,7 +633,7 @@ public class SmartGUIclient{
 
 		casyncStub.hvacTemperature(request, responseObserver);
 		
-			}
+			}*/
 	
 	public void checkCO(){
 		int CoNow = randomCo;
@@ -641,14 +647,16 @@ public class SmartGUIclient{
 			return;
 		}
 		if (CoNow > 40) {
-			System.out.println("Co level is: " + response.getLevel() + "now");
-			System.out.println("High level of CO, extractor on!");
-			messages.setText("Co level is: " + response.getLevel() + "now");
-			messages.append("High level of CO, extractor on!");
+			//System.out.println("Co level: " + response.getLevel());
+			//System.out.println("High level of CO, extractor on!");
+			messages.setText("Co level: " + response.getLevel());
+			messages.setText("High level of CO, extractor on!");
 		}
 		else {
-			System.out.println("CO level OK!");
-			messages.append("CO level OK!");
+			//System.out.println("Co level: " + response.getLevel());
+			messages.setText("Co level: " + response.getLevel());
+			//System.out.println("CO level OK!");
+			messages.setText("CO level OK!");
 		}	
 		
 	}
@@ -671,9 +679,9 @@ public class SmartGUIclient{
 			return;
 		}
 		String intens = String.valueOf(response.getIntensity());
-		lightDataId.setText("LightID: " + response.getLightId());
+		/*lightDataId.setText("LightID: " + response.getLightId());
 		lightDataStatus.setText("Light status: " + response.getStatus());
-		lightDataIntensity.setText("Brightness: " + intens);		
+		lightDataIntensity.setText("Brightness: " + intens);	*/	
 	}
 
 	public void LightsOnOff(boolean OnOffL){
@@ -692,17 +700,58 @@ public class SmartGUIclient{
 		// print appropriate message depending on response
 		Boolean statusLight = response.getSwitch();
 		if (statusLight) {
-			lightDataStatus.setText("Lights turned on!");
-			messages.setText("Lights on!");
+
+			messages.setText("Lights off!");
 		}
 		else {
-			lightDataStatus.setText("Lights off!");
-			messages.setText("Lights off!");
+
+			messages.setText("Lights on!");
 		}
 	}
 	
 	public void lightIntensity(int bright){
-		StreamObserver<IntensityResponse> responseObserver = new StreamObserver<IntensityResponse>() {
+final CountDownLatch finishLatch = new CountDownLatch(1);
+		
+		StreamObserver<IntensityRequest> requestObserver = lasyncStub.withDeadlineAfter(5, TimeUnit.SECONDS)
+				.lightIntensity(new StreamObserver<IntensityResponse>() {
+					@Override
+					public void onNext(IntensityResponse value) {
+						//System.out.println(value);
+						messages.setText("\nFinal Light Setting: "+value.getIntensity());
+					}
+					@Override
+					public void onError(Throwable t) {
+						t.printStackTrace();
+						finishLatch.countDown();
+					}
+					@Override
+					public void onCompleted() {
+						//System.out.println("Lights set");
+						messages.setText("\nLighting adjustment completed");
+						finishLatch.countDown();
+					}
+				});
+		
+		
+		try {
+			// simulation of light adjustment request stream from the client
+			requestObserver.onNext(IntensityRequest.newBuilder().setIntensity(bright).build());
+			/*requestObserver.onNext(IntensityRequest.newBuilder().setIntensity(bright+1).build());
+			requestObserver.onNext(IntensityRequest.newBuilder().setIntensity(bright+2).build());
+			requestObserver.onNext(IntensityRequest.newBuilder().setIntensity(bright+3).build());*/
+			
+			Thread.sleep(1500);
+			
+		} catch (RuntimeException e) {
+			requestObserver.onError(e);
+			throw e;
+		} catch(InterruptedException e) {
+			e.printStackTrace();
+		}
+		requestObserver.onCompleted();		
+	}
+	
+		/*StreamObserver<IntensityResponse> responseObserver = new StreamObserver<IntensityResponse>() {
 
 			@Override
 			public void onNext(IntensityResponse value) {
@@ -728,7 +777,7 @@ public class SmartGUIclient{
 			// send a stream of requests
 			requestObserver.onNext(IntensityRequest.newBuilder().setIntensity(bright).build());
 			System.out.println("Lights brightness changed");
-			messages.append("Lights brightness changed");
+			messages.setText("Lights brightness changed");
 						
 			Thread.sleep(new Random().nextInt(2000) + 1000);
 			// catch any errors
@@ -739,7 +788,7 @@ public class SmartGUIclient{
                 e.printStackTrace();
         }
 		requestObserver.onCompleted();
-	}
+	}*/
 	
 	/**
 	 * DEVICES SERVICES
@@ -758,12 +807,12 @@ public class SmartGUIclient{
 			return;
 		}
 		if (response.getDevices()) {
-			System.out.println("Devices on");
-			messages.setText("Devices on");
+			//System.out.println("Devices on");
+			messages.setText("Devices off");
 		}
 		else {
-			System.out.println("Devices off");
-			messages.setText("Devices off");
+			//System.out.println("Devices off");
+			messages.setText("Devices on");
 		}
 	}
 		
@@ -781,12 +830,12 @@ public class SmartGUIclient{
 			return;
 		}
 		if (response.getCamera()) {
-			System.out.println("Camera on!");
-			messages.setText("Camera on!");
+			//System.out.println("Camera off!");
+			messages.setText("Camera off!");
 		}
 		else {
-			System.out.println("Camera off!");
-			messages.setText("Camera off!");
+			//System.out.println("Camera on!");
+			messages.setText("Camera on!");
 		}
 	}
 	
@@ -798,7 +847,7 @@ public class SmartGUIclient{
 
 			@Override
 			public void onNext(PrinterResponse value) {
-				System.out.println("Printing updated visit list: " + value.getPList());
+				//System.out.println("Printing updated visit list: " + value.getPList());
 				messages.setText("Printing updated visit list: " + value.getPList());
 				listOfVisits.add(value.getPList());
 			}
@@ -813,8 +862,8 @@ public class SmartGUIclient{
 			@Override
 			public void onCompleted() {
 				 
-	               System.out.println("\nList completed");
-	               messages.append("\nList completed");
+	               //System.out.println("\nList completed");
+	               messages.setText("\nList completed");
 			}
 
 		};
@@ -839,16 +888,14 @@ public class SmartGUIclient{
 				
 				
 			requestObserver.onCompleted();
-			System.out.println("\nVisitor List: " + listOfVisits.size());
+			//System.out.println("\nVisitor List: " + listOfVisits.size());
+			messages.setText("\nVisitor List: " + listOfVisits.size());
             for(String visits : listOfVisits) {
-            	System.out.println(visits);
-            	System.out.println(visits);
-                messages.append(visits);
+            	//System.out.println(visits);
+            	JOptionPane.showMessageDialog(null, visits);
             }
 				
 	}
-
-	
 }
 
 				
