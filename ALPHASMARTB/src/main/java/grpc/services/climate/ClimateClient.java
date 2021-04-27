@@ -1,7 +1,7 @@
 package grpc.services.climate;
 
 
-import java.io.IOException;
+/*import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
@@ -19,13 +19,49 @@ public class ClimateClient {
 	private static ClimateServiceGrpc.ClimateServiceBlockingStub cblockingStub;
 	private static ClimateServiceGrpc.ClimateServiceStub casyncStub;
 	
+	public static class Listener implements ServiceListener {
+        @Override
+        public void serviceAdded(ServiceEvent serviceEvent) {
+            System.out.println("Service added: " + serviceEvent.getInfo());
+        }
+
+        @Override
+        public void serviceRemoved(ServiceEvent serviceEvent) {
+            System.out.println("Service removed: " + serviceEvent.getInfo());
+        }
+
+        @Override
+        public void serviceResolved(ServiceEvent serviceEvent) {
+            System.out.println("Service resolved: " + serviceEvent.getInfo());
+            ServiceInfo info = serviceEvent.getInfo();
+            final int Port = serviceEvent.getInfo().getPort();
+            String address = info.getHostAddresses()[0];
+            //String address = "localhost";
+            
+            
+        }
+    }
+	
+	
 	public static void main(String[] args) throws IOException, InterruptedException{
 		
-		ManagedChannel climatechannel = ManagedChannelBuilder.forAddress("localhost", 50051).usePlaintext().build();
+		ManagedChannel climatechannel = ManagedChannelBuilder.forAddress("localhost", 50099).usePlaintext().build();
 
 		cblockingStub = ClimateServiceGrpc.newBlockingStub(climatechannel);
 		casyncStub = ClimateServiceGrpc.newStub(climatechannel);
 		
+		try {
+			// Create a JmDNS instance
+			JmDNS jmdns = JmDNS.create(InetAddress.getLocalHost());
+
+			// Add a service listener
+			jmdns.addServiceListener("_http._tcp.local.", new Listener());
+
+		} catch (UnknownHostException e) {
+			System.out.println(e.getMessage());
+		} catch (IOException e) {
+			System.out.println(e.getMessage());
+		}
 		
 		HvacOnOff();
 		HvacTemperature();
@@ -48,14 +84,20 @@ public class ClimateClient {
 	}
 
 	public static void HvacTemperature(){
+		
 		HvacRequest request = HvacRequest.newBuilder().setTemp(20).build();
-		System.out.println("Set room temperature to " + request + " C");
+		int newTemp = request.getTemp();
+		System.out.println("Set room temperature to " + request.getTemp() + " °C");
 
 		StreamObserver<HvacResponse> responseObserver = new StreamObserver<HvacResponse>() {
 
 			@Override
 			public void onNext(HvacResponse tempNew) {
-				System.out.println("Temperature changed: " + tempNew + " C");
+				if(newTemp > 35 || newTemp < 15 ) {//start if
+					System.out.println("Select temperature between 15°C and 35°C: ");
+				} else {
+				System.out.println("Temperature changed: " + tempNew.getTemp() + " °C");
+			}
 			}
 	
 			@Override
@@ -65,7 +107,7 @@ public class ClimateClient {
 	
 			@Override
 			public void onCompleted() {
-				System.out.println("completed ");
+				System.out.println("Room reached the selected temperature: "+request.getTemp()+"°C");
 			}
 
 		};
@@ -94,4 +136,4 @@ public class ClimateClient {
 			System.out.println("Extractor off!");
 		}
 	}
-}
+}*/
