@@ -1,6 +1,6 @@
 package grpc.services.light;
 
-import java.io.IOException;
+/*import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Random;
@@ -19,12 +19,48 @@ public class LightClient {
 	private static LightServiceGrpc.LightServiceBlockingStub lblockingStub;
 	private static LightServiceGrpc.LightServiceStub lasyncStub;
 	
+	public static class Listener implements ServiceListener {
+        @Override
+        public void serviceAdded(ServiceEvent serviceEvent) {
+            System.out.println("Service added: " + serviceEvent.getInfo());
+        }
+
+        @Override
+        public void serviceRemoved(ServiceEvent serviceEvent) {
+            System.out.println("Service removed: " + serviceEvent.getInfo());
+        }
+
+        @Override
+        public void serviceResolved(ServiceEvent serviceEvent) {
+            System.out.println("Service resolved: " + serviceEvent.getInfo());
+            ServiceInfo info = serviceEvent.getInfo();
+            final int Port = serviceEvent.getInfo().getPort();
+            String address = info.getHostAddresses()[0];
+            //String address = "localhost";
+            
+            
+        }
+    }
+		
 	public static void main(String[] args) throws Exception {
 		// TODO Auto-generated method stub
-		ManagedChannel lightchannel = ManagedChannelBuilder.forAddress("localhost", 50053).usePlaintext().build();
+		ManagedChannel lightchannel = ManagedChannelBuilder.forAddress("localhost", 50097).usePlaintext().build();
 
 		lblockingStub = LightServiceGrpc.newBlockingStub(lightchannel);
 		lasyncStub = LightServiceGrpc.newStub(lightchannel);
+		
+		try {
+			// Create a JmDNS instance
+			JmDNS jmdns = JmDNS.create(InetAddress.getLocalHost());
+
+			// Add a service listener
+			jmdns.addServiceListener("_http._tcp.local.", new Listener());
+
+		} catch (UnknownHostException e) {
+			System.out.println(e.getMessage());
+		} catch (IOException e) {
+			System.out.println(e.getMessage());
+		}
 		
 		lighting();
 		LightsOnOff();
@@ -87,13 +123,13 @@ public class LightClient {
 		StreamObserver<IntensityRequest> requestObserver = lasyncStub.lightIntensity(responseObserver);
 		try {
 			// send a stream of requests
-			requestObserver.onNext(IntensityRequest.newBuilder().setIntensity(50).build());
+			requestObserver.onNext(IntensityRequest.newBuilder().setIntensity(1).build());
 			System.out.println("Lights brightness changed");
-			requestObserver.onNext(IntensityRequest.newBuilder().setIntensity(60).build());
+			requestObserver.onNext(IntensityRequest.newBuilder().setIntensity(3).build());
 			System.out.println("Lights brightness changed");
-			requestObserver.onNext(IntensityRequest.newBuilder().setIntensity(80).build());
+			requestObserver.onNext(IntensityRequest.newBuilder().setIntensity(2).build());
 			System.out.println("Lights brightness changed");
-			requestObserver.onNext(IntensityRequest.newBuilder().setIntensity(100).build());
+			requestObserver.onNext(IntensityRequest.newBuilder().setIntensity(5).build());
 			System.out.println("Lights brightness changed");
 			
 			
@@ -108,5 +144,5 @@ public class LightClient {
 		requestObserver.onCompleted();
 	}
 	
-}
+}*/
 
