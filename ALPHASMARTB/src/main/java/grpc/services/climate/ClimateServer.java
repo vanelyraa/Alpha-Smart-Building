@@ -2,50 +2,45 @@ package grpc.services.climate;
 
 import java.io.IOException;
 import java.net.InetAddress;
-import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
-import java.util.logging.Logger;
-
 import javax.jmdns.JmDNS;
-import javax.jmdns.ServiceEvent;
 import javax.jmdns.ServiceInfo;
-import javax.jmdns.ServiceListener;
-
 import grpc.services.climate.ClimateServiceGrpc.ClimateServiceImplBase;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import io.grpc.stub.StreamObserver;
 
-public class ClimateServer extends ClimateServiceImplBase  {
+public class ClimateServer extends ClimateServiceImplBase{
 	
-	public static void main(String[] args) throws IOException, InterruptedException {
-	
-	System.out.println("Starting gRPC Climate Server");
-	
-	// Create & Register utilities service with jmDNS
-	try {
-		int PORT = 50051;
-		JmDNS jmdns = JmDNS.create(InetAddress.getLocalHost());
-        ServiceInfo serviceInfo = ServiceInfo.create("_climate._tcp.local.", "climate", PORT, "Climate server");
-        jmdns.registerService(serviceInfo);
-        ClimateServer climateServer = new ClimateServer();
-        Server server = ServerBuilder.forPort(PORT)
-                .addService(climateServer)
-                .build()
-                .start();
-        System.out.println("Climate server started, listening on " + PORT);
-        server.awaitTermination();
-        
-	} catch (UnknownHostException e) {
-		System.out.println(e.getMessage());
-        e.printStackTrace();
-	} catch (IOException e) {
-        System.out.println(e.getMessage());
-        e.printStackTrace();
-    }
-	
-}
-	
+public static void main(String[] args) throws IOException, InterruptedException {
+		
+		System.out.println("Starting gRPC Climate Server");
+		
+		
+		try {
+			int PORT = 50099;
+			JmDNS jmdns = JmDNS.create(InetAddress.getLocalHost());
+			ServiceInfo serviceClimate = ServiceInfo.create("_http._tcp.local.", "climate", 50099, "path=index.html");
+	        jmdns.registerService(serviceClimate);
+	        ClimateServer climateServer = new ClimateServer();
+	        Server server = ServerBuilder.forPort(PORT)
+                    .addService(climateServer)
+                    .build()
+                    .start();
+            System.out.println("Climate server started, listening on " + PORT);
+            server.awaitTermination();
+            
+		} catch (UnknownHostException e) {
+			System.out.println(e.getMessage());
+            e.printStackTrace();
+		} catch (IOException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+		
+	}
+
+
 	@Override
 	public void hvacOnOff(SwitchRequest request, StreamObserver<SwitchResponse> responseObserver) {
 		
@@ -68,16 +63,41 @@ public class ClimateServer extends ClimateServiceImplBase  {
 
 	@Override
 	public void hvacTemperature(HvacRequest request, StreamObserver<HvacResponse> responseObserver) {
+int newTemp = request.getTemp();
+		
+		System.out.println("Receiving request to change temperature to: "+ newTemp +"°C");
+		try {
+			HvacResponse response = HvacResponse.newBuilder().setTemp(newTemp+3).build();
+			HvacResponse response1 = HvacResponse.newBuilder().setTemp(newTemp-1).build();
+			HvacResponse response2 = HvacResponse.newBuilder().setTemp(newTemp).build();
+			
+			// delaying the response to simulate the system heating to the desired temperature
+			try {
+	            Thread.sleep(2000);
+	        } catch (InterruptedException e) {
+	            e.printStackTrace();
+	        }
+			 responseObserver.onNext(response);
+			 try {
+	            Thread.sleep(2000);
+	        } catch (InterruptedException e) {
+	            e.printStackTrace();
+	        }
+			 responseObserver.onNext(response1);
+			 try {
+	            Thread.sleep(2000);
+	        } catch (InterruptedException e) {
+	            e.printStackTrace();
+	        }
+			 responseObserver.onNext(response2);
+		} catch (Error e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
 
-		int newTemp = request.getTemp();
-		 System.out.println("Requested temperature change to -> " + newTemp + " C");
-		 System.out.println("Temperature adjusted");
-		 responseObserver.onNext(HvacResponse.newBuilder().setTemp(newTemp).build());
-		 
-		 responseObserver.onCompleted();
-
+		responseObserver.onCompleted();
 	}
-
+	
 	@Override
 	public void checkCO(CoLevelRequest request, StreamObserver<ExtractionResponse> responseObserver) {
 
@@ -87,19 +107,19 @@ public class ClimateServer extends ClimateServiceImplBase  {
        
         if (CoLv > 40) {
         	responseObserver.onNext(ExtractionResponse.newBuilder().setLevel(CoLv).build());
-        	System.out.println("Turn extraction on!");
-        	
-        }
+        	System.out.println("CO level is: " + CoLv);
+        		System.out.println("High level of CO, extractor is on!");
+		}      
         else {
         	responseObserver.onNext(ExtractionResponse.newBuilder().setLevel(CoLv).build());
-        	System.out.println("Turn extraction off!");
+        	System.out.println("CO level OK!");
         }
         
-        //ExtractionResponse response = ExtractionResponse.newBuilder().setLevel(CoLv).build();
-        //System.out.println("this is response   "+response);
-        //responseObserver.onNext(response);
         responseObserver.onCompleted();
 
 	}
+
+
+	
 
 }
