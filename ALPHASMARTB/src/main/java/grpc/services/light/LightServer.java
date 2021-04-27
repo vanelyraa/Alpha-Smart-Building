@@ -3,13 +3,8 @@ package grpc.services.light;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.logging.Logger;
-
 import javax.jmdns.JmDNS;
-import javax.jmdns.ServiceEvent;
 import javax.jmdns.ServiceInfo;
-import javax.jmdns.ServiceListener;
-
 import grpc.services.light.LightServiceGrpc.LightServiceImplBase;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
@@ -17,40 +12,39 @@ import io.grpc.stub.StreamObserver;
 
 public class LightServer extends LightServiceImplBase {
 	
-	public LightData myLightdata = new LightData();
+	LightData myLightdata = new LightData();
 	
-	public static void main(String[] args) throws IOException, InterruptedException {
-	
-	System.out.println("Starting gRPC Utilities Server");
-	
-	// Create & Register utilities service with jmDNS
-	try {
-		int PORT = 50053;
-		JmDNS jmdns = JmDNS.create(InetAddress.getLocalHost());
-        ServiceInfo serviceInfo = ServiceInfo.create("_light._tcp.local.", "light", PORT, "Light server");
-        jmdns.registerService(serviceInfo);
-        LightServer lightServer = new LightServer();
-        Server server = ServerBuilder.forPort(PORT)
-                .addService(lightServer)
-                .build()
-                .start();
-        System.out.println("Light server started, listening on " + PORT);
-        server.awaitTermination();
-        
-	} catch (UnknownHostException e) {
-		System.out.println(e.getMessage());
-        e.printStackTrace();
-	} catch (IOException e) {
-        System.out.println(e.getMessage());
-        e.printStackTrace();
-    }
-	
-}
+public static void main(String[] args) throws IOException, InterruptedException {
+		
+		System.out.println("Starting gRPC Lights Server");
+		
+		try {
+			int PORT = 50097;
+			JmDNS jmdns = JmDNS.create(InetAddress.getLocalHost());
+			ServiceInfo serviceLight = ServiceInfo.create("_http._tcp.local.", "light", 50097,"path=index.html");
+	        jmdns.registerService(serviceLight);
+	        LightServer lightServer = new LightServer();
+	        Server server = ServerBuilder.forPort(PORT)
+                    .addService(lightServer)
+                    .build()
+                    .start();
+            System.out.println("Light server started, listening on " + PORT);
+            server.awaitTermination();
+            
+		} catch (UnknownHostException e) {
+			System.out.println(e.getMessage());
+            e.printStackTrace();
+		} catch (IOException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+		
+	}
 	
 	@Override
 	public void lighting(Empty request, StreamObserver<LightingResponse> responseObserver) {
 		
-		System.out.println("Receiving light request");
+		//System.out.println("Receiving request to turn on lights");
 		String status;
 		
 		if(myLightdata.isOn()) {
@@ -74,10 +68,16 @@ public class LightServer extends LightServiceImplBase {
 	@Override
 	public void lightsOnOff(LightsRequest request, StreamObserver<LightsResponse> responseObserver) {
 		
-		System.out.println("Request received to turn On/Off Lights");
+		System.out.println("Receiving request to turn On Lights");
 		
 		Boolean OnOffL = request.getSwitch();
-		myLightdata.setOn(OnOffL);
+		if (OnOffL) {
+        	System.out.println("Setting light on!");
+        }
+        else {
+        	System.out.println("Setting light off!");
+        }
+		
 		
 		//print out
 		LightsResponse response = LightsResponse.newBuilder().setSwitch(OnOffL).build();
@@ -95,7 +95,7 @@ public class LightServer extends LightServiceImplBase {
 			public void onNext(IntensityRequest value) {
 				// Print the request when received
 				intensity = value.getIntensity();
-				System.out.println("Lights intensity changed to -> " + intensity);
+				System.out.println("Lights intensity changed: " + intensity);
 			}
 			
 			public void onError(Throwable t) {
