@@ -25,26 +25,23 @@ public static void main(String[] args) throws IOException, InterruptedException 
 	        jmdns.registerService(serviceLight);
 	        LightServer lightServer = new LightServer();
 	        Server server = ServerBuilder.forPort(PORT)
-                    .addService(lightServer)
-                    .build()
-                    .start();
+	        	.addService(lightServer)
+                .build()
+                .start();
             System.out.println("Light server started, listening on " + PORT);
-            server.awaitTermination();
-            
+            server.awaitTermination();            
 		} catch (UnknownHostException e) {
 			System.out.println(e.getMessage());
             e.printStackTrace();
 		} catch (IOException e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
-        }
-		
+        }		
 	}
 	
 	@Override
 	public void lighting(Empty request, StreamObserver<LightingResponse> responseObserver) {
 		
-		//System.out.println("Receiving request to turn on lights");
 		String status;
 		
 		if(myLightdata.isOn()) {
@@ -56,13 +53,11 @@ public static void main(String[] args) throws IOException, InterruptedException 
 		
 		String lId = myLightdata.gettypeId();
 		String lStatus = status;
-		Integer lIntensity = myLightdata.getIntensity();
+		Integer lIntensity = myLightdata.getIntensity();		
 		
-		//print out
 		LightingResponse response = LightingResponse.newBuilder().setLightId(lId).setStatus(lStatus).setIntensity(lIntensity).build();
 		responseObserver.onNext(response);
-		responseObserver.onCompleted();
-		
+		responseObserver.onCompleted();		
 	}
 
 	@Override
@@ -72,14 +67,12 @@ public static void main(String[] args) throws IOException, InterruptedException 
 		
 		Boolean OnOffL = request.getSwitch();
 		if (OnOffL) {
-        	System.out.println("Setting light on!");
-        }
-        else {
         	System.out.println("Setting light off!");
         }
+        else {
+        	System.out.println("Setting light on!");
+        }		
 		
-		
-		//print out
 		LightsResponse response = LightsResponse.newBuilder().setSwitch(OnOffL).build();
 		responseObserver.onNext(response);
 		responseObserver.onCompleted();
@@ -89,11 +82,9 @@ public static void main(String[] args) throws IOException, InterruptedException 
 	public StreamObserver<IntensityRequest> lightIntensity(StreamObserver<IntensityResponse> responseObserver) {
 		
 		return new StreamObserver<IntensityRequest>() {
-			// Setting a variable to be used
 			int intensity = 0;
 			
 			public void onNext(IntensityRequest value) {
-				// Print the request when received
 				intensity = value.getIntensity();
 				System.out.println("Lights intensity changed: " + intensity);
 			}
@@ -102,8 +93,7 @@ public static void main(String[] args) throws IOException, InterruptedException 
 				t.printStackTrace();
 			}
 
-			public void onCompleted() {
-				// Send the response
+			public void onCompleted() {				
 				IntensityResponse response = IntensityResponse.newBuilder().setIntensity(intensity).build();
 				responseObserver.onNext(response);
 				responseObserver.onCompleted();
