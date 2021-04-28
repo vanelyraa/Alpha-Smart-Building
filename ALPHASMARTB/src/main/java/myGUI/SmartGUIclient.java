@@ -52,6 +52,8 @@ import java.awt.Color;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 import java.awt.SystemColor;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 
 public class SmartGUIclient{
 
@@ -72,7 +74,7 @@ public class SmartGUIclient{
 	private static final int MIN = 1;
 	private static final int MAX = 5;
 	private static final int DEFAULT = 1;
-	public static JTextField HTemp;
+	public static JSpinner HTemp;
 	public static  JTextField messages;
 	
 	public static class Listener implements ServiceListener {
@@ -155,7 +157,7 @@ public class SmartGUIclient{
 		ublockingStub = UtilityServiceGrpc.newBlockingStub(utilitychannel);
 		uasyncStub = UtilityServiceGrpc.newStub(utilitychannel);
 		
-		reg.unRegister();		
+		//reg.unRegister();		
 	}
 	
 		
@@ -172,7 +174,7 @@ public class SmartGUIclient{
 		
 		frame = new JFrame("Alpha Smart dashboard");
 		frame.getContentPane().setForeground(new Color(255, 228, 225));
-		frame.setBounds(100, 100, 413, 566);
+		frame.setBounds(100, 100, 406, 580);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		frame.getContentPane().setBackground(SystemColor.inactiveCaptionBorder);
@@ -190,7 +192,7 @@ public class SmartGUIclient{
 		homeWelcome.setFont(new Font("Tahoma", Font.BOLD, 15));
 		
 		JLabel logo = new JLabel("");
-		logo.setBounds(0, 406, 166, 128);
+		logo.setBounds(2, 390, 166, 128);
 		frame.getContentPane().add(logo);
 		ImageIcon img = new ImageIcon(this.getClass().getResource("/logo.png"));
 		logo.setIcon(img);
@@ -227,11 +229,12 @@ public class SmartGUIclient{
 		
 		JSeparator separator_3 = new JSeparator();
 		separator_3.setOrientation(SwingConstants.VERTICAL);
-		separator_3.setBounds(194, 306, 2, 209);
+		separator_3.setBounds(194, 306, 2, 212);
 		frame.getContentPane().add(separator_3);
 		
 		messages = new JTextField();
-		messages.setBounds(219, 471, 168, 33);
+		messages.setBackground(SystemColor.inactiveCaptionBorder);
+		messages.setBounds(2, 518, 385, 25);
 		frame.getContentPane().add(messages);
 		messages.setColumns(10);
 				
@@ -258,16 +261,6 @@ public class SmartGUIclient{
 		frame.getContentPane().add(tempLabel);
 		tempLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		
-		HTemp = new JTextField();
-		HTemp.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				HvacTemperature();
-			}
-		});
-		HTemp.setBounds(277, 258, 86, 20);
-		frame.getContentPane().add(HTemp);
-		HTemp.setColumns(10);
-				
 		JButton coButton = new JButton("Check");
 		coButton.setFont(new Font("Tahoma", Font.BOLD, 11));
 		coButton.setBounds(91, 339, 75, 23);
@@ -297,6 +290,23 @@ public class SmartGUIclient{
 	            }
 			}
 		});
+		
+		JSpinner HTemp = new JSpinner();
+		HTemp.setModel(new SpinnerNumberModel(15, 15, 35, 1));
+		HTemp.setBounds(264, 258, 43, 22);
+		frame.getContentPane().add(HTemp);
+		
+		JButton btnNewButton = new JButton("OK");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				HvacTemperature(HTemp.getValue());
+			}
+		});
+		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 8));
+		coButton.setBorderPainted(false);
+		coButton.setBackground(SystemColor.activeCaption);
+		btnNewButton.setBounds(317, 258, 46, 23);
+		frame.getContentPane().add(btnNewButton);
 		
 				
 		/**
@@ -387,25 +397,25 @@ public class SmartGUIclient{
 		
 		JLabel office1light = new JLabel("Office 1");
 		office1light.setForeground(SystemColor.desktop);
-		office1light.setBounds(213, 341, 59, 14);
+		office1light.setBounds(206, 364, 59, 14);
 		frame.getContentPane().add(office1light);
 		office1light.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		
 		JLabel office2light = new JLabel("Office 2");
 		office2light.setForeground(SystemColor.desktop);
 		office2light.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		office2light.setBounds(213, 381, 59, 14);
+		office2light.setBounds(206, 415, 59, 14);
 		frame.getContentPane().add(office2light);
 		
 		JLabel receptionlight = new JLabel("Reception");
 		receptionlight.setForeground(SystemColor.desktop);
 		receptionlight.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		receptionlight.setBounds(213, 420, 75, 14);
+		receptionlight.setBounds(206, 465, 75, 14);
 		frame.getContentPane().add(receptionlight);
 				
 		JToggleButton of1lightbutton = new JToggleButton("Off");
 		of1lightbutton.setFont(new Font("Tahoma", Font.BOLD, 11));
-		of1lightbutton.setBounds(295, 339, 59, 23);
+		of1lightbutton.setBounds(297, 362, 59, 23);
 		frame.getContentPane().add(of1lightbutton);
 		of1lightbutton.setSelected(true);
 		of1lightbutton.addChangeListener(new ChangeListener() {
@@ -423,7 +433,7 @@ public class SmartGUIclient{
 		JToggleButton of2lightbutton = new JToggleButton("Off");
 		of2lightbutton.setFont(new Font("Tahoma", Font.BOLD, 11));
 		of2lightbutton.setSelected(true);
-		of2lightbutton.setBounds(295, 379, 59, 23);
+		of2lightbutton.setBounds(297, 413, 59, 23);
 		frame.getContentPane().add(of2lightbutton);
 		of2lightbutton.addChangeListener(new ChangeListener() {			
 			public void stateChanged(ChangeEvent e) {
@@ -440,7 +450,7 @@ public class SmartGUIclient{
 		JToggleButton reclightbutton = new JToggleButton("Off");
 		reclightbutton.setFont(new Font("Tahoma", Font.BOLD, 11));
 		reclightbutton.setSelected(true);
-		reclightbutton.setBounds(295, 418, 59, 23);
+		reclightbutton.setBounds(297, 463, 59, 23);
 		frame.getContentPane().add(reclightbutton);
 		reclightbutton.addChangeListener(new ChangeListener() {
 		public void stateChanged(ChangeEvent e) {
@@ -463,10 +473,9 @@ public class SmartGUIclient{
 		});
 		sliderbritness.setBounds(20, 247, 200, 39);
 		frame.getContentPane().add(sliderbritness);
-				sliderbritness.setMajorTickSpacing(1);
-				//sliderbritness.setMinorTickSpacing(1);
+				sliderbritness.setMajorTickSpacing(1);				
 				sliderbritness.setPaintTicks(true);
-				sliderbritness.setPaintLabels(true);		
+				sliderbritness.setPaintLabels(true);					
 	}
 	
 	/**
@@ -494,8 +503,8 @@ public class SmartGUIclient{
 		}
 	}
 
-	public static void HvacTemperature(){
-		int newTemp = Integer.parseInt(HTemp.getText().toString());
+	public static void HvacTemperature(Object value){
+		int newTemp =(int) value;
 		
 		HvacRequest request = HvacRequest.newBuilder().setTemp(newTemp).build();
 		System.out.println("Requesting temperature change to "+ newTemp +"°C");
@@ -503,11 +512,7 @@ public class SmartGUIclient{
 		StreamObserver<HvacResponse> responseObserver = new StreamObserver<HvacResponse>() {			
 			@Override
 			public void onNext(HvacResponse value) {
-				if(newTemp > 35 || newTemp < 15 ) {//start if
-					messages.setText("Select temperature between 15°C and 35°C: ");
-				} else {
 				messages.setText("Changing temperature to: "+ value.getTemp() +"°C");
-				}
 			}
 
 			@Override
@@ -518,7 +523,7 @@ public class SmartGUIclient{
 
 			@Override
 			public void onCompleted() {
-				messages.setText("Room reached the selected temperature: "+ newTemp +"°C");
+				messages.setText("Room reached the selected temperature: "+ newTemp +"°C");				
 			}
 		};
 		
@@ -583,7 +588,7 @@ public class SmartGUIclient{
 		StreamObserver<IntensityRequest> requestObserver = lasyncStub.withDeadlineAfter(2, TimeUnit.SECONDS).lightIntensity(new StreamObserver<IntensityResponse>() {
 			@Override
 			public void onNext(IntensityResponse value) {
-				messages.setText("Brightness has been set to level " + value.getIntensity());
+				messages.setText("Lights intensity changed: " + value.getIntensity());
 			}
 			@Override
 			public void onError(Throwable t) {
@@ -661,8 +666,6 @@ public class SmartGUIclient{
 		StreamObserver<PrinterResponse> responseObserver = new StreamObserver<PrinterResponse>() {
 			@Override
 			public void onNext(PrinterResponse value) {
-				//System.out.println("Printing updated visit list: " + value.getPList());
-				messages.setText("Printing visit list: " + value.getPList());
 				listOfVisits.add(value.getPList());
 			}
 
@@ -674,7 +677,8 @@ public class SmartGUIclient{
 
 			@Override
 			public void onCompleted() {
-				  messages.setText("List completed");
+				System.out.println("List completed");
+				messages.setText("List completed");
 			}
 		};
 
@@ -697,8 +701,10 @@ public class SmartGUIclient{
 				
 			requestObserver.onCompleted();
 			messages.setText("\nVisitor List: " + listOfVisits.size());
-            for(String visits : listOfVisits) {            	
+            for(String visits : listOfVisits) { 
+            	messages.setText("Printing visit list: ");
             	JOptionPane.showMessageDialog(null, visits);
+            	System.out.println("Printing visit list: "+ visits);
             }				
 	}
 }
