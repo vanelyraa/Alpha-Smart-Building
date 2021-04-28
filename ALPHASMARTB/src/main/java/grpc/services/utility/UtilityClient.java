@@ -11,22 +11,27 @@ import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.stub.StreamObserver;
 
+//CLIENT IMPLEMENTATION
 public class UtilityClient {
 		
 	private static UtilityServiceGrpc.UtilityServiceBlockingStub ublockingStub;
 	private static UtilityServiceGrpc.UtilityServiceStub uasyncStub;
-	
+		
+	//Add listener for discovery
 	public static class Listener implements ServiceListener {
+		//service resolution 
         @Override
         public void serviceAdded(ServiceEvent serviceEvent) {
             System.out.println("Service added: " + serviceEvent.getInfo());
         }
-
+        
+        //removed service
         @Override
         public void serviceRemoved(ServiceEvent serviceEvent) {
             System.out.println("Service removed: " + serviceEvent.getInfo());
         }
 
+        //service resolved.
         @Override
         public void serviceResolved(ServiceEvent serviceEvent) {
             System.out.println("Service resolved: " + serviceEvent.getInfo());
@@ -38,13 +43,18 @@ public class UtilityClient {
 		
 	public static void main(String[] args) throws Exception {
 		
+		//GRPC channels
 		ManagedChannel utilitychannel = ManagedChannelBuilder.forAddress("localhost", 50098).usePlaintext().build();
 
+		//stubs -- generate from proto
 		ublockingStub = UtilityServiceGrpc.newBlockingStub(utilitychannel);
 		uasyncStub = UtilityServiceGrpc.newStub(utilitychannel);
 		
-		try {			
+		try {
+			// Create a JmDNS instance
 			JmDNS jmdns = JmDNS.create(InetAddress.getLocalHost());
+			
+			// Add a service listener
 			jmdns.addServiceListener("_http._tcp.local.", new Listener());
 		} catch (UnknownHostException e) {
 			System.out.println(e.getMessage());
@@ -57,10 +67,17 @@ public class UtilityClient {
 		printList();
 	}
 	
+	
+	/**
+	 * GRPC services
+	 */
+	
+	//Switch devices	
 	public static void switchDevices(){
 		
 		DevicesRequest request = DevicesRequest.newBuilder().setDevices(false).build();
 
+		//notification of method invocation
 		DevicesResponse response = ublockingStub.switchDevices(request);
 		if (response.getDevices()) {
 			System.out.println("Devices off!");
@@ -69,11 +86,13 @@ public class UtilityClient {
 			System.out.println("Devices on!");
 		}
 	}
-		
+	
+	//Switch cameras
 	public static void switchCameraOn(){
 		
 		CameraRequest request = CameraRequest.newBuilder().setCamera(false).build();
 
+		//if true, cameras off otherwise, on
 		CameraResponse response = ublockingStub.switchCameraOn(request);
 		if (response.getCamera()) {
 			System.out.println("Camera off!");
@@ -83,6 +102,7 @@ public class UtilityClient {
 		}
 	}
 	
+	//Print visit list
 	public static void printList(){
 
 		StreamObserver<PrinterResponse> responseObserver = new StreamObserver<PrinterResponse>() {
@@ -104,6 +124,7 @@ public class UtilityClient {
 
 		StreamObserver<PrinterRequest> requestObserver = uasyncStub.printList(responseObserver);
 			try {
+				//visitors inputs
 				requestObserver.onNext(PrinterRequest.newBuilder().setPList("Walter Knutz").build());
 				requestObserver.onNext(PrinterRequest.newBuilder().setPList("Maria Stunnten").build());
 				requestObserver.onNext(PrinterRequest.newBuilder().setPList("Rodrigo Salez").build());
