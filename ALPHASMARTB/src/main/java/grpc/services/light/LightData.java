@@ -1,13 +1,15 @@
 package grpc.services.light;
 
+//Node for lights 
 public class LightData {
 	
+	//Declare variables
 	private String type, typeId;
 	private boolean on;
 	private int intensity;
 	public static LightData lights;
 
-	
+	//Constructors
 	public LightData() {
 		this.type="Lighs";
 		this.on=true;
@@ -15,6 +17,7 @@ public class LightData {
 		this.intensity=1;
 	}
 
+	//Setters and getters
 	public String gettype() {
 		return type;
 	}
