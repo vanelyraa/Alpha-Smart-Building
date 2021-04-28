@@ -11,22 +11,27 @@ import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.stub.StreamObserver;
 
+//CLIENT SIDE IMPLEMENTATION
 public class LightClient {
 
 	private static LightServiceGrpc.LightServiceBlockingStub lblockingStub;
 	private static LightServiceGrpc.LightServiceStub lasyncStub;
 	
+	//Add listener for discovery
 	public static class Listener implements ServiceListener {
+		//service resolution
         @Override
         public void serviceAdded(ServiceEvent serviceEvent) {
             System.out.println("Service added: " + serviceEvent.getInfo());
         }
 
+        //removed service
         @Override
         public void serviceRemoved(ServiceEvent serviceEvent) {
             System.out.println("Service removed: " + serviceEvent.getInfo());
         }
 
+        //service resolved.
         @Override
         public void serviceResolved(ServiceEvent serviceEvent) {
             System.out.println("Service resolved: " + serviceEvent.getInfo());
@@ -38,13 +43,18 @@ public class LightClient {
 		
 	public static void main(String[] args) throws Exception {
 		
+		//GRPC channels
 		ManagedChannel lightchannel = ManagedChannelBuilder.forAddress("localhost", 50097).usePlaintext().build();
 
+		//stubs -- generate from proto
 		lblockingStub = LightServiceGrpc.newBlockingStub(lightchannel);
 		lasyncStub = LightServiceGrpc.newStub(lightchannel);
 		
-		try {			
+		try {
+			// Create a JmDNS instance
 			JmDNS jmdns = JmDNS.create(InetAddress.getLocalHost());
+			
+			// Add a service listener
 			jmdns.addServiceListener("_http._tcp.local.", new Listener());
 		} catch (UnknownHostException e) {
 			System.out.println(e.getMessage());
@@ -57,12 +67,14 @@ public class LightClient {
 		lightIntensity();
 	}
 	
+	//Lights
 	public static void lighting(){
 		
 		Empty emp = Empty.newBuilder().build();
 		
 		LightingResponse response;		
 		try {
+			//gathering lights information
 			response = lblockingStub.lighting(emp);
 			String intens = String.valueOf(response.getIntensity());
 			System.out.println("LightID: " + response.getLightId());
@@ -74,9 +86,11 @@ public class LightClient {
 		}	
 	}
 
+	//Lights
 	public static void LightsOnOff(){
 		LightsRequest request = LightsRequest.newBuilder().setSwitch(false).build();
-				
+		
+		//if true, lights off otherwise, on
 		LightsResponse response = lblockingStub.lightsOnOff(request);
 		if (response.getSwitch()) {
 			System.out.println("Lights off!");
@@ -86,6 +100,7 @@ public class LightClient {
 		}
 	}
 	
+	//Lights intensity
 	public static void lightIntensity(){
 		StreamObserver<IntensityResponse> responseObserver = new StreamObserver<IntensityResponse>() {
 
@@ -106,7 +121,8 @@ public class LightClient {
 		};
 
 		StreamObserver<IntensityRequest> requestObserver = lasyncStub.lightIntensity(responseObserver);
-		try {			
+		try {
+			//simulating several requests from client to change temperature
 			requestObserver.onNext(IntensityRequest.newBuilder().setIntensity(1).build());
 			System.out.println("Lights brightness changed to: 1");
 			requestObserver.onNext(IntensityRequest.newBuilder().setIntensity(3).build());
