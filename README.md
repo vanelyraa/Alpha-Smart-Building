@@ -1,4 +1,9 @@
 # ALPHA-SMART-BUILDING-SOLUTIONS
-Java (Swing, AWT), IDE Eclipse - 
-Application developed for a smart office, user controls lights and energy consumption, system checks temperature and visitors using a dashboard. 
-Contains: protocol buffers, remote procedure calls(GRPC), JmDNS. 
+Java
+-Implementation of 3 services which published themselves and discover each other, communication via gRPC with corresponding proto file.
+-Use of all RPC invocation styles - simple RPC, server-side streaming RPC, client-side streaming RPC, bidirectional streaming RPC
+-Naming Services using jmDNS
+-Registration and discovery of services
+-Error handling for remote invocations and error messaging
+-User input validation with appropriate and different message
+-Implementation a simple client GUI 
